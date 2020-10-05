@@ -431,7 +431,7 @@
         "extensions": [
             "kiwi",
             "tiger",
-            "novalnetcheckoutaddon"
+            "useCloudExtensionPack"
         ],
         "annotations": [
             "UnitTests",
