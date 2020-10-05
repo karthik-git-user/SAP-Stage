@@ -1,0 +1,22 @@
+INSERT_UPDATE IntegrationObject ; code[unique=true] ; integrationType(code)
+                                ; ProductIOClassificationTest ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem ; integrationObject(code)[unique=true] ; code[unique=true] ; type(code) ; root[default=false] ; itemTypeMatch(code)
+; ProductIOClassificationTest ; Product ; Product ; true ; ;
+; ProductIOClassificationTest ; Catalog ; Catalog ; ; ;
+; ProductIOClassificationTest ; CatalogVersion ; CatalogVersion ; ; ;
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute ; integrationObjectItem(integrationObject(code),code)[unique=true] ; attributeName[unique=true] ; attributeDescriptor(enclosingType(code),qualifier) ; returnIntegrationObjectItem(integrationObject(code),code) ; unique[default=false] ; autoCreate[default=false]
+; ProductIOClassificationTest:Product ; code ; Product:code ; ; ;
+; ProductIOClassificationTest:Product ; catalogVersion ; Product:catalogVersion
+; ProductIOClassificationTest:CatalogVersion ; ;
+; ProductIOClassificationTest:Catalog ; id ; Catalog:id ; ; ;
+; ProductIOClassificationTest:CatalogVersion ; version ; CatalogVersion:version ; ; ;
+; ProductIOClassificationTest:CatalogVersion ; catalog ; CatalogVersion:catalog
+; ProductIOClassificationTest:Catalog ; ;
+
+INSERT_UPDATE IntegrationObjectItemClassificationAttribute ; integrationObjectItem(integrationObject(code),code)[unique=true] ; attributeName[unique=true] ; classAttributeAssignment(classificationClass(catalogVersion(catalog(id),version),code),classificationAttribute(systemVersion(catalog(id),version),code)) ; returnIntegrationObjectItem(integrationObject(code),code) ; autocreate[default=false]
+; ProductIOClassificationTest:Product ; height ; Electronics:Staged:dimensions:Electronics:Staged:height ; ;
+; ProductIOClassificationTest:Product ; depth ; Electronics:Staged:dimensions:Electronics:Staged:depth ; ;
+; ProductIOClassificationTest:Product ; width ; Electronics:Staged:dimensions:Electronics:Staged:width ; ;

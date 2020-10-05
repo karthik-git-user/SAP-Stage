@@ -1,0 +1,372 @@
+#***********************
+#*** Inbound Product ***
+#***********************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundProduct
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]  ; type(code)
+                                   ; InboundProduct                        ; Product              ; Product
+                                   ; InboundProduct                        ; Unit                 ; Unit
+                                   ; InboundProduct                        ; Catalog              ; Catalog
+                                   ; InboundProduct                        ; CatalogVersion       ; CatalogVersion
+                                   ; InboundProduct                        ; PriceRow             ; PriceRow
+                                   ; InboundProduct                        ; Category             ; Category
+                                   ; InboundProduct                        ; ProductPriceGroup    ; ProductPriceGroup
+                                   ; InboundProduct                        ; ProductDiscountGroup ; ProductDiscountGroup
+                                   ; InboundProduct                        ; ProductTaxGroup      ; ProductTaxGroup
+                                   ; InboundProduct                        ; VariantType          ; VariantType
+                                   ; InboundProduct                        ; Warehouse            ; Warehouse
+                                   ; InboundProduct                        ; Vendor               ; Vendor
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundProduct:Catalog                                             ; id                          ; Catalog:id                                         ;
+; InboundProduct:CatalogVersion                                      ; catalog                     ; CatalogVersion:catalog                             ; InboundProduct:Catalog
+; InboundProduct:CatalogVersion                                      ; version                     ; CatalogVersion:version                             ;
+; InboundProduct:CatalogVersion                                      ; active                      ; CatalogVersion:active                              ;
+; InboundProduct:Unit                                                ; code                        ; Unit:code                                          ;
+; InboundProduct:Unit                                                ; name                        ; Unit:name                                          ;
+; InboundProduct:Unit                                                ; unitType                    ; Unit:unitType                                      ;
+; InboundProduct:ProductPriceGroup                                   ; code                        ; ProductPriceGroup:code                             ;
+; InboundProduct:ProductDiscountGroup                                ; code                        ; ProductDiscountGroup:code                          ;
+; InboundProduct:ProductTaxGroup                                     ; code                        ; ProductTaxGroup:code                               ;
+; InboundProduct:VariantType                                         ; code                        ; VariantType:code                                   ;
+; InboundProduct:Warehouse                                           ; code                        ; Warehouse:code                                     ;                                                           ; true
+; InboundProduct:Warehouse                                           ; vendor                      ; Warehouse:vendor                                   ; InboundProduct:Vendor
+; InboundProduct:Warehouse                                           ; name                        ; Warehouse:name                                     ;
+; InboundProduct:Vendor                                              ; code                        ; Vendor:code                                        ;                                                           ; true
+; InboundProduct:Product                                             ; code                        ; Product:code                                       ;
+; InboundProduct:Product                                             ; catalogVersion              ; Product:catalogVersion                             ; InboundProduct:CatalogVersion
+; InboundProduct:Product                                             ; name                        ; Product:name                                       ;
+; InboundProduct:Product                                             ; unit                        ; Product:unit                                       ; InboundProduct:Unit
+; InboundProduct:Product                                             ; pricerow                    ; Product:ownEurope1Prices                           ; InboundProduct:PriceRow
+; InboundProduct:Product                                             ; Europe1PriceFactory_PPG     ; Product:Europe1PriceFactory_PPG                    ; InboundProduct:ProductPriceGroup
+; InboundProduct:Product                                             ; Europe1PriceFactory_PDG     ; Product:Europe1PriceFactory_PDG                    ; InboundProduct:ProductDiscountGroup
+; InboundProduct:Product                                             ; Europe1PriceFactory_PTG     ; Product:Europe1PriceFactory_PTG                    ; InboundProduct:ProductTaxGroup
+; InboundProduct:Product                                             ; supercategories             ; Product:supercategories                            ; InboundProduct:Category                                     ;;true
+; InboundProduct:Product                                             ; sapBlocked                  ; Product:sapBlocked                                 ;
+; InboundProduct:Product                                             ; sapBaseUnitConversion       ; Product:sapBaseUnitConversion                      ;
+; InboundProduct:Product                                             ; sapEAN                      ; Product:sapEAN                                     ;
+; InboundProduct:Product                                             ; sapBlockedDate              ; Product:sapBlockedDate                             ;
+; InboundProduct:Product                                             ; variantType                 ; Product:variantType                                ; InboundProduct:VariantType
+; InboundProduct:Product                                             ; sapPlant                    ; Product:sapPlant                                   ; InboundProduct:Warehouse
+; InboundProduct:Product                                             ; sapConfigurable             ; Product:sapConfigurable                            ;
+; InboundProduct:PriceRow                                            ; price                       ; PriceRow:price                                     ;                                                           ; true
+; InboundProduct:PriceRow                                            ; unit                        ; PriceRow:unit                                      ; InboundProduct:Unit
+; InboundProduct:Category                                            ; code                        ; Category:code                                      ;
+; InboundProduct:Category                                            ; catalogVersion              ; Category:catalogVersion                            ; InboundProduct:CatalogVersion
+
+#***********************************
+#*** Inbound ERP Variant Product ***
+#***********************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundERPVariantProduct; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundERPVariantProduct	; ProductFeature      	; ProductFeature      	; 	;  
+; InboundERPVariantProduct	; CatalogVersion      	; CatalogVersion      	; 	;  
+; InboundERPVariantProduct	; ProductTaxGroup     	; ProductTaxGroup     	; 	;  
+; InboundERPVariantProduct	; ERPVariantProduct   	; ERPVariantProduct   	; true	;  
+; InboundERPVariantProduct	; Catalog             	; Catalog             	; 	;  
+; InboundERPVariantProduct	; Product             	; Product             	; 	;  
+; InboundERPVariantProduct	; ProductPriceGroup   	; ProductPriceGroup   	; 	;  
+; InboundERPVariantProduct	; VariantType         	; VariantType         	; 	;  
+; InboundERPVariantProduct	; Category            	; Category            	; 	;  
+; InboundERPVariantProduct	; Unit                	; Unit                	; 	;  
+; InboundERPVariantProduct	; Warehouse           	; Warehouse           	; 	;  
+; InboundERPVariantProduct	; ProductDiscountGroup	; ProductDiscountGroup	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundERPVariantProduct:ProductFeature      	; product                	; ProductFeature:product                   	; InboundERPVariantProduct:Product             	; true	;  
+; InboundERPVariantProduct:ProductFeature      	; valuePosition          	; ProductFeature:valuePosition             	;                                               	; true	;  
+; InboundERPVariantProduct:ProductFeature      	; author                 	; ProductFeature:author                    	;                                               	; 	;  
+; InboundERPVariantProduct:ProductFeature      	; value                  	; ProductFeature:value                     	;                                               	; 	;  
+; InboundERPVariantProduct:ProductFeature      	; qualifier              	; ProductFeature:qualifier                 	;                                               	; true	;  
+; InboundERPVariantProduct:CatalogVersion      	; catalog                	; CatalogVersion:catalog                   	; InboundERPVariantProduct:Catalog             	; true	;  
+; InboundERPVariantProduct:CatalogVersion      	; version                	; CatalogVersion:version                   	;                                               	; true	;  
+; InboundERPVariantProduct:ProductTaxGroup     	; code                   	; ProductTaxGroup:code                     	;                                               	; true	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapConfigurable        	; ERPVariantProduct:sapConfigurable        	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapBlockedDate         	; ERPVariantProduct:sapBlockedDate         	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; features               	; ERPVariantProduct:features               	; InboundERPVariantProduct:ProductFeature      	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapBaseUnitConversion  	; ERPVariantProduct:sapBaseUnitConversion  	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; code                   	; ERPVariantProduct:code                   	;                                               	; true	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; catalogVersion         	; ERPVariantProduct:catalogVersion         	; InboundERPVariantProduct:CatalogVersion      	; true	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; variantType            	; ERPVariantProduct:variantType            	; InboundERPVariantProduct:VariantType         	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapEAN                 	; ERPVariantProduct:sapEAN                 	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapPlant               	; ERPVariantProduct:sapPlant               	; InboundERPVariantProduct:Warehouse           	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; baseProduct            	; ERPVariantProduct:baseProduct            	; InboundERPVariantProduct:Product             	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; Europe1PriceFactory_PDG	; ERPVariantProduct:Europe1PriceFactory_PDG	; InboundERPVariantProduct:ProductDiscountGroup	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; Europe1PriceFactory_PTG	; ERPVariantProduct:Europe1PriceFactory_PTG	; InboundERPVariantProduct:ProductTaxGroup     	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; name                   	; ERPVariantProduct:name                   	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; sapBlocked             	; ERPVariantProduct:sapBlocked             	;                                               	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; unit                   	; ERPVariantProduct:unit                   	; InboundERPVariantProduct:Unit                	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; supercategories        	; ERPVariantProduct:supercategories        	; InboundERPVariantProduct:Category            	; 	;  
+; InboundERPVariantProduct:ERPVariantProduct   	; Europe1PriceFactory_PPG	; ERPVariantProduct:Europe1PriceFactory_PPG	; InboundERPVariantProduct:ProductPriceGroup   	; 	;  
+; InboundERPVariantProduct:Catalog             	; id                     	; Catalog:id                               	;                                               	; true	;  
+; InboundERPVariantProduct:Product             	; catalogVersion         	; Product:catalogVersion                   	; InboundERPVariantProduct:CatalogVersion      	; true	;  
+; InboundERPVariantProduct:Product             	; code                   	; Product:code                             	;                                               	; true	;  
+; InboundERPVariantProduct:ProductPriceGroup   	; code                   	; ProductPriceGroup:code                   	;                                               	; true	;  
+; InboundERPVariantProduct:VariantType         	; code                   	; VariantType:code                         	;                                               	; true	;  
+; InboundERPVariantProduct:Category            	; code                   	; Category:code                            	;                                               	; true	;  
+; InboundERPVariantProduct:Category            	; catalogVersion         	; Category:catalogVersion                  	; InboundERPVariantProduct:CatalogVersion      	; true	;  
+; InboundERPVariantProduct:Unit                	; code                   	; Unit:code                                	;                                               	; true	;  
+; InboundERPVariantProduct:Warehouse           	; code                   	; Warehouse:code                           	;                                               	; true	;  
+; InboundERPVariantProduct:ProductDiscountGroup	; code                   	; ProductDiscountGroup:code                	;                                               	; true	;  
+
+#*******************************
+#*** Inbound Product Feature ***
+#*******************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundProductFeature; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundProductFeature	; ProductFeature	; ProductFeature	; 	;  
+; InboundProductFeature	; Product       	; Product       	; true	;  
+; InboundProductFeature	; Catalog       	; Catalog       	; 	;  
+; InboundProductFeature	; CatalogVersion	; CatalogVersion	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundProductFeature:ProductFeature	; qualifier     	; ProductFeature:qualifier    	;                                      	; true	;  
+; InboundProductFeature:ProductFeature	; value         	; ProductFeature:value        	;                                      	; 	;  
+; InboundProductFeature:ProductFeature	; product       	; ProductFeature:product      	; InboundProductFeature:Product       	; true	;  
+; InboundProductFeature:ProductFeature	; author        	; ProductFeature:author       	;                                      	; 	;  
+; InboundProductFeature:ProductFeature	; valuePosition 	; ProductFeature:valuePosition	;                                      	; true	;  
+; InboundProductFeature:Product       	; catalogVersion	; Product:catalogVersion      	; InboundProductFeature:CatalogVersion	; true	;  
+; InboundProductFeature:Product       	; features      	; Product:features            	; InboundProductFeature:ProductFeature	; 	;  
+; InboundProductFeature:Product       	; code          	; Product:code                	;                                      	; true	;  
+; InboundProductFeature:Catalog       	; id            	; Catalog:id                  	;                                      	; true	;  
+; InboundProductFeature:CatalogVersion	; active        	; CatalogVersion:active       	;                                      	; 	;  
+; InboundProductFeature:CatalogVersion	; version       	; CatalogVersion:version      	;                                      	; true	;  
+; InboundProductFeature:CatalogVersion	; catalog       	; CatalogVersion:catalog      	; InboundProductFeature:Catalog       	; true	;  
+#*************************
+#*** Inbound Price Row ***
+#*************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundPriceRow
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)
+                                   ; InboundPriceRow                       ; PriceRow           ; PriceRow
+                                   ; InboundPriceRow                       ; Product            ; Product
+                                   ; InboundPriceRow                       ; Currency           ; Currency
+                                   ; InboundPriceRow                       ; Unit               ; Unit
+                                   ; InboundPriceRow                       ; CatalogVersion     ; CatalogVersion
+                                   ; InboundPriceRow                       ; Catalog            ; Catalog
+                                   ; InboundPriceRow                       ; ProductPriceGroup  ; ProductPriceGroup
+                                   ; InboundPriceRow                       ; UserPriceGroup     ; UserPriceGroup
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+                                            ; InboundPriceRow:UserPriceGroup                                     ; code                        ; UserPriceGroup:code                                ;
+                                            ; InboundPriceRow:ProductPriceGroup                                  ; code                        ; ProductPriceGroup:code                             ;
+                                            ; InboundPriceRow:Product                                            ; code                        ; Product:code                                       ;
+                                            ; InboundPriceRow:Product                                            ; catalogVersion              ; Product:catalogVersion                             ; InboundPriceRow:CatalogVersion                            ;
+                                            ; InboundPriceRow:Unit                                               ; code                        ; Unit:code                                          ;                                                           ;
+                                            ; InboundPriceRow:Currency                                           ; isocode                     ; Currency:isocode                                   ;                                                           ;
+                                            ; InboundPriceRow:Catalog                                            ; id                          ; Catalog:id                                         ;
+                                            ; InboundPriceRow:CatalogVersion                                     ; catalog                     ; CatalogVersion:catalog                             ; InboundPriceRow:Catalog
+                                            ; InboundPriceRow:CatalogVersion                                     ; version                     ; CatalogVersion:version                             ;
+                                            ; InboundPriceRow:PriceRow                                           ; net                         ; PriceRow:net                                       ;
+                                            ; InboundPriceRow:PriceRow                                           ; sapConditionId              ; PriceRow:sapConditionId                            ;                                                           ; true
+                                            ; InboundPriceRow:PriceRow                                           ; startTime                   ; PriceRow:startTime                                 ;
+                                            ; InboundPriceRow:PriceRow                                           ; endTime                     ; PriceRow:endTime                                   ;
+                                            ; InboundPriceRow:PriceRow                                           ; price                       ; PriceRow:price                                     ;
+                                            ; InboundPriceRow:PriceRow                                           ; unitFactor                  ; PriceRow:unitFactor                                ;
+                                            ; InboundPriceRow:PriceRow                                           ; minqtd                      ; PriceRow:minqtd                                    ;
+                                            ; InboundPriceRow:PriceRow                                           ; currency                    ; PriceRow:currency                                  ; InboundPriceRow:Currency                                  ; true
+                                            ; InboundPriceRow:PriceRow                                           ; ug                          ; PriceRow:ug                                        ; InboundPriceRow:UserPriceGroup                            ;
+                                            ; InboundPriceRow:PriceRow                                           ; pg                          ; PriceRow:pg                                        ; InboundPriceRow:ProductPriceGroup                         ;
+                                            ; InboundPriceRow:PriceRow                                           ; product                     ; PriceRow:product                                   ; InboundPriceRow:Product                                   ;
+                                            ; InboundPriceRow:PriceRow                                           ; catalogVersion              ; PriceRow:catalogVersion                            ; InboundPriceRow:CatalogVersion                            ; true
+                                            ; InboundPriceRow:PriceRow                                           ; unit                        ; PriceRow:unit                                      ; InboundPriceRow:Unit                                      ; true
+
+#****************************
+#*** Inbound Discount Row ***
+#****************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundDiscountRow; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundDiscountRow	; Discount         	; Discount         	; 	;  
+; InboundDiscountRow	; CatalogVersion   	; CatalogVersion   	; 	;  
+; InboundDiscountRow	; ProductPriceGroup	; ProductPriceGroup	; 	;  
+; InboundDiscountRow	; DiscountRow      	; DiscountRow      	; true	;  
+; InboundDiscountRow	; Currency         	; Currency         	; 	;  
+; InboundDiscountRow	; UserPriceGroup   	; UserPriceGroup   	; 	;  
+; InboundDiscountRow	; Product          	; Product          	; 	;  
+; InboundDiscountRow	; Catalog          	; Catalog          	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundDiscountRow:Discount         	; code          	; Discount:code             	;                                      	; true	;  
+; InboundDiscountRow:CatalogVersion   	; version       	; CatalogVersion:version    	;                                      	; true	;  
+; InboundDiscountRow:CatalogVersion   	; catalog       	; CatalogVersion:catalog    	; InboundDiscountRow:Catalog          	; true	;  
+; InboundDiscountRow:ProductPriceGroup	; code          	; ProductPriceGroup:code    	;                                      	; true	;  
+; InboundDiscountRow:DiscountRow      	; sapConditionId	; DiscountRow:sapConditionId	;                                      	; true	;  
+; InboundDiscountRow:DiscountRow      	; product       	; DiscountRow:product       	; InboundDiscountRow:Product          	; 	;  
+; InboundDiscountRow:DiscountRow      	; currency      	; DiscountRow:currency      	; InboundDiscountRow:Currency         	; 	;  
+; InboundDiscountRow:DiscountRow      	; discount      	; DiscountRow:discount      	; InboundDiscountRow:Discount         	; 	;  
+; InboundDiscountRow:DiscountRow      	; value         	; DiscountRow:value         	;                                      	; 	;  
+; InboundDiscountRow:DiscountRow      	; endTime       	; DiscountRow:endTime       	;                                      	; 	;  
+; InboundDiscountRow:DiscountRow      	; ug            	; DiscountRow:ug            	; InboundDiscountRow:UserPriceGroup   	; 	;  
+; InboundDiscountRow:DiscountRow      	; pg            	; DiscountRow:pg            	; InboundDiscountRow:ProductPriceGroup	; 	;  
+; InboundDiscountRow:DiscountRow      	; catalogVersion	; DiscountRow:catalogVersion	; InboundDiscountRow:CatalogVersion   	; true	;  
+; InboundDiscountRow:DiscountRow      	; startTime     	; DiscountRow:startTime     	;                                      	; 	;  
+; InboundDiscountRow:Currency         	; isocode       	; Currency:isocode          	;                                      	; true	;  
+; InboundDiscountRow:UserPriceGroup   	; code          	; UserPriceGroup:code       	;                                      	; true	;  
+; InboundDiscountRow:Product          	; code          	; Product:code              	;                                      	; true	;  
+; InboundDiscountRow:Product          	; catalogVersion	; Product:catalogVersion    	; InboundDiscountRow:CatalogVersion   	; true	;  
+; InboundDiscountRow:Catalog          	; id            	; Catalog:id                	;                                      	; true	;  
+
+#*******************************
+#*** Inbound OMM Stock Level ***
+#*******************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundOMMStockLevel
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)
+                                   ; InboundOMMStockLevel                  ; StockLevel         ; StockLevel
+                                   ; InboundOMMStockLevel                  ; Warehouse          ; Warehouse
+                                   ; InboundOMMStockLevel                  ; Vendor             ; Vendor
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+                                            ; InboundOMMStockLevel:StockLevel                                    ; available                   ; StockLevel:available                               ;
+                                            ; InboundOMMStockLevel:StockLevel                                    ; maxPreOrder                 ; StockLevel:maxPreOrder                             ;
+                                            ; InboundOMMStockLevel:StockLevel                                    ; productCode                 ; StockLevel:productCode                             ;                                                           ; true
+                                            ; InboundOMMStockLevel:StockLevel                                    ; warehouse                   ; StockLevel:warehouse                               ; InboundOMMStockLevel:Warehouse                            ; true
+                                            ; InboundOMMStockLevel:Warehouse                                     ; code                        ; Warehouse:code                                     ;                                                           ; true
+                                            ; InboundOMMStockLevel:Warehouse                                     ; vendor                      ; Warehouse:vendor                                   ; InboundOMMStockLevel:Vendor                               ;
+                                            ; InboundOMMStockLevel:Warehouse                                     ; name                        ; Warehouse:name                                     ;                                                           ;
+                                            ; InboundOMMStockLevel:Vendor                                        ; code                        ; Vendor:code                                        ;                                                           ; true
+
+#************************************
+#*** Inbound Classification Class ***
+#************************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundClassificationClass; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundClassificationClass	; Catalog            	; Catalog            	; 	;  
+; InboundClassificationClass	; Category           	; Category           	; 	;  
+; InboundClassificationClass	; CatalogVersion     	; CatalogVersion     	; 	;  
+; InboundClassificationClass	; ClassificationClass	; ClassificationClass	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundClassificationClass:Catalog            	; id             	; Catalog:id                         	;                                           	; true	;  
+; InboundClassificationClass:Category           	; catalogVersion 	; Category:catalogVersion            	; InboundClassificationClass:CatalogVersion	; true	;  
+; InboundClassificationClass:Category           	; code           	; Category:code                      	;                                           	; true	;  
+; InboundClassificationClass:CatalogVersion     	; catalog        	; CatalogVersion:catalog             	; InboundClassificationClass:Catalog       	; true	;  
+; InboundClassificationClass:CatalogVersion     	; active         	; CatalogVersion:active              	;                                           	; 	;  
+; InboundClassificationClass:CatalogVersion     	; version        	; CatalogVersion:version             	;                                           	; true	;  
+; InboundClassificationClass:ClassificationClass	; catalogVersion 	; ClassificationClass:catalogVersion 	; InboundClassificationClass:CatalogVersion	; true	;  
+; InboundClassificationClass:ClassificationClass	; supercategories	; ClassificationClass:supercategories	; InboundClassificationClass:Category      	; 	;  
+; InboundClassificationClass:ClassificationClass	; name           	; ClassificationClass:name           	;                                           	; 	;  
+; InboundClassificationClass:ClassificationClass	; code           	; ClassificationClass:code           	;                                           	; true	;  
+
+#**********************************************
+#*** Inbound Classification Attribute Value ***
+#**********************************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundClassificationAttributeValue; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundClassificationAttributeValue	; ClassificationSystemVersion 	; ClassificationSystemVersion 	; 	;  
+; InboundClassificationAttributeValue	; Catalog                     	; Catalog                     	; 	;  
+; InboundClassificationAttributeValue	; ClassificationAttributeValue	; ClassificationAttributeValue	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundClassificationAttributeValue:ClassificationSystemVersion 	; version      	; ClassificationSystemVersion:version       	;                                                                 	; true	;  
+; InboundClassificationAttributeValue:ClassificationSystemVersion 	; catalog      	; ClassificationSystemVersion:catalog       	; InboundClassificationAttributeValue:Catalog                    	; true	;  
+; InboundClassificationAttributeValue:Catalog                     	; id           	; Catalog:id                                	;                                                                 	; true	;  
+; InboundClassificationAttributeValue:ClassificationAttributeValue	; code         	; ClassificationAttributeValue:code         	;                                                                 	; true	;  
+; InboundClassificationAttributeValue:ClassificationAttributeValue	; name         	; ClassificationAttributeValue:name         	;                                                                 	; 	;  
+; InboundClassificationAttributeValue:ClassificationAttributeValue	; systemVersion	; ClassificationAttributeValue:systemVersion	; InboundClassificationAttributeValue:ClassificationSystemVersion	; true	;  
+
+#****************************************
+#*** Inbound Classification Attribute ***
+#****************************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundClassificationAttribute; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundClassificationAttribute	; Catalog                     	; Catalog                     	; 	;  
+; InboundClassificationAttribute	; ClassificationAttributeValue	; ClassificationAttributeValue	; 	;  
+; InboundClassificationAttribute	; ClassificationSystemVersion 	; ClassificationSystemVersion 	; 	;  
+; InboundClassificationAttribute	; ClassificationAttribute     	; ClassificationAttribute     	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundClassificationAttribute:Catalog                     	; id                          	; Catalog:id                                          	;                                                             	; true	;  
+; InboundClassificationAttribute:ClassificationAttributeValue	; code                        	; ClassificationAttributeValue:code                   	;                                                             	; true	;  
+; InboundClassificationAttribute:ClassificationAttributeValue	; systemVersion               	; ClassificationAttributeValue:systemVersion          	; InboundClassificationAttribute:ClassificationSystemVersion 	; true	;  
+; InboundClassificationAttribute:ClassificationSystemVersion 	; version                     	; ClassificationSystemVersion:version                 	;                                                             	; true	;  
+; InboundClassificationAttribute:ClassificationSystemVersion 	; catalog                     	; ClassificationSystemVersion:catalog                 	; InboundClassificationAttribute:Catalog                     	; true	;  
+; InboundClassificationAttribute:ClassificationAttribute     	; name                        	; ClassificationAttribute:name                        	;                                                             	; 	;  
+; InboundClassificationAttribute:ClassificationAttribute     	; code                        	; ClassificationAttribute:code                        	;                                                             	; true	;  
+; InboundClassificationAttribute:ClassificationAttribute     	; sapERPCharacteristicLongText	; ClassificationAttribute:sapERPCharacteristicLongText	;                                                             	; 	;  
+; InboundClassificationAttribute:ClassificationAttribute     	; defaultAttributeValues      	; ClassificationAttribute:defaultAttributeValues      	; InboundClassificationAttribute:ClassificationAttributeValue	; 	;  
+; InboundClassificationAttribute:ClassificationAttribute     	; systemVersion               	; ClassificationAttribute:systemVersion               	; InboundClassificationAttribute:ClassificationSystemVersion 	; true	;  
+
+#******************************************
+#*** Inbound Class Attribute Assignment ***
+#******************************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundClassAttributeAssignment
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]             ; type(code)
+                                   ; InboundClassAttributeAssignment       ; ClassAttributeAssignment        ; ClassAttributeAssignment
+                                   ; InboundClassAttributeAssignment       ; ClassificationAttributeTypeEnum ; ClassificationAttributeTypeEnum
+                                   ; InboundClassAttributeAssignment       ; ClassificationSystemVersion     ; ClassificationSystemVersion
+                                   ; InboundClassAttributeAssignment       ; ClassificationSystem            ; ClassificationSystem
+                                   ; InboundClassAttributeAssignment       ; ClassificationAttribute         ; ClassificationAttribute
+                                   ; InboundClassAttributeAssignment       ; ClassificationClass             ; ClassificationClass
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code)      ; unique[default = false]
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; classificationClass         ; ClassAttributeAssignment:classificationClass       ; InboundClassAttributeAssignment:ClassificationClass             ; true
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; formatDefinition            ; ClassAttributeAssignment:formatDefinition          ;                                                                 ;
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; systemVersion               ; ClassAttributeAssignment:systemVersion             ; InboundClassAttributeAssignment:ClassificationSystemVersion     ; true
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; attributeType               ; ClassAttributeAssignment:attributeType             ; InboundClassAttributeAssignment:ClassificationAttributeTypeEnum ; false
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; description                 ; ClassAttributeAssignment:description               ;                                                                 ;
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; multiValued                 ; ClassAttributeAssignment:multiValued               ;                                                                 ;
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; classificationAttribute     ; ClassAttributeAssignment:classificationAttribute   ; InboundClassAttributeAssignment:ClassificationAttribute         ; true
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; range                       ; ClassAttributeAssignment:range                     ;                                                                 ;
+                                            ; InboundClassAttributeAssignment:ClassAttributeAssignment           ; sapCpiAssignmentUnitCode    ; ClassAttributeAssignment:sapCpiAssignmentUnitCode  ;                                                                 ;
+                                            ; InboundClassAttributeAssignment:ClassificationAttributeTypeEnum    ; code                        ; ClassificationAttributeTypeEnum:code               ;                                                                 ; true
+                                            ; InboundClassAttributeAssignment:ClassificationSystemVersion        ; catalog                     ; ClassificationSystemVersion:catalog                ; InboundClassAttributeAssignment:ClassificationSystem            ; true
+                                            ; InboundClassAttributeAssignment:ClassificationSystemVersion        ; version                     ; ClassificationSystemVersion:version                ;                                                                 ; true
+                                            ; InboundClassAttributeAssignment:ClassificationSystem               ; id                          ; ClassificationSystem:id                            ;                                                                 ; true
+                                            ; InboundClassAttributeAssignment:ClassificationAttribute            ; code                        ; ClassificationAttribute:code                       ;                                                                 ; true
+                                            ; InboundClassAttributeAssignment:ClassificationAttribute            ; systemVersion               ; ClassificationAttribute:systemVersion              ; InboundClassAttributeAssignment:ClassificationSystemVersion     ; true
+                                            ; InboundClassAttributeAssignment:ClassificationClass                ; catalogVersion              ; ClassificationClass:catalogVersion                 ; InboundClassAttributeAssignment:ClassificationSystemVersion     ; true
+                                            ; InboundClassAttributeAssignment:ClassificationClass                ; code                        ; ClassificationClass:code                           ;                                                                 ; true
+
+#***********************************
+#*** SAP Integration User Groups ***
+#***********************************
+
+INSERT_UPDATE UserGroup; UID[unique = true]            ; locname[lang = en]               ; description                      ; groups(uid)[mode = append]
+                       ; sapInboundClassificationGroup ; SAp Inbound Classification Group ; SAp Inbound Classification Group ; integrationusergroup
+                       ; sapInboundProductGroup        ; SAP Inbound Product Group        ; SAP Inbound Product Group        ; integrationusergroup
+                       ; sapInboundPriceGroup          ; SAP Inbound Price Group          ; SAP Inbound Price Group          ; integrationusergroup
+
+#***************************************************
+#*** SAP Integration Flexible Search Restriction ***
+#***************************************************
+
+INSERT_UPDATE SearchRestriction; code[unique = true]                    ; name[lang = en]                             ; query                                                                                                                                                                                                                                               ; principal(UID)       ; restrictedType(code); active; generate
+                               ; sapInboundCCRestriction                ; SAP Inbound CC Restriction                  ; ({code}='InboundClassificationClass' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundClassificationGroup' }} )) OR ({code}!='InboundClassificationClass')                   ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundCARestriction                ; SAP Inbound CA Restriction                  ; ({code}='InboundClassificationAttribute' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundClassificationGroup' }} )) OR ({code}!='InboundClassificationAttribute')           ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundCAVRestriction               ; SAP Inbound CAV Restriction                 ; ({code}='InboundClassificationAttributeValue' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundClassificationGroup' }} )) OR ({code}!='InboundClassificationAttributeValue') ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundCAARestriction               ; SAP Inbound CAA Restriction                 ; ({code}='InboundClassAttributeAssignment' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundClassificationGroup' }} )) OR ({code}!='InboundClassAttributeAssignment')         ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundProductRestriction           ; SAP Inbound Product Restriction             ; ({code}='InboundProduct' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundProduct')                                                  ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundERPVariantProductRestriction ; SAP Inbound ERP Variant Product Restriction ; ({code}='InboundERPVariantProduct' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundERPVariantProduct')                              ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundProductFeatureRestriction    ; SAP Inbound Product Feature Restriction     ; ({code}='InboundProductFeature' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundProductFeature')                                    ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundOMMStockLeveRestriction      ; SAP Inbound OMM Stock Leve Restriction      ; ({code}='InboundOMMStockLevel' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundOMMStockLevel')                                      ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundPriceRowRestriction          ; SAP Inbound Price Row Restriction           ; ({code}='InboundPriceRow' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundPriceGroup' }} )) OR ({code}!='InboundPriceRow')                                                  ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundDiscountRowRestriction       ; SAP Inbound Discount Row Restriction        ; ({code}='InboundDiscountRow' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundPriceGroup' }} )) OR ({code}!='InboundDiscountRow')                                            ; integrationusergroup ; IntegrationObject   ; true  ; true

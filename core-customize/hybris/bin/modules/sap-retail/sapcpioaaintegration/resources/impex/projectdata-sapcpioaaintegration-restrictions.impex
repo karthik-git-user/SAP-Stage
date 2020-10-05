@@ -1,0 +1,5 @@
+#******************************************
+#*** Create SAP Integration Test Users ****
+#******************************************
+INSERT_UPDATE Employee; UID[unique = true]         				 ; name                           			    ; groups(uid)[mode = append]
+                      ; sapOaaApiUser 			 ; SAP OAA User	    	; sapOaaApiGroup,integrationadmingroup

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<typegroup name="CMS Components">
+			
+			<itemtype code="SAPQualtricsSiteComponent"
+				extends="SimpleCMSComponent" jaloclass="de.hybris.platform.sapqualtricsaddon.jalo.SAPQualtricsSiteComponent"
+				autocreate="true" generate="true" >
+				<description>
+				Used by {@code SAPQualtricsSiteComponentRenderer} to load all  ConsumedDestinations of {@code DestinationTarget } with id qualtricsDestinationTarget. 
+				Once you add an instance of JspIncludeComponent component to any content slot, the Controller responsible for loading the respective page 
+				should be modified to load data to its corresponding view. But for Commerce Qualtrics integration, an instance of SAPQualtricsSiteComponent  
+				can be placed in any slot of any page where the customer wants to evaluate  if a Qualtrics survey can be loaded. We don’t want the customer 
+				to keep on modifying controller classes based on where he has placed this component
+				</description>
+			</itemtype>
+		</typegroup>
+	</itemtypes>
+</items>

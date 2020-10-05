@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+       
+    <alias name="defaultEnhancedScimUserFacade" alias="scimUserFacade"/>
+    <bean id="defaultEnhancedScimUserFacade" class="de.hybris.platform.scimfacadescep.user.impl.DefaultEnhancedScimUserFacade" parent="defaultScimUserFacade">
+    		<property name="scimUserGenericDao" ref="scimUserGenericDao"/>
+    		<property name="scimUserConverter" ref="scimUserConverter"/>
+    </bean>
+    
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="scimUserConverter"/>
+        <property name="add" ref="defaultEnhancedDefaultScimUserPopulator"/>
+    </bean>
+    
+    <alias name="defaultEnhancedDefaultScimUserPopulator" alias="enhancedScimUserPopulator"/>
+    <bean id="defaultEnhancedDefaultScimUserPopulator" class="de.hybris.platform.scimfacadescep.user.populators.EnhancedScimUserPopulator">
+    		<property name="scimUserGroupGenericDao" ref="scimUserGroupGenericDao" />
+    </bean>
+        
+    <alias name="defaultScimUserGenericDao" alias="scimUserGenericDao"/>
+	<bean name="defaultScimUserGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="User"/>
+	</bean>
+
+	<alias name="defaultScimUserGroupGenericDao" alias="scimUserGroupGenericDao"/>
+	<bean name="defaultScimUserGroupGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="ScimUserGroup"/>
+	</bean>
+	
+	<alias name="defaultScimGroupFacade" alias="scimGroupFacade"/>
+    <bean id="defaultScimGroupFacade" class="de.hybris.platform.scimfacadescep.group.impl.DefaultScimGroupFacade" >
+    		<property name="modelService" ref="modelService" />
+    		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+    		<property name="scimGroupReverseConverter" ref="scimGroupReverseConverter"/>
+    		<property name="scimGroupConverter" ref="scimGroupConverter"/>
+    		<property name="scimUserGroupGenericDao" ref="scimUserGroupGenericDao" />
+    </bean>
+			
+	<alias name="defaultScimGroupReversePopulator" alias="scimGroupReversePopulator"/>
+    <bean id="defaultScimGroupReversePopulator" class="de.hybris.platform.scimfacadescep.group.populators.ScimGroupReversePopulator" >
+    		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+    		<property name="scimUserGroupTypeService" ref="defaultTypeService"/>
+    		<property name="modelService" ref="modelService" />
+ 	</bean>
+    
+    <bean id="scimGroupReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.scimservices.model.ScimUserGroupModel" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="scimGroupReversePopulator"/>
+            </list>
+        </property>
+    </bean>
+    
+	<alias name="defaultScimGroupPopulator" alias="scimGroupPopulator"/>
+    <bean id="defaultScimGroupPopulator" class="de.hybris.platform.scimfacadescep.group.populators.ScimGroupPopulator" >
+    </bean>
+    
+    <bean id="scimGroupConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.scimfacadescep.ScimGroup" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="scimGroupPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+		   	   http://www.springframework.org/schema/util
+		   http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+	<bean id="createReturnEventListener"
+		class="com.sap.hybris.returnssupport.listeners.CreateReturnEventListener"
+		parent="abstractSiteEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="supportedSiteChannels" ref="returnEventListenerSupportedSiteChannels" />
+	</bean>
+
+	<util:set id="returnEventListenerSupportedSiteChannels"
+		value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+		<value>B2C</value>
+		<value>B2B</value>
+	</util:set>
+
+
+	<alias alias="returnService" name="ommReturnService" />
+	<bean id="ommReturnService"
+		class="com.sap.hybris.returnssupport.service.impl.DefaultReturnsService"
+		parent="defaultReturnService">
+	</bean>
+
+	<alias alias="returnActionAdapter" name="saperpreturnActionAdapter" />
+	<bean id="saperpreturnActionAdapter"
+		class="com.sap.hybris.returnssupport.impl.DefaultReturnActionAdapter">
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias alias="sapArticleComponentDao" name="sapDefaultArticleComponentDao" />
+	<bean class="com.sap.retail.commercesuite.saparticlemodel.articlecomponent.dao.impl.ArticleComponentDAOImpl" id="sapDefaultArticleComponentDao"
+		parent="abstractItemDao" >
+      <property name="productService" ref="defaultProductService"></property>
+      <property name="catalogVersionService" ref="defaultCatalogVersionService"></property>
+   </bean>			
+
+	<alias alias="sapArticleComponentService" name="sapDefaultArticleComponentService" />
+	<bean class="com.sap.retail.commercesuite.saparticlemodel.articlecomponent.impl.ArticleComponentServiceImpl" id="sapDefaultArticleComponentService"
+		scope="singleton">
+		<property name="articleComponentDAO" ref="sapArticleComponentDao" />
+	</bean>
+	
+   <alias name="sapDefaultArticleRemoveInterceptor" alias="sapArticleRemoveInterceptor"/>
+	<bean id="sapDefaultArticleRemoveInterceptor" class="com.sap.retail.commercesuite.saparticlemodel.articlecomponent.validations.ArticleComponentRemoveInterceptor">
+	  <property name="articleComponentService" ref="sapArticleComponentService"/>
+	</bean>
+   
+   <alias name="sapDefaultArticleRemoveInterceptorMapping" alias="sapArticleRemoveInterceptorMapping"/>
+   <bean id="sapDefaultArticleRemoveInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+      <property name="interceptor" ref="sapArticleRemoveInterceptor" />
+      <property name="typeCode" value="Product" />
+   </bean>			
+ 
+</beans>

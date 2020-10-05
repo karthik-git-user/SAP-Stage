@@ -1,0 +1,18 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; 
+; CPQOutboundQuoteStatus
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; CPQOutboundQuoteStatus	; SAPCPQOutboundQuoteStatus         	    ; SAPCPQOutboundQuoteStatus 
+; CPQOutboundQuoteStatus	; SAPCPQOutboundQuoteComment  				; SAPCPQOutboundQuoteComment
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteStatus	 	    ; quoteId							; SAPCPQOutboundQuoteStatus:quoteId		          		;                                                     	 	; true
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteStatus         	; status                     		; SAPCPQOutboundQuoteStatus:status             	    	;                                               	       	; 
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteStatus         	; action                     		; SAPCPQOutboundQuoteStatus:action            	    	;                                               	       	;
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteStatus         	; orderId                     		; SAPCPQOutboundQuoteStatus:orderId            	    	;                                               	       	; 
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteStatus		    ; cancellationComment				; SAPCPQOutboundQuoteStatus:cancellationComment         ;		CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment	;
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment		    ; quoteId			                ; SAPCPQOutboundQuoteComment:quoteId    		        ;														    ; true
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment		    ; email			                    ; SAPCPQOutboundQuoteComment:email     		            ;														    ; 
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment		    ; userName				            ; SAPCPQOutboundQuoteComment:userName    		        ;														    ;
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment		    ; userCompany				        ; SAPCPQOutboundQuoteComment:userCompany   		        ;														    ;
+; CPQOutboundQuoteStatus:SAPCPQOutboundQuoteComment		    ; comment    				        ; SAPCPQOutboundQuoteComment:comment   		            ;														    ;

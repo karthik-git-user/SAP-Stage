@@ -1,0 +1,16 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; MapJSONTest; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; MapJSONTest	; Catalog       	; Catalog       	; 	;  
+; MapJSONTest	; CatalogVersion	; CatalogVersion	; 	;  
+; MapJSONTest	; Product       	; Product       	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; MapJSONTest:Catalog       	; id            	; Catalog:id            	;                        	; true	;  
+; MapJSONTest:CatalogVersion	; catalog       	; CatalogVersion:catalog	; MapJSONTest:Catalog       	; true	;  
+; MapJSONTest:CatalogVersion	; version       	; CatalogVersion:version	;                        	; true	;  
+; MapJSONTest:Product       	; catalogVersion	; Product:catalogVersion	; MapJSONTest:CatalogVersion	; true	;  
+; MapJSONTest:Product       	; code          	; Product:code          	;                        	; true	;  
+; MapJSONTest:Product       	; description   	; Product:description   	;                        	; 	;  
+; MapJSONTest:Product       	; deliveryTime  	; Product:deliveryTime  	;                        	; 	;  

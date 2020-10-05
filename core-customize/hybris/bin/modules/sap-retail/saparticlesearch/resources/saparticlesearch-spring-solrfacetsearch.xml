@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Abstract value resolver definition for component article property value resolver -->
+	<bean id="saparticlesearchStructuredArticleValueResolver" abstract="true">
+		<property name="commonI18NService" ref="commonI18NService" />
+	</bean>
+
+	<!-- Solr value resolver for component article names -->
+	<bean id="sapStructuredArticleComponentNamesValueResolver" class="com.sap.retail.commercesuite.saparticlesearch.provider.StructuredArticleComponentNamesValueResolver"
+		parent="saparticlesearchStructuredArticleValueResolver">
+	</bean>
+
+	<!-- Solr value resolver for component article key words -->
+	<bean id="sapStructuredArticleComponentKeywordsValueResolver" class="com.sap.retail.commercesuite.saparticlesearch.provider.StructuredArticleComponentKeywordsValueResolver"
+		parent="saparticlesearchStructuredArticleValueResolver">
+	</bean>
+
+
+	<!-- Enhancing commerce full text search by two component article properties -->
+	<bean id="saparticlesearchCommerceSearchTextPopulatorEnhancer" class="com.sap.retail.commercesuite.saparticlesearch.populator.SearchTextPopulatorEnhancer"
+		init-method="enhance">
+		<property name="searchTextPopulator" ref="commerceSearchTextPopulator" />
+		<property name="freeTextQueryBuilders">
+			<list>
+				<bean class="de.hybris.platform.commerceservices.search.solrfacetsearch.querybuilder.impl.DefaultFreeTextQueryBuilder">
+					<property name="propertyName" value="componentNames" />
+					<property name="boost" value="07" />
+				</bean>
+				<bean class="de.hybris.platform.commerceservices.search.solrfacetsearch.querybuilder.impl.DefaultFreeTextQueryBuilder">
+					<property name="propertyName" value="componentKeywords" />
+					<property name="boost" value="05" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>

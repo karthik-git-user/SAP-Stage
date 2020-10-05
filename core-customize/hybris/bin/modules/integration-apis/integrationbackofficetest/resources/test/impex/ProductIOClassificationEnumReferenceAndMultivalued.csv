@@ -1,0 +1,102 @@
+# The following ImpEx provides a full example of
+# 1) Creating classifications
+# 2) Creating Integration Object with classification attributes
+# ***************************************************************************************
+#     Set up the classifications
+# ***************************************************************************************
+$SYSTEM=Electronics
+$VERSION=Staged
+$SYSTEM_VERSION=$SYSTEM:$VERSION
+$catalogVersionHeader=catalogVersion(catalog(id), version)
+$systemVersionHeader=systemVersion(catalog(id), version)
+INSERT_UPDATE ClassificationSystem; id[unique = true]
+                                  ; $SYSTEM
+                                  ; Alternative
+INSERT_UPDATE ClassificationSystemVersion; catalog(id)[unique = true]; version[unique = true]
+                                         ; $SYSTEM                   ; $VERSION
+                                         ; Alternative               ; Products
+INSERT_UPDATE ClassificationClass; code[unique = true]; $catalogVersionHeader[unique = true]
+                                 ; dimensions         ; $SYSTEM_VERSION
+                                 ; QA                 ; $SYSTEM_VERSION
+                                 ; alternativeProduct ; Alternative:Products
+
+
+INSERT_UPDATE ClassificationAttributeUnit; $systemVersionHeader[unique = true]; code[unique = true]; symbol; unitType
+                                         ; $SYSTEM_VERSION                    ; centimeters        ; cm    ; measurement
+INSERT_UPDATE ClassificationAttribute; code[unique = true]; $systemVersionHeader[unique = true]
+                                     ;depth               ; $SYSTEM_VERSION
+                                     ;bool               ; $SYSTEM_VERSION
+                                     ;valueList           ; $SYSTEM_VERSION
+                                     ;ReferenceTypeM      ; $SYSTEM_VERSION
+                                     ;tester              ; $SYSTEM_VERSION
+                                     ;dateM              ; $SYSTEM_VERSION
+                                     ;valueListM         ; $SYSTEM_VERSION
+                                     ;stringType          ; $SYSTEM_VERSION
+                                     ;numberM             ; $SYSTEM_VERSION
+                                     ;stringTypeM         ; $SYSTEM_VERSION
+                                     ;date                ; $SYSTEM_VERSION
+                                     ;classificationName  ; Alternative:Products
+                                     ;boolM              ; $SYSTEM_VERSION
+
+$class=classificationClass($catalogVersionHeader, code)
+$attribute=classificationAttribute($systemVersionHeader, code)
+INSERT_UPDATE ClassAttributeAssignment; $class[unique = true]     ; $attribute[unique = true]; unit($systemVersionHeader, code); attributeType(code);multiValued ; referenceType(code)
+
+                                         ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:dateM    ;      ; date;true
+                                         ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:stringTypeM   ;      ; string;true
+                                         ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:numberM    ;      ; number;true
+                                         ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:boolM    ;      ; boolean;true
+                                         ; $SYSTEM_VERSION:QA; $SYSTEM_VERSION:tester    ;      ; reference ; false ; Employee
+                                         ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:valueListM    ;      ; enum;true
+                                         ; $SYSTEM_VERSION:QA; $SYSTEM_VERSION:ReferenceTypeM    ;      ; reference;true;Employee
+
+                                          ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:depth    ; $SYSTEM_VERSION:centimeters     ; number;false ;
+                                          ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:bool    ;      ; boolean; false ;
+                                          ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:valueList    ;      ; enum; false ;
+                                          ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:stringType    ;      ; string; false ;
+                                          ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:date    ;      ; date; false;
+                                          ; Alternative:Products:alternativeProduct;Alternative:Products:classificationName; ;string; false ;
+
+
+
+$IO=ProductIOClassificationEnumReferenceAndMultivalued
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; $IO; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; $IO ; Catalog         ; Catalog         ;   ;
+; $IO ; Product         ; Product         ; true  ;
+; $IO ; Employee        ; Employee        ;   ;
+; $IO ; CatalogVersion  ; CatalogVersion  ;   ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; $IO:Catalog         ; id              ; Catalog:id              ;                                   ; true  ;
+; $IO:Product         ; code            ; Product:code            ;                                   ; true  ;
+; $IO:Product         ; catalogVersion  ; Product:catalogVersion  ; $IO:CatalogVersion  ; true  ;
+; $IO:Employee        ; uid             ; Employee:uid            ;                                   ; true  ;
+; $IO:CatalogVersion  ; catalog         ; CatalogVersion:catalog  ; $IO:Catalog         ; true  ;
+; $IO:CatalogVersion  ; version         ; CatalogVersion:version  ;                                   ; true  ;
+
+
+$SYSTEM_VERSION=Electronics:Staged
+$item=integrationObjectItem(integrationObject(code), code)
+$systemVersionHeader=systemVersion(catalog(id), version)
+$classificationClassHeader=classificationClass(catalogVersion(catalog(id), version), code)
+$classificationAttributeHeader=classificationAttribute($systemVersionHeader, code)
+$classificationAssignment=classAttributeAssignment($classificationClassHeader, $classificationAttributeHeader)
+INSERT_UPDATE IntegrationObjectItemClassificationAttribute; $item[unique = true]; attributeName[unique = true]; $classificationAssignment; returnIntegrationObjectItem(integrationObject(code), code)
+; $IO:Product         ; bool                ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:bool
+; $IO:Product         ; valueList           ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:valueList
+; $IO:Product         ; ReferenceTypeM      ; $SYSTEM_VERSION:QA:$SYSTEM_VERSION:ReferenceTypeM;$IO:Employee
+; $IO:Product         ; depth               ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:depth
+; $IO:Product         ; tester             ; $SYSTEM_VERSION:QA:$SYSTEM_VERSION:tester; $IO:Employee
+; $IO:Product         ; dateM               ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:dateM
+; $IO:Product         ; valueListM          ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:valueListM
+; $IO:Product         ; stringType          ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:stringType
+; $IO:Product         ; numberM             ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:numberM
+; $IO:Product         ; stringTypeM         ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:stringTypeM
+; $IO:Product         ; date                ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:date
+; $IO:Product         ; boolM               ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:boolM
+; $IO:Product         ; classificationName  ; Alternative:Products:alternativeProduct:Alternative:Products:classificationName
+
+

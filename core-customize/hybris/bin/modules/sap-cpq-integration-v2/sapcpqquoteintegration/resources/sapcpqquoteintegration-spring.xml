@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+		   http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	
+	<alias name="defaultScpiCpqQuoteProcessDefinitionResource" alias="scpiCpqQuoteProcessDefinitionResource" />
+	<bean id="defaultScpiCpqQuoteProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/sapcpqquoteintegration/process/sap-cpq-quote-buyer-submit-process.xml" />
+	</bean>
+	
+    
+    <alias name="defaultScpiCpqQuoteStatusProcessDefinitionResource" alias="scpiCpqQuoteStatusProcessDefinitionResource" />
+	<bean id="defaultScpiCpqQuoteStatusProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/sapcpqquoteintegration/process/sap-cpq-quote-completed-process.xml" />
+	</bean>
+	
+	<alias name="defaultScpiCpqQuoteEmailProcessDefinitionResource" alias="scpiCpqQuoteEmailProcessDefinitionResource" />
+	<bean id="defaultScpiCpqQuoteEmailProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/sapcpqquoteintegration/process/sap-cpq-cpi-quote-email-notification-process.xml" />
+	</bean>
+	
+	
+	<!-- Inbound Quote Helpers List-->
+    <alias alias="sapCpqInboundQuoteHelpers" name="sapCpqInboundQuoteHelpers"/>
+    <util:list id="sapCpqInboundQuoteHelpers" value-type="com.sap.hybris.sapcpqquoteintegration.inbound.helper.CpqInboundQuoteHelper"/>
+	    
+	<!-- Inbound Quote Helper -->
+    <alias name="defaultCpqInboundQuoteHelper" alias="cpqInboundQuoteHelper" />
+	<bean id="defaultCpqInboundQuoteHelper" class="com.sap.hybris.sapcpqquoteintegration.inbound.helper.impl.DefaultCpqInboundQuoteHelper">
+		<property name="quoteService" ref="quoteService" />
+		<property name="userService" ref="userService" />
+		<property name="keyGenerator" ref="orderCodeGenerator"/>
+		<property name="commentService" ref="commentService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="catalogService" ref="catalogService" />
+		<property name="modelService" ref="modelService" />
+		<property name="mediaService" ref="mediaService" />
+		<property name="productService" ref="productService" />
+		<property name="sapCpqQuoteService" ref="sapCpqQuoteService" />
+	</bean>
+	
+
+	<alias alias="quoteCpqConversionService" name="defaultCpqQuoteConversionService"/>
+	<bean id="defaultCpqQuoteConversionService" class="com.sap.hybris.sapcpqquoteintegration.outbound.service.impl.DefaultSapCpqCpiOutboundQuoteConversionService">
+	<property name="quoteService" ref="quoteService"/>
+	<property name="b2bUnitService" ref="b2bUnitService" />
+	<property name="configurationService" ref="configurationService" />
+	</bean>
+	
+	
+	
+	
+	<!-- Add Inbound Quote Helper -->
+    <bean id="sapCpqInboundQuoteHelper" depends-on="sapCpqInboundQuoteHelpers" parent="listMergeDirective">
+        <property name="add" ref="cpqInboundQuoteHelper" />
+    </bean>
+	
+	
+	<bean id="sapCpqInboundQuotePersistenceHook"
+          class="com.sap.hybris.sapcpqquoteintegration.inbound.SapCpqCpiInboundQuotePersistenceHook">
+        <property name="sapCpqInboundQuoteHelpers" ref="sapCpqInboundQuoteHelpers"/>
+    </bean>
+
+    <alias alias="sapCpqQuoteService" name="defaultSapCpqQuoteService"/>
+	<bean id="defaultSapCpqQuoteService" class="com.sap.hybris.sapcpqquoteintegration.service.impl.DefaultSapCpqQuoteService">
+	        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+			
+	<alias name="defaultCPQOutboundQuoteService" alias="commerceQuoteService"/>
+	<bean id="defaultCPQOutboundQuoteService" class="com.sap.hybris.sapcpqquoteintegration.outbound.service.impl.DefaultSapCpqCpiQuoteService" parent="defaultCommerceQuoteService"/>
+	
+	<alias alias="sapCpqCpiQuoteBuyerSubmitEventListener" name="sapCpqCpiQuoteBuyerSubmitEventListener" />
+	<bean id="sapCpqCpiQuoteBuyerSubmitEventListener" class="com.sap.hybris.sapcpqquoteintegration.events.SapCpqCpiQuoteBuyerSubmitEventListener" parent="abstractEventListener">
+	<property name="modelService" ref="modelService" />
+	<property name="businessProcessService" ref="businessProcessService" />
+    </bean>
+    
+    <alias alias="defaultSapCpqCpiOutboundQuoteService" name="defaultSapCpqCpiOutboundQuoteService" />
+	<bean id="defaultSapCpqCpiOutboundQuoteService" class="com.sap.hybris.sapcpqquoteintegration.outbound.service.impl.DefaultSapCpqCpiOutboundQuoteService">
+	<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+	</bean>
+ 
+    <alias alias="sapCpqCpiSendQuoteAction" name="sapCpqCpiSendQuoteAction" />
+	<bean id="sapCpqCpiSendQuoteAction" class="com.sap.hybris.sapcpqquoteintegration.outbound.actions.SapCpqCpiSendQuoteAction">
+	<property name="quoteService" ref="quoteService"/>
+   	<property name="modelService" ref="modelService"/>
+   	<property name="quoteConversionService" ref="quoteCpqConversionService"/>
+   	<property name="sapCpqCpiOutboundQuoteService" ref="defaultSapCpqCpiOutboundQuoteService" />
+    </bean> 
+    
+      
+      
+   <!-- Check quote status -->
+   <alias alias="sapCpqCheckQuoteStateAction" name="sapCpqCheckQuoteStateAction"/>
+   <bean id="sapCpqCheckQuoteStateAction" class="com.sap.hybris.sapcpqquoteintegration.outbound.actions.SapCpqCpiCheckQuoteStateAction" parent="abstractAction">
+   		<property name="quoteService" ref="quoteService"/>
+   </bean>
+   
+   
+   <alias alias="sapCpqSendQuoteStatusAction" name="sapCpqSendQuoteStatusAction"/>
+   <bean id="sapCpqSendQuoteStatusAction" class="com.sap.hybris.sapcpqquoteintegration.outbound.actions.SapCpqCpiSendQuoteStatusAction" parent="abstractAction">
+   		<property name="quoteService" ref="quoteService"/>
+   		<property name="quoteConversionService" ref="quoteCpqConversionService" />
+   		<property name="sapCpqOutboundQuoteService" ref="defaultSapCpqCpiOutboundQuoteService"/>
+   </bean>
+   
+   	<alias alias="SapCpqCpiQuoteCancelEventListener" name="SapCpqCpiQuoteCancelEventListener"/>
+	<bean id="SapCpqCpiQuoteCancelEventListener" class="com.sap.hybris.sapcpqquoteintegration.events.SapCpqCpiQuoteCancelEventListener"
+		parent="abstractEventListener">
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+
+	<alias name="defaultSapCpqQuoteCartValidationStrategy" alias="quoteCartValidationStrategy" />
+	<bean id="defaultSapCpqQuoteCartValidationStrategy"
+		  class="com.sap.hybris.sapcpqquoteintegration.strategy.impl.DefaultSapCpqQuoteCartValidationStrategy" parent="defaultQuoteCartValidationStrategy">
+	</bean>
+	
+	<alias name="defaultSapCpiCpqQuoteOrderMethodHook" alias="commercePlaceQuoteOrderMethodHook"/>
+    <bean id="defaultSapCpiCpqQuoteOrderMethodHook" class="com.sap.hybris.sapcpqquoteintegration.outbound.hook.SapCpiCpqQuoteOrderMethodHook" parent="defaultCommercePlaceQuoteOrderMethodHook">
+	</bean>
+	
+	<alias alias="quoteCpqBuyerOrderPlacedEventListener" name="defaultSapCpqQuoteOrderPlacedEventListener"/>
+	<bean id="defaultSapCpqQuoteOrderPlacedEventListener"	class="com.sap.hybris.sapcpqquoteintegration.events.SapCpqCpiQuoteOrderPlacedEventListener"
+		parent="abstractEventListener">
+		<property name="commerceQuoteService" ref="commerceQuoteService" />
+		<property name="modelService" ref="modelService" />
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	
+	<alias name="defaultCpqInboundQuoteOrderHelper" alias="sapCpqDataHubInboundOrderHelper" />
+	<bean id="defaultCpqInboundQuoteOrderHelper" class="com.sap.hybris.sapcpqquoteintegration.inbound.helper.impl.DefaultCpqInboundQuoteOrderHelper"
+		parent="sapOmsDataHubInboundOrderHelper">
+	</bean>
+
+	<bean id="sapCpiCpqOmsOrderConfirmationPersistenceHook" class="com.sap.hybris.sapcpqquoteintegration.inbound.SapCpiCpqOmsOrderConfirmationPersistenceHook">
+	<property name="sapDataHubInboundOrderHelper" ref="sapCpqDataHubInboundOrderHelper"/>
+	</bean>
+     
+
+	<alias name="sapCpqQuoteCartCalculationMethodHook" alias="commerceQuoteCartCalculationMethodHook" />
+	<bean id="sapCpqQuoteCartCalculationMethodHook" class="com.sap.hybris.sapcpqquoteintegration.outbound.hook.SapCpqQuoteCartCalculationMethodHook" parent="defaultCommerceQuoteCartCalculationMethodHook" />
+     
+    <alias name="sapOmsCpqQuoteSalesConditionsContributor" alias="sapSalesConditionsContributor" />
+    <bean id="sapOmsCpqQuoteSalesConditionsContributor"
+        class="com.sap.hybris.sapcpqquoteintegration.outbound.contributor.DefaultSapCpqOmsQuoteSalesConditionsContributor"
+        parent="sapOmsSalesConditionsContributor" />
+        
+        <!-- Vendor Quote Email -->
+    <bean id="generateSapCpiCpqQuoteEmail" parent="abstractGenerateEmailAction">
+        <property name="frontendTemplateName" value="QuoteVendorSubmissionEmailTemplate"/>
+    </bean>
+    
+	<!-- Quote Helpers List-->
+    <alias alias="sapCpqQuoteHelpers" name="sapCpqQuoteHelpers"/>
+    <util:list id="sapCpqQuoteHelpers" value-type="com.sap.hybris.sapcpqquoteintegration.inbound.helper.CpqQuoteHelper"/>
+	    
+	    
+	<!-- Quote Helper -->
+    <alias name="defaultCpqQuoteHelper" alias="cpqQuoteHelper" />
+	<bean id="defaultCpqQuoteHelper" class="com.sap.hybris.sapcpqquoteintegration.inbound.helper.impl.DefaultCpqEmailNotificationQuoteHelper">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="emailService" ref="emailService"/>
+		<property name="mediaService" ref="mediaService" />
+		<property name="sapGlobalConfigurationService" ref="sapCoreDefaultSAPGlobalConfigurationService"/>
+	</bean>
+	
+	<!-- Add Quote Helper -->
+    <bean id="sapCpqQuoteHelper" depends-on="sapCpqQuoteHelpers" parent="listMergeDirective">
+        <property name="add" ref="cpqQuoteHelper" />
+    </bean>
+	
+	<bean id="sapCpiCpqQuotePostPersistenceHook"
+          class="com.sap.hybris.sapcpqquoteintegration.inbound.SapCpiCpqQuotePostPersistenceHook">
+        <property name="sapCpqQuoteHelpers" ref="sapCpqQuoteHelpers"/>
+    </bean>
+    
+    
+    
+    <alias name="defaultSapCpqQuotePopulator" alias="defaultSapCpqQuotePopulator"/>
+    <bean id="defaultSapCpqQuotePopulator"
+          class="com.sap.hybris.sapcpqquoteintegration.populators.SapCpqQuotePopulator">
+    </bean>
+
+    <!-- append discount specific order entry populator to the default orderEntryConverter -->
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="quoteConverter"/>
+        <property name="add" ref="defaultSapCpqQuotePopulator"/>
+    </bean>
+    
+    <bean id="restCpqTemplate" class="org.springframework.web.client.RestTemplate"/>
+    
+    <alias name="sapCpqQuoteApiClientService" alias="sapCpqQuoteApiClientService" />
+	<bean name="sapCpqQuoteApiClientService" class="com.sap.hybris.sapcpqquoteintegration.clients.impl.DefaultSapCpqQuoteApiClientService">
+		<property name="quoteService" ref="quoteService"/>
+		<property name="restTemplate" ref="restCpqTemplate"/>
+		<property name="destinationService" ref="destinationService"/>
+		<property name="integrationRestTemplateFactory" ref="integrationRestTemplateFactory"/>
+	</bean>
+	
+	<alias alias="emailGenerationService" name="defaultCpqEmailGenerationService" />
+	<bean id="defaultCpqEmailGenerationService"
+		class="com.sap.hybris.sapcpqquoteintegration.outbound.service.impl.DefaultCpqEmailGenerationService"
+		parent="defaultEmailGenerationService">
+		<property name="modelService" ref="modelService" />
+		<property name="mediaService" ref="mediaService"/>
+		<property name="sapCpqQuoteApiClientService" ref="sapCpqQuoteApiClientService" />
+		<property name="catalogService" ref="catalogService" />
+		<property name="guidKeyGenerator" ref="guidKeyGenerator" />
+	</bean>
+	
+</beans>

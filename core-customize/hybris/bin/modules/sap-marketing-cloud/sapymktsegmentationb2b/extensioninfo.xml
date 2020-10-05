@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Sapymktsegmentationb2b" managername="Sapymktsegmentationb2bManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapymktsegmentationb2b" usemaven="false">
+        
+        <!--       <requires-extension name="b2bcommerce"/> -->
+        
+        <!-- Workaround for missing translation in b2bcommerce of AbstractOrder2B2BComment.b2bcomments -->
+              
+        <requires-extension name="b2bapprovalprocess"/>
+              
+        <requires-extension name="sapymktsegmentation"/>
+              
+        <coremodule generated="true" manager="com.hybris.ymkt.segmentation.jalo.Sapymktsegmentationb2bManager" packageroot="com.hybris.ymkt.segmentation"/>
+           
+    </extension>
+    
+</extensioninfo>

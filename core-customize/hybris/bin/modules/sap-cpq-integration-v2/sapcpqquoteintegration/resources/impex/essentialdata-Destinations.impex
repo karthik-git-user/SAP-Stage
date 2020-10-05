@@ -1,0 +1,42 @@
+$quoteStatusUrl=https://tester.hana.ondemand.com/gw/odata/SAP/QUOTEOUTBOUNDSTATUS
+$quoteStatusVersion=v=1
+$quoteReplicationUrl=https://tester.hana.ondemand.com/gw/odata/SAP/QUOTECPQOUTBOUND
+$quoteReplicationVersion=v=1
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;password;username
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;SAPCPQQuoteStatusDestination
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCPQOutboundQuoteStatuses;SAPCPQOutboundQuoteStatuses;;"$quoteStatusUrl;$quoteStatusVersion";unknown
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$quoteStatusUrl;$quoteStatusVersion";scpiCredentials;SAPCPQQuoteStatusDestination;SAPCPQOutboundQuoteStatuses:unknown;SAPCPQQuoteStatusDestination;"$quoteStatusUrl;$quoteStatusVersion/SAPCPQOutboundQuoteStatuses"
+
+
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;scpiCPQQuoteReplication
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCPQOutboundQuotes;SAPCPQOutboundQuotes;;"$quoteReplicationUrl;$quoteReplicationVersion";unknown
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$quoteReplicationUrl;$quoteReplicationVersion";scpiCredentials;scpiCPQQuoteReplication;SAPCPQOutboundQuotes:unknown;scpiCPQQuoteReplication;"$quoteReplicationUrl;$quoteReplicationVersion/SAPCPQOutboundQuotes"
+
+
+
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;salesRepCredentials;password;username
+
+INSERT_UPDATE DestinationTarget ; id[unique=true]
+                                ; CpqDocumentDestination
+
+INSERT_UPDATE Endpoint ; id[unique=true]              ; version[unique=true] ; specUrl ; name
+                       ; sapCpqProposalDocuments ; v1                   ; "empy"  ; "SAP Proposal Documents"
+
+INSERT_UPDATE ConsumedDestination ; id[unique=true]     ; url                           ; endpoint(id)                 ; destinationTarget(id) ; credential(id)
+                                  ; downloadProposalDocumentId ; https://sample.downloadProposal.url ; sapCpqProposalDocuments ; CpqDocumentDestination       ; salesRepCredentials

@@ -1,0 +1,31 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Powertools site emails
+#
+$contentCatalog=powertoolsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+# Import config properties into impex macros for modulegen
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$emailResource=jar:com.sap.hybris.constants.SapcpqquoteintegrationaddonConstants&/sapcpqquoteintegrationaddon/import/contentCatalogs/powertoolsContentCatalog/emails
+
+# Language
+$lang=en
+
+# CMS components and Email velocity templates
+UPDATE RendererTemplate;code[unique=true];description[lang=$lang];templateScript[lang=$lang,translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+ ;powertools_Email_Quote_Vendor_Submission_Body;"Quote Vendor Submission Email Body";$emailResource/email-quoteVendorSubmissionBody.vm
+ ;powertools_Email_Quote_Vendor_Submission_Subject;"Quote Vendor Submission Email Subject";$emailResource/email-quoteVendorSubmissionSubject.vm
+
+# Email Pages
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];fromEmail[lang=$lang];fromName[lang=$lang]
+ ;;QuoteVendorSubmissionEmail;"customerservices@hybris.com";"Customer Services Team"

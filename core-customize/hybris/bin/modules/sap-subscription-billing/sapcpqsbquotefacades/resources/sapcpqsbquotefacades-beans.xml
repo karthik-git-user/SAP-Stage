@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean
+		class="de.hybris.platform.sapcpqsbintegration.data.CpqPricingParameterData">
+		<property name="code" type="String" />
+		<property name="itemId" type="String" />
+		<property name="value" type="String" />
+	</bean>
+
+
+
+	<bean
+		class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+		<property name="effectiveDate" type="java.lang.String" />
+		<property name="contractStartDate" type="java.lang.String" />
+		<property name="contractEndDate" type="java.lang.String" />
+		<property name="contractLength" type="java.lang.String" />
+		<property name="minimumContractEndDate" type="java.lang.String" />
+		<property name="minimumContractLength"
+			type="java.lang.String" />
+		<property name="subscriptionPricePlanId"
+			type="java.lang.String" />
+		<property name="cpqPricingParameters"
+			type="de.hybris.platform.sapcpqsbintegration.data.CpqPricingParameterData" />
+		<property name="initialSubscriptionPricePlan"
+			type="de.hybris.platform.subscriptionfacades.data.SubscriptionPricePlanData" />
+		<property name="discountSubscriptionPricePlan"
+			type="de.hybris.platform.subscriptionfacades.data.SubscriptionPricePlanData" />
+		
+	</bean>
+
+
+<bean
+		class="de.hybris.platform.sapcpqsbintegration.data.CpqSubscriptionDetailsData">
+		<property name="effectiveDate" type="java.lang.String" />
+		<property name="ratePlanId" type="java.lang.String" />		
+		<property name="contractStartDate" type="java.lang.String" />
+		<property name="contractEndDate" type="java.lang.String" />
+		<property name="minimumContractEndDate" type="java.lang.String" />
+		<property name="contractLength" type="java.lang.String" />
+		<property name="minimumContractLength" type="java.lang.String" />
+		<property name="subscriptionPricePlanId" type="java.lang.String" />
+		<property name="cpqPricingParameters"
+			type="de.hybris.platform.sapcpqsbintegration.data.CpqPricingParameterData" />
+	</bean>
+</beans>

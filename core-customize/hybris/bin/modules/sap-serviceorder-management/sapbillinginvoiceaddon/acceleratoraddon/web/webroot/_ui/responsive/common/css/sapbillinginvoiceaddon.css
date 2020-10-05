@@ -1,0 +1,12 @@
+.marging-bottom20px {
+	margin-bottom: 20px;
+}
+
+.well.well-tertiary.billing-invoice .item-value {
+	font-size: 14px;
+	text-decoration: underline;
+}
+
+.well.well-tertiary.billing-invoice .responsive-table-item {
+    background-color: transparent !important;
+}

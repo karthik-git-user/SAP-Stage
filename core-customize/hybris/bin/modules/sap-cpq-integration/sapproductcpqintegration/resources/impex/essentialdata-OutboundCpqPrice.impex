@@ -1,0 +1,31 @@
+INSERT_UPDATE IntegrationObject; code[unique = true];
+; SAPCpqOutboundPrice
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; SAPCpqOutboundPrice	; CatalogVersion  	; CatalogVersion 
+; SAPCpqOutboundPrice	; SAPConfiguration	; SAPConfiguration 
+; SAPCpqOutboundPrice	; Product         	; Product 
+; SAPCpqOutboundPrice	; PriceRow        	; PriceRow 
+; SAPCpqOutboundPrice	; Currency        	; Currency 
+; SAPCpqOutboundPrice	; BaseStore       	; BaseStore 
+; SAPCpqOutboundPrice	; Catalog         	; Catalog 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false] 
+; SAPCpqOutboundPrice:CatalogVersion  	; catalog                                	; CatalogVersion:catalog                                  	; SAPCpqOutboundPrice:Catalog         	; true 
+; SAPCpqOutboundPrice:CatalogVersion  	; version                                	; CatalogVersion:version                                  	;                                     	; true 
+; SAPCpqOutboundPrice:SAPConfiguration	; saporderexchange_itemPriceConditionType	; SAPConfiguration:saporderexchange_itemPriceConditionType	;                                     	;  
+; SAPCpqOutboundPrice:SAPConfiguration	; core_name                              	; SAPConfiguration:core_name                              	;                                     	; true 
+; SAPCpqOutboundPrice:SAPConfiguration	; sapcommon_distributionChannel          	; SAPConfiguration:sapcommon_distributionChannel          	;                                     	;  
+; SAPCpqOutboundPrice:SAPConfiguration	; sapcommon_salesOrganization            	; SAPConfiguration:sapcommon_salesOrganization            	;                                     	;  
+; SAPCpqOutboundPrice:Product         	; catalogVersion                         	; Product:catalogVersion                                  	; SAPCpqOutboundPrice:CatalogVersion  	; true 
+; SAPCpqOutboundPrice:Product         	; code                                   	; Product:code                                            	;                                     	; true 
+; SAPCpqOutboundPrice:PriceRow        	; price                                  	; PriceRow:price                                          	;                                     	;  
+; SAPCpqOutboundPrice:PriceRow        	; currency                               	; PriceRow:currency                                       	; SAPCpqOutboundPrice:Currency        	; true 
+; SAPCpqOutboundPrice:PriceRow        	; catalogVersion                         	; PriceRow:catalogVersion                                 	; SAPCpqOutboundPrice:CatalogVersion  	;  
+; SAPCpqOutboundPrice:PriceRow        	; product                                	; PriceRow:product                                        	; SAPCpqOutboundPrice:Product         	;  
+; SAPCpqOutboundPrice:Currency        	; isocode                                	; Currency:isocode                                        	;                                     	; true 
+; SAPCpqOutboundPrice:BaseStore       	; SAPConfiguration                       	; BaseStore:SAPConfiguration                              	; SAPCpqOutboundPrice:SAPConfiguration	;  
+; SAPCpqOutboundPrice:BaseStore       	; defaultCurrency                        	; BaseStore:defaultCurrency                               	; SAPCpqOutboundPrice:Currency        	;  
+; SAPCpqOutboundPrice:BaseStore       	; uid                                    	; BaseStore:uid                                           	;                                     	; true 
+; SAPCpqOutboundPrice:Catalog         	; baseStores                             	; Catalog:baseStores                                      	; SAPCpqOutboundPrice:BaseStore       	;  
+; SAPCpqOutboundPrice:Catalog         	; id                                     	; Catalog:id                                              	;                                     	; true 

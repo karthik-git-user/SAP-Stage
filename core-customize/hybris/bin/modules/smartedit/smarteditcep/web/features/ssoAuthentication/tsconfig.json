@@ -1,0 +1,51 @@
+{
+    "include": [
+        "**/*.ts",
+        "./src/*.ts"
+    ],
+    "compilerOptions": {
+        "target": "es5",
+        "module": "es2015",
+        "moduleResolution": "node",
+        "lib": [
+            "dom",
+            "es5",
+            "scripthost",
+            "es2015",
+            "es2015.iterable"
+        ],
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "allowJs": false,
+        "checkJs": false,
+        "noUnusedParameters": false,
+        "strictNullChecks": false,
+        "forceConsistentCasingInFileNames": true,
+        "noEmitOnError": true,
+        "baseUrl": "../../../",
+        "typeRoots": [
+            "node_modules/@types"
+        ],
+        "traceResolution": false,
+        "listEmittedFiles": false,
+        "skipLibCheck": true,
+        "pretty": true,
+        "declaration": false,
+        "experimentalDecorators": true,
+        "paths": {
+            "smarteditcepcontainer": [
+                "web/features/smarteditcepContainer"
+            ],
+            "smarteditcepcontainer/services/authentication/*": [
+                "web/features/smarteditcepcontainer/services/authentication/*"
+            ],
+            "smarteditcep": [
+                "web/features/smarteditcep"
+            ],
+            "smarteditcommons": [
+                "smartedit-build/lib/smarteditcommons/src"
+            ]
+        }
+    }
+}

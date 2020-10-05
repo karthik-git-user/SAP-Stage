@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<!-- ATTENTION: This is just an example file. You have to edit it according
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		<collectiontype code="ScheduleLineCollection"
+			elementtype="ScheduleLine" autocreate="true" generate="false" type="list" />
+	</collectiontypes>
+
+	<enumtypes>
+
+		<enumtype code="sapoaa_mode" generate="true"
+			autocreate="true">
+			<description>
+				This enumeration defines the mode which will be used for the Article availability and sourcing
+			</description>
+			<value code="oaaProfile" />
+			<value code="salesChannel" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation autocreate="true"
+			code="SapCarHttpDestinationForGlobalConfiguration" generate="true"
+			localized="false">
+			<sourceElement cardinality="many"
+				qualifier="sapoaa_globalConfigurations" type="SAPGlobalConfiguration" />
+			<targetElement cardinality="one"
+				qualifier="sapoaa_carHttpDestination" type="SAPHTTPDestination" />
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="ScheduleLine" jaloclass="com.sap.retail.oaa.model.jalo.ScheduleLine"
+			extends="GenericItem" autocreate="true" generate="true">
+			<deployment table="ScheduleLines" typecode="28001" />
+			<attributes>
+				<attribute qualifier="confirmedQuantity" type="java.lang.Double">
+					<description>Confirmed Quantity</description>
+					<modifiers initial="true" read="true" write="true"
+						search="true" />
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="confirmedDate" type="java.util.Date">
+					<description>Date</description>
+					<modifiers initial="true" read="true" write="true"
+						search="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SAPConfiguration" autocreate="false"
+			generate="false">
+			<attributes>
+				<attribute qualifier="sapoaa_oaaProfile" type="java.lang.String"
+					generate="true">
+					<description>OAA Profile</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapoaa_salesChannel" type="java.lang.String"
+					generate="true">
+					<description>Sales Channel</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapoaa_consumerId" type="java.lang.String"
+					generate="true">
+					<description>OAA Consumer ID</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapoaa_vendorItemCategory" type="java.lang.String"
+					generate="true">
+					<description>Item Category</description>
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="sapoaa_mode" type="sapoaa_mode"
+					generate="true" >
+					<modifiers optional="false"/>
+					<description>OAA Mode</description>
+					<persistence type="property"  />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SAPGlobalConfiguration" autocreate="false"
+			generate="false">
+			<attributes>
+				<attribute qualifier="sapoaa_carClient" type="java.lang.String"
+					generate="true">
+					<description>SAP CAR Client</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="StockLevel" autocreate="false"
+			generate="false">
+			<attributes>
+				<attribute qualifier="sapoaa_roughStockIndicator" type="java.lang.String"
+					generate="true">
+					<description>Rough Stock Indicator</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapoaa_roughStockIndicator_availabilityDate" type="java.util.Date"
+					generate="true">
+					<description>Rough Stock Indicator - availability date</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PointOfService" autocreate="false"
+			generate="false">
+			<attributes>
+				<attribute qualifier="sapoaa_cacShippingPoint" type="java.lang.String"
+					generate="true">
+					<description>Shipping Point for Click and Collect</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+
+		<typegroup name="Order">
+			<itemtype code="AbstractOrder" autocreate="false"
+				generate="false">
+				<attributes>
+					<attribute qualifier="sapBackendReservation" type="java.lang.Boolean">
+						<description>Indicates if a reservation is in the SAP Backend System</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+					
+					<attribute qualifier="sapCosSystemUsed" type="java.lang.Boolean">
+						<description>Indicates if SAP COS System is used</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+					
+					<attribute qualifier="isCosOrderAcknowledgedByBackend" type="java.lang.Boolean">
+						<description>Indicates if COS order is Acknowledged By Backend</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+						<defaultvalue>Boolean.FALSE</defaultvalue>
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+		<typegroup name="OrderEntry">
+			<itemtype code="AbstractOrderEntry" autocreate="false"
+				generate="false">
+				<attributes>
+					<attribute qualifier="scheduleLines" type="ScheduleLineCollection">
+						<description>Schedule Lines</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute qualifier="sapSource" type="PointOfService">
+						<description>Result from Sourcing determination which will be sent to as site SAP ERP</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute qualifier="sapVendor" type="java.lang.String">
+						<description>Result from Sourcing determination which will be sent as vendor to SAP ERP</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+
+					<attribute qualifier="sapBackendReservation" type="java.lang.Boolean">
+						<description>Indicates if a reservation is in the SAP Backend System</description>
+						<modifiers initial="true" read="true" write="true"
+							search="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		</typegroup>
+
+	</itemtypes>
+</items>

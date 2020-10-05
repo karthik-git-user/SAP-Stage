@@ -1,0 +1,40 @@
+$productUrl=https://tester.hana.ondemand.com/gw/odata/SAP/PRODUCTOUTBOUND
+$productVersion=v=1
+$priceUrl=https://tester.hana.ondemand.com/gw/odata/SAP/PRICEOUTBOUND
+$priceVersion=v=1
+$productMediaUrl=https://cpq.com/api/v1/admin/files/productImage
+$productMediaVersion=v=1
+
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;password;username
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpqCredentials;password;username#DomainName
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;scpiProductsCpqDestination
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;scpiProductsMediaCpqDestination
+
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCpiOutboundProductCpq;SAPCpiOutboundProductCpq;;"$productUrl;$productVersion/";unknown
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCpiOutboundPriceCpq;SAPCpiOutboundPriceCpq;;"$priceUrl;$priceVersion/";unknown
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCpiOutboundProductMediaCpq;SAPCpiOutboundProductMediaCpq;;"$productMediaUrl/";unknown
+
+
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$productUrl;$productVersion/" ;scpiCredentials;scpiProductsCpqDestination;SAPCpiOutboundProductCpq:unknown;scpiProductCpqDestination;"$productUrl;$productVersion/Products"
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$priceUrl;$priceVersion/" ;scpiCredentials;scpiProductsCpqDestination;SAPCpiOutboundPriceCpq:unknown;scpiPriceCpqDestination;"$priceUrl;$priceVersion/PriceRows"
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;;scpqCredentials;scpiProductsMediaCpqDestination;SAPCpiOutboundProductMediaCpq:unknown;scpiProductMediaCpqDestination;"$productMediaUrl"

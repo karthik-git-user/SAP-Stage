@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><project name="smarteditcep_buildcallbacks">
+        
+    <patternset id="extension.smarteditcep.binary.filter">
+                
+        <patternset refid="extension.binary.filter"/>
+                
+        <exclude name="build/"/>
+                
+        <exclude name="smartedit-build/"/>
+                
+        <exclude name="smartedit-custom-build/generated/"/>
+                
+        <exclude name="node_modules/"/>
+                
+        <exclude name="jsTarget/"/>
+                
+        <exclude name="package.json"/>
+
+        <exclude name="resources/smarteditcep/test-metadata/"/>
+            
+    </patternset>
+        
+    <patternset id="extension.smarteditcep.source.filter">
+                
+        <patternset refid="extension.source.filter"/>
+                
+        <exclude name="build/"/>
+                
+        <exclude name="smartedit-build/"/>
+                
+        <exclude name="smartedit-custom-build/generated/"/>
+                
+        <exclude name="node_modules/"/>
+                
+        <exclude name="jsTarget/"/>
+                
+        <exclude name="package.json"/>
+
+        <exclude name="resources/smarteditcep/test-metadata/"/>
+            
+    </patternset>
+        
+    <patternset id="extension.smarteditcep.production.filter">
+                
+        <patternset refid="extension.production.filter"/>
+                
+        <exclude name="build/"/>
+                
+        <exclude name="smartedit-build/"/>
+                
+        <exclude name="smartedit-custom-build/generated/"/>
+                
+        <exclude name="node_modules/"/>
+                
+        <exclude name="jsTarget/"/>
+                
+        <exclude name="package.json"/>
+
+        <exclude name="resources/smarteditcep/test-metadata/"/>
+            
+    </patternset>
+        
+    <macrodef name="smarteditcep_before_clean">
+                
+        <sequential>
+                        
+            <if>
+                				
+                <available file="${ext.npmancillary.path}${file.separator}resources${file.separator}npm${file.separator}node_modules" type="dir"/>
+                                
+                <then>
+                                        
+                    <delete dir="${ext.smarteditcep.path}${file.separator}temp"/>
+                                        
+                    <delete dir="${ext.smarteditcep.path}${file.separator}jsTarget"/>
+                                        
+                    <delete dir="${ext.smarteditcep.path}${file.separator}web${file.separator}webroot${file.separator}smarteditcep${file.separator}js"/>
+                                        
+                    <unLinkSmarteditBundle target="${ext.smarteditcep.path}"/>
+                                        
+                    <removeNodeModulesSymlink path="${ext.smarteditcep.path}"/>
+                                    
+                </then>
+                            
+            </if>
+                    
+        </sequential>
+            
+    </macrodef>
+        
+    <macrodef name="smarteditcep_before_build">
+                
+        <sequential>
+                    	
+            <copy failonerror="false" file="${ext.smarteditcep.path}${file.separator}gitignore" overwrite="true" tofile="${ext.smarteditcep.path}${file.separator}.gitignore"/>
+                        
+            <if>
+                				
+                <available file="${ext.npmancillary.path}${file.separator}resources${file.separator}npm${file.separator}node_modules" type="dir"/>
+                                
+                <then>
+                                        
+                    <linkSmarteditBundle target="${ext.smarteditcep.path}"/>
+                                        
+                    <gruntBuild path="${ext.smarteditcep.path}" phase="packageSkipTests"/>
+                                    
+                </then>
+                            
+            </if>
+                    
+        </sequential>
+            
+    </macrodef>
+        
+    <macrodef name="smarteditcep_before_yunit">
+                
+        <sequential>
+                        
+            <if>
+                				
+                <available file="${ext.npmancillary.path}${file.separator}resources${file.separator}npm${file.separator}node_modules" type="dir"/>
+                                
+                <then>
+                                        
+                    <gruntBuild path="${ext.smarteditcep.path}" phase="test_only"/>
+                                    
+                </then>
+                            
+            </if>
+                    
+        </sequential>
+            
+    </macrodef>
+        
+
+
+</project>

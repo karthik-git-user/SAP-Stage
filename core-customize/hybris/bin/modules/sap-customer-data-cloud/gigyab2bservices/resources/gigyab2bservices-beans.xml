@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaGroupsData">
+		<property name="organizations" type="java.util.List&lt;de.hybris.platform.gigya.gigyab2bservices.data.GigyaOrganisationData>" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaOrganisationData">
+		<property name="orgId" type="java.lang.String" />
+		<property name="bpid" type="java.lang.String" />
+		<property name="status" type="java.lang.String" />
+		<property name="job" type="java.lang.String" />
+		<property name="department" type="java.lang.String" />
+		<property name="roles" type="java.util.List&lt;String>" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyaservices.data.GigyaAccount">
+		<property name="groups" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaGroupsData" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyaservices.data.GigyaUserObject">
+		<property name="groups" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaGroupsData" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAuthData">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		
+		<property name="assets" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAssetsData" >
+			<annotations>@JsonProperty("assets")</annotations>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAssetsData">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		
+		<property name="assetTemplates" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAssetTemplatesData" >
+			<annotations>@JsonProperty("templates")</annotations>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAssetTemplatesData">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		
+		<property name="commerceFunctionalRoles" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaFunctionalRolesData" >
+			<annotations>@JsonProperty("Get Commerce Roles")</annotations>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaFunctionalRolesData">
+		<property name="actions" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaActionsData" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaActionsData">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		
+		<property name="accessList" type="java.util.List&lt;de.hybris.platform.gigya.gigyab2bservices.data.GigyaActionsAccessData>" >
+			<annotations>@JsonProperty("access")</annotations>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaActionsAccessData">
+		<property name="path" type="java.lang.String" />
+		<property name="attributes" type="java.util.Map&lt;java.lang.String,java.util.List&lt;java.lang.Object>>" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAuthRequestData">
+		<property name="identity" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaIdentityData" />
+		<property name="context" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaContextData" />
+		<property name="response" type="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAuthResponseData" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaIdentityData">
+		<property name="id" type="java.lang.String" />
+		<property name="attributes" type="java.util.Map&lt;java.lang.String,java.util.List&lt;java.lang.Object>>" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaContextData">
+		<property name="organization" type="java.lang.String" />
+	</bean>
+	
+	<bean class="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAuthResponseData">
+		<property name="include_identity" type="boolean" />
+		<property name="include_reasons" type="boolean" />
+	</bean>
+
+</beans>

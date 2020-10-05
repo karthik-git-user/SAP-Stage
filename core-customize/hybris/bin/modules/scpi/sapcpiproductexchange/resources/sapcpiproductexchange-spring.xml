@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="sapCpiClassAssignmentUnitPersistenceHook"
+          class="de.hybris.platform.sap.sapcpiproductexchange.inbound.events.SapCpiClassAssignmentUnitPersistenceHook">
+        <property name="classificationSystemService" ref="classificationSystemService" />
+  </bean>
+    <bean id="sapCpiProductFeaturePersistenceHook"
+          class="de.hybris.platform.sap.sapcpiproductexchange.inbound.events.SapCpiProductFeaturePersistenceHook">
+          <property name="classResolverStrategy" ref="classificationClassesResolverStrategy"/>
+          <property name="modelService" ref="modelService"/>
+          <property name="classificationSystemService" ref="classificationSystemService" />
+          <property name="collectionDelimiter" value="${sapcpiproductexchange.sapCpiProductFeaturePersistenceHook.collectionDelimiter}"></property>
+  </bean>
+  <bean id="sapCpiProductFeatureCleanHook"
+          class="de.hybris.platform.sap.sapcpiproductexchange.inbound.events.SapCpiProductFeatureCleanHook">
+    <property name="classificationService" ref="classificationService"/>    
+  </bean>
+</beans>

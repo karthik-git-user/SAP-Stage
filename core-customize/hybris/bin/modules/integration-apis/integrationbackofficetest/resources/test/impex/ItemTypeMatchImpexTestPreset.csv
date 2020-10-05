@@ -1,0 +1,17 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; StockLevelForTest; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]; itemTypeMatch(code)
+; StockLevelForTest	; Product       	; Product       	; 	    ; ALL_SUB_AND_SUPER_TYPES	;
+; StockLevelForTest	; CatalogVersion	; CatalogVersion	; 	    ; ALL_SUB_AND_SUPER_TYPES	;
+; StockLevelForTest	; StockLevel    	; StockLevel    	; true	; ALL_SUB_AND_SUPER_TYPES	;
+; StockLevelForTest	; Catalog       	; Catalog       	; 	    ; ALL_SUB_AND_SUPER_TYPES	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; StockLevelForTest:Product       	; catalogVersion	; Product:catalogVersion	; StockLevelForTest:CatalogVersion	; true	;
+; StockLevelForTest:Product       	; code          	; Product:code          	;                                 	; true	;
+; StockLevelForTest:CatalogVersion	; catalog       	; CatalogVersion:catalog	; StockLevelForTest:Catalog       	; true	;
+; StockLevelForTest:CatalogVersion	; version       	; CatalogVersion:version	;                                 	; true	;
+; StockLevelForTest:StockLevel    	; productCode     	; StockLevel:productCode  	;                                 	; true	;
+; StockLevelForTest:StockLevel    	; product       	; StockLevel:product    	; StockLevelForTest:Product       	; 	    ;
+; StockLevelForTest:Catalog       	; id            	; Catalog:id            	;                                 	; true	;

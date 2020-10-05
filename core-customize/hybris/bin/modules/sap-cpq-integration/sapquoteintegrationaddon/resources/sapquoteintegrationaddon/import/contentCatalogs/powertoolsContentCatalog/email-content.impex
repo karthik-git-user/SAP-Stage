@@ -1,0 +1,57 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Powertools site emails
+#
+$contentCatalog=powertoolsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent=CMSImageComponent,BannerComponent
+
+# Import modulegen config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor];pk[unique=true]
+$jarResourceCms=$config-jarResourceCmsValue
+$emailPackageName=$config-emailContextPackageName
+
+# Email page Template
+INSERT_UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];name;active;frontendTemplateName;subject(code);htmlTemplate(code);restrictedPageTypes(code)
+;;QuoteVendorSubmissionEmailTemplate;Quote Vendor Submission Email Template;true;quoteVendorSubmissionEmail;powertools_Email_Quote_Vendor_Submission_Subject;powertools_Email_Quote_Vendor_Submission_Body;EmailPage
+
+# Templates for CMS Cockpit Page Edit
+UPDATE EmailPageTemplate;$contentCV[unique=true];uid[unique=true];velocityTemplate[translator=de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]
+;;QuoteVendorSubmissionEmailTemplate;$jarResourceCms/structure-view/structure_quoteNotificationEmailTemplate.vm
+
+INSERT_UPDATE ContentSlotName;name[unique=true];template(uid,$contentCV)[unique=true][default='QuoteVendorSubmissionEmailTemplate'];validComponentTypes(code)
+;SiteLogo;;;logo
+;TopContent;;$wideContent;
+;BottomContent;;$wideContent;
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active
+;;EmailTopSlot;Default Email Top Slot;true
+;;EmailBottomSlot;Default Email Bottom Slot;true
+;;EmailSiteLogoSlot;Default Email Site Slot;true
+
+INSERT_UPDATE ContentSlotForTemplate;$contentCV[unique=true];uid[unique=true];position[unique=true];pageTemplate(uid,$contentCV)[unique=true][default='QuoteVendorSubmissionEmailTemplate'];contentSlot(uid,$contentCV)[unique=true];allowOverwrite
+;;SiteLogo-QuoteVendorSubmissionEmail;SiteLogo;;EmailSiteLogoSlot;true
+;;TopContent-QuoteVendorSubmissionEmail;TopContent;;EmailTopSlot;true
+;;BottomContent-QuoteVendorSubmissionEmail;BottomContent;;EmailBottomSlot;true
+
+# Email Pages
+INSERT_UPDATE EmailPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);defaultPage;approvalStatus(code)[default='approved']
+;;QuoteVendorSubmissionEmail;Quote Vendor Submission Email;QuoteVendorSubmissionEmailTemplate;true;
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate;code[unique=true];contextClass;rendererType(code)[default='velocity']
+;powertools_Email_Quote_Vendor_Submission_Subject;$emailPackageName.QuoteNotificationEmailContext
+;powertools_Email_Quote_Vendor_Submission_Body;$emailPackageName.QuoteNotificationEmailContext
+
+UPDATE EmailPage;$contentCV[unique=true];uid[unique=true]
+;;QuoteVendorSubmissionEmail;

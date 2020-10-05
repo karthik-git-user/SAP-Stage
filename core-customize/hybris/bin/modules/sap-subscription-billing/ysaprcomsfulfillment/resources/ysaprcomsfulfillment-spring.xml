@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+        
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+      
+    <import resource="ysaprcomsfulfillment-process-definitions-spring.xml" />
+    
+    <context:annotation-config/>
+    
+    <bean id="sapOrderExchangeOmsCancelRepairCronJob" class="com.sap.hybris.ysaprcomsfulfillment.jobs.SapOrderExchangeOmsCancelRepairCronJob"
+		parent="abstractJobPerformable">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="orderExchangeRepair" ref="sapOrderexchangeOrderExchangeRepair" />
+		<property name="sapOrderCancelService" ref="sapOrderexchangeOrderCancelService" />
+		<property name="timeService" ref="timeService" />
+	</bean>
+ 
+    <alias alias="warehousingShippingService" name="sapWarehousingShippingService"/>
+    <bean id="sapWarehousingShippingService" class="com.sap.hybris.ysaprcomsfulfillment.service.SapWarehousingShippingService" parent="defaultWarehousingShippingService" />
+	
+</beans>

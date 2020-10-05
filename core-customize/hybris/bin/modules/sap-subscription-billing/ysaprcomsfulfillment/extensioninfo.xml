@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    	
+    <extension abstractclassprefix="Generated" classprefix="Ysaprcomsfulfillment" managername="YsaprcomsfulfillmentManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="ysaprcomsfulfillment">
+        		
+        <requires-extension name="acceleratorservices"/>
+        		
+        <requires-extension name="warehousing"/>
+        		
+        <requires-extension name="saporderexchangeoms"/>
+        		
+        <requires-extension name="sapmodel"/>
+        		
+        <coremodule generated="true" manager="com.sap.hybris.ysaprcomsfulfillment.jalo.YsaprcomsfulfillmentManager" packageroot="com.sap.hybris.ysaprcomsfulfillment"/>
+        		
+        <meta key="extgen-template-extension" value="true"/>
+        		
+        <meta key="deprecated" value="true"/>
+        	
+    </extension>
+    
+</extensioninfo>

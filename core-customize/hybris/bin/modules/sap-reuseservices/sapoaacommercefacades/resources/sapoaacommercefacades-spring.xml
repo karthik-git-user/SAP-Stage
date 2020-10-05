@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    <!-- Data Models  -->
+	<bean id="oaaScheduleLineData" class="com.sap.retail.oaa.commerce.facades.schedulelines.OaaScheduleLineData" scope="prototype"/>
+
+	<!-- Populator  -->
+	<alias name="defaultOaaOrderEntryPopulator" alias="orderEntryPopulator"/>
+	<bean id="defaultOaaOrderEntryPopulator"
+			class="com.sap.retail.oaa.commerce.facades.converters.populator.DefaultOaaOrderEntryPopulator" parent="defaultOrderEntryPopulator">
+			<property name="scheduleLineConverter" ref="oaaScheduleLineConverter" />
+	</bean>
+	
+	<alias name="defaultOaaScheduleLinePopulator" alias="oaaScheduleLinePopulator"/>
+	<bean id="defaultOaaScheduleLinePopulator"
+			class="com.sap.retail.oaa.commerce.facades.converters.populator.DefaultOaaScheduleLinePopulator">
+	</bean>
+	
+	
+	<alias name="defaultProductStockPopulator" alias="oaaProductStockPopulator"/>
+    <bean id="defaultProductStockPopulator" parent="baseProductPopulator"
+          class="com.sap.retail.oaa.commerce.facades.converters.populator.DefaultOaaProductStockPopulator">
+        <property name="stockConverter" ref="oaaStockConverter"/>
+    </bean>
+    
+	
+	<alias name="defaultOaaStockPopulator" alias="oaaStockPopulator"/>
+    <bean id="defaultOaaStockPopulator"  class="com.sap.retail.oaa.commerce.facades.converters.populator.DefaultOaaStockPopulator">
+        <property name="oaaStockService" ref="commerceStockService" />
+        <property name="baseStoreService" ref="baseStoreService"/>
+    </bean>
+    
+	
+	<!-- Converter  -->
+	<alias name="oaaScheduleLineConverter" alias="oaaScheduleLineConverter"/>
+	<bean id="oaaScheduleLineConverter" parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget" bean="oaaScheduleLineData"/>
+		<property name="populators">
+			<list>
+				<ref bean="oaaScheduleLinePopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<alias name="defaultOaaStockConverter" alias="oaaStockConverter"/>
+    <bean id="defaultOaaStockConverter" parent="abstractPopulatingConverter">
+        <property name="targetClass" value="de.hybris.platform.commercefacades.product.data.StockData"/>
+        <property name="populators">
+            <list>
+                <ref bean="oaaStockPopulator"/>
+            </list>
+        </property>
+    </bean>
+	
+	
+	<!-- Overwrite the orderEntryProductConverter to suppress productDeliveryModeAvailabilityPopulator 
+	     by each add to / update cart entry call -->	
+	<alias name="defaultOrderEntryProductConverter" alias="orderEntryProductConverter"/>
+	<bean id="defaultOrderEntryProductConverter" parent="defaultProductConverter">
+		<property name="populators">
+			<list merge="true">
+				<!--  
+				<ref bean="productDeliveryModeAvailabilityPopulator"/>
+				<ref bean="productStockPopulator"/>
+				-->
+				<!-- Adding new populator to reduce number of calls for populating StockLevel and StockLevelStatus -->
+				<ref bean="oaaProductStockPopulator"/>
+				<ref bean="productCategoriesPopulator"/>
+			</list>
+		</property>
+	</bean>	
+	
+	<alias name="sapOaaCheckoutFacade" alias="checkoutFacade"/>
+	<bean id="sapOaaCheckoutFacade" class="com.sap.retail.oaa.commerce.facades.checkout.impl.DefaultSapOaaCheckoutFacade" 
+		parent="defaultCheckoutFacade" >
+		<property name="sourcingStrategy" ref="oaaCommerceSourcingStrategy" />
+	</bean>
+	
+	
+			
+</beans>

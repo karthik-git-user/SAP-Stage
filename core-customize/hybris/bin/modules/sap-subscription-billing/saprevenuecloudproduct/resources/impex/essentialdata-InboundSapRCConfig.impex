@@ -1,0 +1,63 @@
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundBillingEvent; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundBillingEvent	; BillingEvent	; BillingEvent	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundBillingEvent:BillingEvent	; code       	; BillingEvent:code       	;                     	; true	;
+                                            ; InboundBillingEvent:BillingEvent	; description	; BillingEvent:description	;                     	; 	;  
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundUsageUnit; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundUsageUnit	; UsageUnit	; UsageUnit	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundUsageUnit:UsageUnit	; name      	; UsageUnit:name      	;                  	; 	;
+                                            ; InboundUsageUnit:UsageUnit	; namePlural	; UsageUnit:namePlural	;                  	; 	;
+                                            ; InboundUsageUnit:UsageUnit	; id        	; UsageUnit:id        	;                  	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundTaxes; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundTaxes	; Tax	; Tax	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundTaxes:Tax	; name	; Tax:name	;              	; 	;
+                                            ; InboundTaxes:Tax	; code	; Tax:code	;              	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundTaxRow; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundTaxRow	; CatalogVersion 	; CatalogVersion 	; 	;
+                                   ; InboundTaxRow	; ProductTaxGroup	; ProductTaxGroup	; 	;
+                                   ; InboundTaxRow	; Tax            	; Tax            	; 	;
+                                   ; InboundTaxRow	; Catalog        	; Catalog        	; 	;
+                                   ; InboundTaxRow	; TaxRow         	; TaxRow         	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundTaxRow:CatalogVersion 	; version       	; CatalogVersion:version	;                              	; true	;
+                                            ; InboundTaxRow:CatalogVersion 	; catalog       	; CatalogVersion:catalog	; InboundTaxRow:Catalog        	; true	;
+                                            ; InboundTaxRow:ProductTaxGroup	; code          	; ProductTaxGroup:code  	;                              	; true	;
+                                            ; InboundTaxRow:Tax            	; code          	; Tax:code              	;                              	; true	;
+                                            ; InboundTaxRow:Tax            	; name          	; Tax:name              	;                              	;   	;
+                                            ; InboundTaxRow:Catalog        	; id            	; Catalog:id            	;                              	; true	;
+                                            ; InboundTaxRow:TaxRow         	; pg            	; TaxRow:pg             	; InboundTaxRow:ProductTaxGroup	; true	;
+                                            ; InboundTaxRow:TaxRow         	; catalogVersion	; TaxRow:catalogVersion 	; InboundTaxRow:CatalogVersion 	; true	;
+                                            ; InboundTaxRow:TaxRow         	; tax           	; TaxRow:tax            	; InboundTaxRow:Tax            	; true	;
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundProductTaxes; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundProductTaxes	; ProductTaxGroup	; ProductTaxGroup	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundProductTaxes:ProductTaxGroup	; code	; ProductTaxGroup:code	;                     	; true	;
+                                            ; InboundProductTaxes:ProductTaxGroup	; name	; ProductTaxGroup:name	;                     	;   	;

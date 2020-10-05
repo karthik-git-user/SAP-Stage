@@ -1,0 +1,43 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]
+; MktOutboundSavedCart
+ 
+;  
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; MktOutboundSavedCart	; CatalogVersion	; CatalogVersion	; 	;  
+; MktOutboundSavedCart	; OrderStatus   	; OrderStatus   	; 	;  
+; MktOutboundSavedCart	; CartEntry     	; CartEntry     	; 	;  
+; MktOutboundSavedCart	; Unit          	; Unit          	; 	;  
+; MktOutboundSavedCart	; Currency      	; Currency      	; 	;  
+; MktOutboundSavedCart	; Customer          ; Customer       	; 	;  
+; MktOutboundSavedCart	; Cart          	; Cart          	; true	;  
+; MktOutboundSavedCart	; Catalog       	; Catalog       	; 	;  
+; MktOutboundSavedCart	; Product       	; Product       	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; MktOutboundSavedCart:CatalogVersion	; catalog       	; CatalogVersion:catalog	; MktOutboundSavedCart:Catalog       	; true	;  
+; MktOutboundSavedCart:CatalogVersion	; version       	; CatalogVersion:version	;                                    	; true	;  
+; MktOutboundSavedCart:OrderStatus   	; code          	; OrderStatus:code      	;                                    	; true	;  
+; MktOutboundSavedCart:CartEntry     	; product       	; CartEntry:product     	; MktOutboundSavedCart:Product       	; 	;  
+; MktOutboundSavedCart:CartEntry     	; totalPrice    	; CartEntry:totalPrice  	;                                    	; 	;  
+; MktOutboundSavedCart:CartEntry     	; order         	; CartEntry:order       	; MktOutboundSavedCart:Cart          	; true	;  
+; MktOutboundSavedCart:CartEntry     	; quantity      	; CartEntry:quantity    	;                                    	; 	;  
+; MktOutboundSavedCart:CartEntry     	; unit          	; CartEntry:unit        	; MktOutboundSavedCart:Unit          	; 	;  
+; MktOutboundSavedCart:CartEntry     	; entryNumber   	; CartEntry:entryNumber 	;                                    	; true	;  
+; MktOutboundSavedCart:Unit          	; code          	; Unit:code             	;                                    	; true	;  
+; MktOutboundSavedCart:Currency      	; isocode       	; Currency:isocode      	;                                    	; true	;  
+; MktOutboundSavedCart:Cart          	; name          	; Cart:name             	;                                    	; true	;  
+; MktOutboundSavedCart:Cart          	; description   	; Cart:description      	;                                    	; true	;  
+; MktOutboundSavedCart:Cart          	; ymktTrackingId	; Cart:ymktTrackingId   	;                                    	; 	;  
+; MktOutboundSavedCart:Cart          	; currency      	; Cart:currency         	; MktOutboundSavedCart:Currency      	; 	;  
+; MktOutboundSavedCart:Cart         	; user          	; Order:user            	; MktOutboundSavedCart:Customer      	; 	;
+; MktOutboundSavedCart:Cart          	; entries       	; Cart:entries          	; MktOutboundSavedCart:CartEntry     	; 	;  
+; MktOutboundSavedCart:Cart          	; totalPrice    	; Cart:totalPrice       	;                                    	; 	;  
+; MktOutboundSavedCart:Cart          	; code          	; Cart:code             	;                                    	; true	;  
+; MktOutboundSavedCart:Cart          	; status        	; Cart:status           	; MktOutboundSavedCart:OrderStatus   	; 	;
+; MktOutboundSavedCart:Cart         	; modifiedtime  	; Order:modifiedtime    	;                                	; 	;
+; MktOutboundSavedCart:Customer      	; name          	; Customer:name         	;                                	; 	;
+; MktOutboundSavedCart:Customer      	; customerID    	; Customer:customerID   	;                                	; true	;
+; MktOutboundSavedCart:Catalog       	; id            	; Catalog:id            	;                                    	; true	;  
+; MktOutboundSavedCart:Product       	; code          	; Product:code          	;                                    	; true	;  
+; MktOutboundSavedCart:Product       	; catalogVersion	; Product:catalogVersion	; MktOutboundSavedCart:CatalogVersion	; true	;  

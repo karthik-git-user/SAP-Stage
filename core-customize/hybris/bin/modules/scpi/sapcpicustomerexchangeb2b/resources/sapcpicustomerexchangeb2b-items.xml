@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <itemtypes>
+
+        <itemtype code="Address" generate="false" autocreate="false">
+            <description>Extending Address type with additional attributes for SCPI integration to handle OData actions.</description>
+            <attributes>
+                <attribute qualifier="sapMessageFunction" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="B2BCustomer" generate="false" autocreate="false">
+            <attributes>
+                <attribute qualifier="sapBusinessPartnerID" type="java.lang.String">
+                    <description>SAP Business Partner ID</description>
+                    <modifiers initial="true" read="true" write="true" optional="true"/>
+                    <persistence type="property"/>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+    </itemtypes>
+
+</items>

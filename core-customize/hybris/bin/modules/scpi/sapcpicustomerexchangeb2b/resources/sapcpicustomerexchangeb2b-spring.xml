@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Override The Address Interceptor From The sapcustomerb2b Extension -->
+    <alias name="sapCpiB2BUnitAddressInterceptor" alias="sapCustomerAddressConsistencyInterceptor"/>
+    <bean id="sapCpiB2BUnitAddressInterceptor"
+          class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.inbound.interceptors.SapCpiB2BUnitAddressInterceptor"
+          parent="defaultSAPCustomerAddressConsistencyInterceptor"/>
+
+    <!-- Inbound B2BUnit Persistence Hook -->
+    <bean id="sapCpiB2BUnitPersistenceHook"
+          class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.inbound.events.SapCpiB2BUnitPersistenceHook"/>
+
+    <!-- Inbound B2BCustomer Persistence Hook -->
+    <bean id="sapCpiB2BCustomerPersistenceHook"
+          class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.inbound.events.SapCpiB2BCustomerPersistenceHook">
+        <property name="modelService" ref="modelService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <!-- Outbound B2BCustomer Conversion Service -->
+    <alias name="sapCpiB2BCustomerDefaultConversionService" alias="sapCpiB2BCustomerConversionService"/>
+    <bean id="sapCpiB2BCustomerDefaultConversionService"
+          class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.outbound.services.impl.SapCpiB2BCustomerDefaultConversionService">
+        <property name="customerNameStrategy" ref="customerNameStrategy"/>
+        <property name="b2bUnitService" ref="b2bUnitService"/>
+        <property name="baseStoreService" ref="baseStoreService"/>
+        <property name="sapCpiB2BCustomerDestinationService" ref="sapCpiB2BCustomerDestinationService"/>
+        <property name="customerAddressReplicationUtilityService" ref="customerAddressReplicationUtilityService" />
+    </bean>
+
+    <!-- Send Outbound B2BCustomer Service -->
+    <alias name="sapCpiB2BCustomerOutboundService" alias="b2bCustomerExportService"  />
+    <bean id="sapCpiB2BCustomerOutboundService" class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.outbound.services.impl.SapCpiB2BCustomerOutboundService"
+          parent="defaultB2BCustomerExportService">
+        <property name="sapCpiB2BCustomerConversionService" ref="sapCpiB2BCustomerConversionService" />
+        <property name="sapCpiOutboundService" ref="sapCpiOutboundService" />
+    </bean>
+
+    <!-- Outbound B2B Customer Destination Service -->
+    <alias name="sapCpiB2BCustomerDefaultDestinationService" alias="sapCpiB2BCustomerDestinationService"/>
+    <bean id="sapCpiB2BCustomerDefaultDestinationService" class="de.hybris.platform.sap.sapcpicustomerexchangeb2b.outbound.services.impl.SapCpiB2BCustomerDefaultDestinationService">
+        <property name="mdmEnabled" value="${sapcpicustomerexchangeb2b.mdm.destination.enabled}" />
+        <property name="sapCoreSAPGlobalConfigurationDAO" ref="sapCoreSAPGlobalConfigurationDAO"/>
+    </bean>
+
+</beans>

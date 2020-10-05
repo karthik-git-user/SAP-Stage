@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+	
+	<bean class="com.sap.hybris.sapentitlementsintegration.pojo.EntitlementFilter">
+	
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+		<property name="attribute" type="java.lang.String" >
+			<annotations>@JsonProperty("Attribute")</annotations>
+		</property>
+		<property name="operation" type="java.lang.String" >
+			<annotations>@JsonProperty("Operation")</annotations>
+		</property>
+		<property name="values" type="java.util.List&lt;java.lang.String>" >
+			<annotations>@JsonProperty("Values")</annotations>
+		</property>
+	</bean>
+	
+	<bean class="com.sap.hybris.sapentitlementsintegration.pojo.GetEntitlementRequest">
+	
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+	
+		<property name="filters" type="java.util.List&lt;com.sap.hybris.sapentitlementsintegration.pojo.EntitlementFilter>" >
+				<annotations>@JsonProperty("Filters")</annotations>
+		</property>	
+		
+		<property name="paging" type="com.sap.hybris.sapentitlementsintegration.pojo.Paging" >
+				<annotations>@JsonProperty("Paging")</annotations>
+		</property>
+
+	</bean>
+	
+	
+	<bean class="com.sap.hybris.sapentitlementsintegration.pojo.Paging">
+	
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties" />
+		<import type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+	
+		<property name="pageNum" type="int" >
+				<annotations>@JsonProperty("PageNum")</annotations>
+		</property>	
+		
+		<property name="pageSize" type="int" >
+				<annotations>@JsonProperty("PageSize")</annotations>
+		</property>
+
+	</bean>	
+	
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security 
+		http://www.springframework.org/schema/security/spring-security.xsd">
+
+		<!-- Commons security imports -->
+		<import resource="classpath:webservicescommons/commons-security-spring.xml"/>
+
+		<http pattern="/**" entry-point-ref="oauthAuthenticationEntryPoint" use-expressions="false" xmlns="http://www.springframework.org/schema/security" >
+
+			<session-management session-authentication-strategy-ref="fixation" />
+
+			<intercept-url pattern="/**" requires-channel="#{configurationService.configuration.getString('webservicescommons.required.channel', 'https')}" />
+			<port-mappings>
+				<port-mapping http="#{configurationService.configuration.getProperty('tomcat.http.port')}" https="#{configurationService.configuration.getProperty('tomcat.ssl.port')}" />
+				<port-mapping http="#{configurationService.configuration.getProperty('embeddedserver.http.port')}" https="#{configurationService.configuration.getProperty('embeddedserver.ssl.port')}" />
+			</port-mappings>
+
+			<!--<http-basic />-->
+			<custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+			<custom-filter ref="hybrisUserFilter" after="LAST" />
+			<access-denied-handler ref="oauthAccessDeniedHandler" />
+
+			<csrf disabled="true" />
+
+			<headers defaults-disabled="true">
+				<content-type-options />
+				<hsts include-subdomains="true"	max-age-seconds="16070400" />
+				<xss-protection />
+			</headers>
+		</http>
+</beans>

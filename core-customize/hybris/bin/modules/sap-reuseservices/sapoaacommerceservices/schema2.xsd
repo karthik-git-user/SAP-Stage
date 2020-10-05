@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.sap.com/abapxml">
+
+  <xs:import namespace="http://www.sap.com/abapxml" schemaLocation="schema1.xsd"/>
+
+  <xs:complexType name="abap">
+    <xs:sequence>
+      <xs:element ref="ns1:values" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="values">
+    <xs:sequence>
+      <xs:element name="SOURCING" type="sourcing" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sourcing">
+    <xs:sequence>
+      <xs:element name="CART" type="cart" minOccurs="0"/>
+      <xs:element name="CONSUMER_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="OAA_PROFILE_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="RESERVATION_STATUS" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cart">
+    <xs:sequence>
+      <xs:element name="CART_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="CART_ITEMS" type="cartItems" minOccurs="0"/>
+      <xs:element name="SHIPPING_METHOD" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cartItems">
+    <xs:sequence>
+      <xs:element name="ITEM" type="cartItem" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cartItem">
+    <xs:sequence>
+      <xs:element name="ARTICLE_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="ITEM_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="QUANTITY" type="xs:string" minOccurs="0"/>
+      <xs:element name="UNIT" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

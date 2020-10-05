@@ -1,0 +1,45 @@
+$cpiTenantHostName=https://tester.hana.ondemand.com
+
+###############################################################
+# This sets up the credential (username/password) called "mktCPIBasicCredentails"
+# ##############################################################
+INSERT_UPDATE BasicCredential ; id[unique = true]      ; username ; password
+                              ; mktCPIBasicCredentails ; username ; password
+
+###############################################################
+# This sets up the endpoint called "mktCPISingleCodeCouponEndpoint."
+# #############################################################
+INSERT_UPDATE Endpoint ; id[unique = true]            ; version[unique = true] ; name                         ; specUrl
+                       ; mktCPISingleCodeCouponEndpoint ; unknown                ; mktCPISingleCodeCouponEndpoint ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-SINGLE-CODE-COUPON-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/$metadata" 
+
+##############################################################
+# This sets up a ConsumedDestination called "mktCPISingleCodeCouponDestination."
+# It uses the Endpoint and BasicCredential created above. The user calls
+# the Outbound Service with the destination ID (e.g. "mktCPISingleCodeCouponDestination").
+# The Outbound Service looks up the details of the destination by ID,
+# so it knows where to send the data
+# ############################################################
+INSERT_UPDATE DestinationTarget ; id[unique = true]
+                                ; mktCPISingleCodeCouponDestinationTarget
+
+INSERT_UPDATE ConsumedDestination ; id[unique = true]               ; url                                                                                                                                                                  ; endpoint(id, version)                ; credential(id)         ; destinationTarget(id)[default = mktCPISingleCodeCouponDestinationTarget] ; additionalProperties(key, value)[map-delimiter=|]
+                                  ; mktCPISingleCodeCouponDestination ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-SINGLE-CODE-COUPON-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/SingleCodeCoupons" ; mktCPISingleCodeCouponEndpoint:unknown ; mktCPIBasicCredentails ;                                                                        ; "csrfURL->$cpiTenantHostName/gw/odata/SAP/REPLICATE-SINGLE-CODE-COUPON-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1"
+
+################################################################
+# Setup Outbound Sync configuration container
+# ##############################################################
+INSERT_UPDATE OutboundSyncStreamConfigurationContainer ; id[unique = true]                           ;
+                                                       ; mktCPISingleCodeCouponOutboundSyncDataStreams ;
+
+INSERT_UPDATE OutboundSyncJob ; code[unique = true]                      ; streamConfigurationContainer(id)
+                              ; mktCPIoDataSingleCodeCouponOutboundSyncJob ; mktCPISingleCodeCouponOutboundSyncDataStreams
+
+INSERT_UPDATE OutboundChannelConfiguration ; code[unique = true]                     ; integrationObject(code)   ; destination(id)
+                                           ; outboundSyncMktCPISingleCodeCouponChannel ; MktOutboundSingleCodeCoupon ; mktCPISingleCodeCouponDestination
+
+# Set up a Variant Product stream that will detect changes made to the Variant Product and include it in the mktCPISingleCodeCouponOutboundSyncDataStreams StreamConfigurationContainer
+INSERT_UPDATE OutboundSyncStreamConfiguration ; streamId[unique = true]            ; container(id)                               ; itemTypeForStream(code) ; outboundChannelConfiguration(code)      ;
+                                              ; mktCPISingleCodeCouponOutboundStream ; mktCPISingleCodeCouponOutboundSyncDataStreams ; SingleCodeCoupon          ; outboundSyncMktCPISingleCodeCouponChannel ;
+
+INSERT_UPDATE OutboundSyncCronJob ; code[unique = true]                     ; job(code)                                ; sessionLanguage(isoCode)[default = en]
+                                  ; mktCPISingleCodeCouponOutboundSyncCronJob ; mktCPIoDataSingleCodeCouponOutboundSyncJob ;

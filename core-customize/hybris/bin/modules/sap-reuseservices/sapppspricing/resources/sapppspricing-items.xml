@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<!-- Possible deployment options for PPS -->
+	<enumtypes>
+
+		<enumtype autocreate="true" code="interfaceVersion"
+			dynamic="false" generate="true">
+			<description>This type determines the client interface version.</description>
+			<value code="VERSION20" />
+		</enumtype>
+		
+		<enumtype code="OppsPromoResultStatus" dynamic="true" generate="true" autocreate="true">
+			<value code="APPLIED"/>
+			<value code="POTENTIAL"/>
+		</enumtype>
+		
+	</enumtypes>
+
+	<itemtypes>
+		<!-- Enhance SAP Base Store Configuration by PPS client specific configuration -->
+		<itemtype code="SAPConfiguration" autocreate="false"
+			generate="false">
+			<attributes>
+				<attribute qualifier="sappps_active"
+					type="java.lang.Boolean" generate="true">
+					<persistence type="property" />
+					<description>PPS active</description>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<modifiers optional="false" />
+				</attribute>
+				<attribute qualifier="sappps_businessUnitId"
+					type="java.lang.String" generate="true">
+					<description>ID of Business Unit for which calculation shall be done</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sappps_interfaceVersion"
+					type="interfaceVersion">
+					<modifiers optional="false" />
+					<description>Client Interface Version </description>
+					<defaultvalue>em().getEnumerationValue("interfaceVersion", "Version20")</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sappps_sourceSystemId"
+					type="java.lang.String">
+					<modifiers optional="false" />
+					<description>Master Data Source System ID</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="PromotionResult" extends="GenericItem"
+			jaloclass="de.hybris.platform.promotions.jalo.PromotionResult"
+			autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="oppsPromoResultType" type="OppsPromoResultStatus">
+					<persistence type="property" />
+					<description>Type of Promotion from OPPS : Applied or Potential</description>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="Product" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="discountable" type="java.lang.Boolean">
+					<description>Discountable</description>
+					<defaultvalue>Boolean.FALSE</defaultvalue>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+	</itemtypes>
+</items>

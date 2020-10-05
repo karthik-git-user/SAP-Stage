@@ -1,0 +1,103 @@
+
+$catalog-id=testProductCatalog
+$catalog-version=Online
+$productCatalog=testProductCatalog
+$productCatalogName=Test Product Catalog
+$catalogversion=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[unique=true,default=$productCatalog:Online]
+
+$catalogversionResolver=catalogversion(catalog(id[default=$productCatalog]),version[default='Online'])[default=$productCatalog:Online]
+$supercategories=supercategories(code,catalogversion(catalog(id[default=$productCatalog]),version[default='Online']))
+$billingFrequency=billingFrequency(code)[default='monthly']
+$testCategory0-id=testCategory0
+$testCategory1-id=testCategory1
+$vendor=default
+$lang=en
+
+
+INSERT_UPDATE Catalog;id[unique=true];name[lang=en];defaultCatalog;;;;;;
+                     ;$productCatalog;$productCatalogName;true;;;;;;
+
+INSERT_UPDATE CatalogVersion; catalog(id)[unique=true]; version[unique=true];active;defaultCurrency(isocode);;;;;;
+                            ;$productCatalog;Online;true;USD;;;;;;
+
+
+INSERT_UPDATE Customer	;uid[unique=true]	;customerID		;name		;description	;sessionLanguage(isocode)	;sessionCurrency(isocode)	;groups(uid)	;password
+                          ;johnsmith			;100000			;John Smith;				;en							;USD						;customergroup	;1234
+
+
+INSERT_UPDATE BillingFrequency;code[unique=true];order;cartAware[default=true]
+                              ;monthly;5
+                              ;quarterly;6
+                              ;yearly;7
+
+UPDATE BillingFrequency;code[unique=true];nameInCart[lang=$lang];nameInOrder[lang=$lang];description[lang=$lang]
+                       ;monthly;Monthly;;Monthly
+                       ;quarterly;Quarterly;;Quarterly
+                       ;yearly;Annually;;Yearly
+
+
+INSERT_UPDATE BillingPlan;id[unique=true];name[lang=$lang];billingCycleDay(code);billingCycleType(code)[default='subscription_start'];$billingFrequency
+
+;MonthlyPlan;Monthly Plan;;subscription_start;monthly
+
+INSERT_UPDATE BillingEvent;code[unique=true];order;cartAware[default=true]
+                          ;paynow;1
+                          ;onfirstbill;2
+                          ;oncancellation;0;false
+
+INSERT_UPDATE UsageUnit;id[unique=true];accumulative[default=false];name[lang=$lang];namePlural[lang=$lang]
+                       ;phone_minutes;;minute;minutes
+                       ;sms;;text message;text messages
+                       ;mobile_data;;MB;MBs
+
+#create test subscription terms
+INSERT_UPDATE SubscriptionTerm;id[unique=true];name[lang=$lang];termOfServiceFrequency(code);termOfServiceNumber(code);termOfServiceRenewal(code);billingPlan(id[default=MonthlyPlan]);cancellable[default=true]
+                       ;T1;T1;monthly;10;auto_renewing;MonthlyPlan;
+                       ;T2;T2;monthly;10;auto_renewing;MonthlyPlan;false
+                       ;T3;T3;monthly;10;auto_renewing;MonthlyPlan;false
+                       ;T4;T4;monthly;10;auto_renewing;MonthlyPlan;false
+
+
+# create test products
+INSERT_UPDATE Product;code[unique=true];unit(code[unique=true,default=pieces]);$catalogversion
+                ;"P1";;
+                ;"P2";;
+                ;"P3";;
+                ;"P4";;
+
+
+# set subscription term "monthly" for all test products
+INSERT_UPDATE Product;code[unique=true];name[lang=$lang];$catalogversion;subscriptionTerm(id)
+              ;P1;P1;;T1
+              ;P2;P2;;T2
+              ;P3;P3;;T3
+              ;P4;P4;;T4
+
+#   for all test products, add a subscription priceplan with currency "USD"
+INSERT_UPDATE SubscriptionPricePlan;name[lang=$lang, unique=true];user(uid)[allowNull=true];ug(code,itemtype(code[default='UserPriceGroup']))[allowNull=true];currency(isocode);product(code, $catalogversionResolver);$catalogversion;unit(code)[default=pieces]
+                            ;SPP1;;;USD;P1
+                            ;SPP2;;;USD;P2
+                            ;SPP3;;;USD;P3
+                            ;SPP4;;;USD;P4
+
+
+#for test subscription price plans, add one time payments
+INSERT_UPDATE OneTimeChargeEntry;id[unique=true];subscriptionPricePlanOneTime(name[lang=$lang, unique=true]);price;$catalogversion;billingEvent(code)
+                                ;SPP1_oncancellation;SPP1;10.00;;oncancellation
+                                ;SPP2_paynow;SPP2;10.00;;paynow
+                                ;SPP3_onfirstbill;SPP3;10.00;;onfirstbill
+
+
+#add recurring charges
+INSERT_UPDATE RecurringChargeEntry;id[unique=true];subscriptionPricePlanRecurring(name[lang=$lang, unique=true]);price;cycleStart;cycleEnd;$catalogversion
+                        ;SPP4_Start_0_End_;SPP4;20.00;0;
+
+
+
+
+
+
+
+
+
+

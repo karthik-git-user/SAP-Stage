@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+        
+    <relations>
+		<relation code="SAPCpiOutboundOrderItem2CpiScheduleLine" localized="false">
+            <sourceElement type="SAPCpiOutboundOrderItem" qualifier="sapCpiOutboundOrderItem" cardinality="one" />
+            <targetElement type="CpiScheduleLine" qualifier="cpiScheduleLines" cardinality="many" collectiontype="set">
+                <modifiers partof="true" />
+            </targetElement>
+            
+        </relation>
+        
+    </relations>
+    
+    <itemtypes>
+    	<itemtype code="CpiScheduleLine" jaloclass="com.sap.hybris.sapcpioaaorderintegration.model.jalo.ScheduleLine"
+			extends="GenericItem" autocreate="true" generate="true">
+			<deployment table="CpiScheduleLines" typecode="9369" />
+			<attributes>
+				<attribute qualifier="confirmedQuantity" type="java.lang.String">
+					<description>Confirmed Quantity</description>
+					<modifiers initial="true" read="true" write="true"
+						search="true" />
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="confirmedDate" type="java.lang.String">
+					<description>Date</description>
+					<modifiers initial="true" read="true" write="true"
+						search="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="SAPCpiOutboundOrderItem" autocreate="false" generate="true">
+			<attributes>
+				<attribute qualifier="cacShippingPoint" type="java.lang.String">
+					<description>Shipping Point for Click and Collect</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>		
+		</itemtype>
+		
+	
+    </itemtypes>
+    
+</items>

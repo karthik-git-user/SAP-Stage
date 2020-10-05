@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Scimwebservices" managername="ScimwebservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="scimwebservices" usemaven="false">
+                       
+      
+        <requires-extension name="webservicescommons"/>
+              
+        <requires-extension name="scimfacades"/>
+               
+        <requires-extension name="scimfacadescep"/>
+               
+      
+        <coremodule generated="true" manager="de.hybris.platform.scimwebservices.jalo.ScimwebservicesManager" packageroot="de.hybris.platform.scimwebservices"/>
+              
+        <webmodule jspcompile="false" webroot="/scim"/>
+           
+    </extension>
+          
+
+</extensioninfo>

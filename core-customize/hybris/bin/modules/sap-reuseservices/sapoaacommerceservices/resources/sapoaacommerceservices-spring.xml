@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+<beans>
+	
+		
+		
+
+		<!-- ====== Sourcing Service ====== -->
+		
+	
+		<alias name="defaultOaaSourcingStrategy" alias="oaaCommerceSourcingStrategy" />
+		<bean id="defaultOaaSourcingStrategy"
+			class="com.sap.retail.oaa.commerce.services.sourcing.strategy.impl.DefaultSourcingStrategy">
+			<property name="sourcingService" ref="commerceSourcingService" />
+		</bean>
+			
+		<alias name="defaultOaaATPAggregationStrategy" alias="oaaCommerceATPAggregationStrategy" />
+		<bean id="defaultOaaATPAggregationStrategy"
+			class="com.sap.retail.oaa.commerce.services.atp.strategy.impl.DefaultATPAggregationStrategy">
+		</bean>
+
+		<!-- ====== Cart Strategies ====== -->
+
+		<alias name="defaultOaaCartAdjustmentStrategy" alias="oaaCartAdjustmentStrategy" />
+		<bean id="defaultOaaCartAdjustmentStrategy"
+			class="com.sap.retail.oaa.commerce.services.order.impl.DefaultSapOaaCartAdjustmentStrategy">
+			<property name="oaaStockService" ref="commerceStockService" />
+		</bean>
+
+		<alias name="defaultOaaAddToCartStrategy" alias="commerceAddToCartStrategy" />
+		<bean id="defaultOaaAddToCartStrategy"
+			class="com.sap.retail.oaa.commerce.services.order.impl.DefaultSapOaaCommerceAddToCartStrategy"
+			parent="defaultCommerceAddToCartStrategy">
+			<property name="oaaCartAdjustmentStrategy" ref="oaaCartAdjustmentStrategy" />
+		</bean>
+
+		
+
+		<alias name="defaultOaaCartValidationStrategy" alias="cartValidationStrategy" />
+		<bean id="defaultOaaCartValidationStrategy"
+			class="com.sap.retail.oaa.commerce.services.strategies.impl.DefaultSapOaaCartValidationStrategy"
+			parent="defaultCartValidationStrategy">
+			<property name="oaaStockService" ref="commerceStockService" />
+			<property name="atpAggregationStrategy" ref="oaaCommerceATPAggregationStrategy" />
+		</bean>
+
+
+			
+
+		<!-- Overwrite stockLevelStatusStrategy for rough stock indicator -->
+		<alias alias="stockLevelStatusStrategy" name="defaultSapOaaStockLevelStatusStrategy" />
+		<bean id="defaultSapOaaStockLevelStatusStrategy"
+			class="com.sap.retail.oaa.commerce.services.stock.impl.DefaultSapOaaStockLevelStatusStrategy"
+			parent="defaultStockLevelStatusStrategy">
+		</bean>
+
+
+		<alias name="defaultSapOaaPickupAvailabilityStrategy" alias="pickupAvailabilityStrategy" />
+		<bean id="defaultSapOaaPickupAvailabilityStrategy"
+			class="com.sap.retail.oaa.commerce.services.strategies.impl.DefaultSapOaaPickupAvailabilityStrategy">
+			<property name="pickupStrategy" ref="pickupStrategy" />
+			<property name="commerceStockService" ref="commerceStockService" />
+		</bean>
+
+		<alias name="defaultSapOaaServiceUtils" alias="oaaServiceUtils" />
+		<bean id="defaultSapOaaServiceUtils"
+			class="com.sap.retail.oaa.commerce.services.common.util.impl.DefaultServiceUtils">
+			<property name="timeZone" value="UTC" />
+			<property name="dateFormat" value="yyyy-MM-dd" />
+			<property name="leadingZeroFormatter" value="%018d" />
+		</bean>
+
+		<!-- ====== Stock Service ====== -->
+		<alias name="defaultOaaCommerceStockService" alias="commerceStockService" />
+		<bean id="defaultOaaCommerceStockService"
+			class="com.sap.retail.oaa.commerce.services.stock.impl.DefaultSapOaaCommerceStockService"
+			parent="defaultCommerceStockService">
+			<property name="atpService" ref="commerceATPService" />
+			<property name="stockLevelStatusStrategy" ref="stockLevelStatusStrategy" />
+			<property name="pointOfServiceDao" ref="pointOfServiceDao" />
+			<property name="atpAggregationStrategy" ref="oaaCommerceATPAggregationStrategy" />
+		</bean>
+
+		
+		
+	</beans>
+
+	<beans profile="sapoaa_carApiVersion1">
+
+		<alias name="ApiV1OaaSourcingRequestMapper" alias="oaaSourcingRequestMapper" />
+		<bean id="ApiV1OaaSourcingRequestMapper"
+			class="com.sap.retail.oaa.commerce.services.sourcing.impl.OaaApiV1SourcingRequestMapper">
+			<property name="sapCoreConfigurationService" ref="sapCoreConfigurationService" />
+			<property name="serviceUtils" ref="oaaServiceUtils" />
+		</bean>
+
+	</beans>
+
+
+
+
+</beans>
+
+

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+    <context:annotation-config/> 
+    <context:component-scan base-package="com.sap.retail.oaa.controllers"/>   
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultSapoaaaddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="sapoaaaddon"/>
+	</bean>
+
+	<bean id="defaultSapoaaaddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultSapoaaaddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getSapoaaaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultSapoaaaddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="SapoaaaddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getSapoaaaddonBeforeViewHandler"/>
+	</bean>
+
+	<!-- OAA Accelerator Checkout Facade -->
+	<alias name="defaultOaaAcceleratorCheckoutFacade" alias="acceleratorCheckoutFacade"/>
+	<bean id="defaultOaaAcceleratorCheckoutFacade" class="com.sap.retail.oaa.acceleratorfacades.order.impl.DefaultSapOaaAcceleratorCheckoutFacade" parent="defaultAcceleratorCheckoutFacade">
+		<property name="oaaCheckoutFacade" ref="checkoutFacade" />
+	</bean>
+	
+	<!-- Checkout step validator -->
+	<bean id="defaultResponsiveDeliveryAddressCheckoutValidator" 
+		class="com.sap.retail.oaa.validators.ResponsiveDeliveryAddressCheckoutStepValidator" 
+		parent="abstractCheckoutStepValidator" >
+		<property name="oaaCheckoutFacade" ref="checkoutFacade" />
+	</bean>
+	
+	<bean id="defaultResponsiveDeliveryMethodCheckoutValidator" 
+		class="com.sap.retail.oaa.validators.ResponsiveDeliveryMethodCheckoutStepValidator" 
+		parent="abstractCheckoutStepValidator" >
+		<property name="oaaCheckoutFacade" ref="checkoutFacade" />
+	</bean>
+	
+	<bean id="defaultResponsivePaymentMethodCheckoutValidator" 
+		class="com.sap.retail.oaa.validators.ResponsivePaymentCheckoutStepValidator" 
+		parent="abstractCheckoutStepValidator" >
+		<property name="oaaCheckoutFacade" ref="checkoutFacade" />
+	</bean>
+	
+	<bean id="defaultResponsiveSummaryCheckoutValidator" 
+		class="com.sap.retail.oaa.validators.ResponsiveSummaryCheckoutStepValidator" 
+		parent="abstractCheckoutStepValidator" >
+		<property name="oaaCheckoutFacade" ref="checkoutFacade" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="sapCpiOmsReturnsOutboundConversionServiceImpl" alias="sapCpiOmsReturnsOutboundConversionService"/>
+    <bean id="sapCpiOmsReturnsOutboundConversionServiceImpl"
+          class="de.hybris.platform.sap.sapcpiomsreturnsexchange.service.impl.SapCpiOmsReturnsOutboundConversionServiceImpl" parent="sapCpiOmmReturnsOutboundConversionService">
+          <property name="returnOrderContributor" ref="returnOrderContributor"/>
+          <property name="cancelReturnOrderEntryContributor" ref="cancelReturnOrderEntryContributor"/>
+          
+    </bean>
+	   
+    	
+	<alias name="sapOrderexchangeDefaultOmsSendReturnOrderToSCPIAction" alias="sapOrderexchangeSendOmsReturnOrderToBackEndAction" />
+	<bean id="sapOrderexchangeDefaultOmsSendReturnOrderToSCPIAction" class="de.hybris.platform.sap.sapcpiomsreturnsexchange.actions.SapOrderexchangeDefaultOmsSendReturnOrderToSCPIAction"
+		parent="sapOrderexchangeDefaultOmsSendReturnOrderToDataHubAction">
+		<property name="modelService" ref="modelService"></property>
+		<property name="sapPlantLogSysOrgService" ref="sapPlantLogSysOrgService" />
+		<property name="keyGeneratorLookup" ref="keyGeneratorLookups"/>
+		<property name="returnSourcingContext" ref="sapDefaultReturnRequestSouricngContext"/>
+		<property name="sapCpiOmsReturnsOutboundConversionService" ref="sapCpiOmsReturnsOutboundConversionService"/>
+		<property name="sapCpiOmsOutboundReturnService" ref="sapCpiOmsOutboundReturnService"/>
+	</bean>
+	
+	
+	<!-- SAP CPI Outbound Service For Returns -->
+	<alias name="sapCpiOmsOutboundReturnServiceImpl" alias="sapCpiOmsOutboundReturnService" />
+	<bean id="sapCpiOmsOutboundReturnServiceImpl"
+		class="de.hybris.platform.sap.sapcpiomsreturnsexchange.service.impl.SapCpiOmsOutboundReturnServiceImpl">
+		<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+	</bean>
+	
+
+	 <alias name="cancelReturnRequestToSAPSCPIAction" alias="cancelReturnRequestToSAPAction" />
+	    <bean id="cancelReturnRequestToSAPSCPIAction" class="de.hybris.platform.sap.sapcpiomsreturnsexchange.actions.CancelReturnRequestToSAPSCPIAction" parent="defaultCancelReturnRequestToSAPAction">
+	    	<property name="sapCpiOmsReturnsOutboundConversionService" ref="sapCpiOmsReturnsOutboundConversionService"/>
+		<property name="sapCpiOmsOutboundReturnService" ref="sapCpiOmsOutboundReturnService"/>
+	 </bean>
+	 
+	 
+	 <!-- Cancel Return Order Confirmation Persistence Hook -->
+    <bean id="sapCpiOmsCancelReturnOrderConfirmationPersistenceHook"
+          class="de.hybris.platform.sap.sapcpiomsreturnsexchange.inbound.event.SapCpiOmsCancelReturnOrderConfirmationPersistenceHook">
+        <property name="sapDataHubInboundReturnOrderHelper" ref="sapDataHubInboundReturnOrderHelper"/>
+    </bean>
+
+
+	
+
+			
+</beans>

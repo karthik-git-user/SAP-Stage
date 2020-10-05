@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<alias alias="sapProductRecommendationManagerFacade" name="productRecommendationManagerFacade" />
+	<bean id="productRecommendationManagerFacade" class="com.hybris.ymkt.recommendationaddon.facades.ProductRecommendationManagerFacade">
+		<property name="impressionService" ref="impressionService" />
+		<property name="productService" ref="productService" />
+		<property name="recommendationService" ref="recommendationService" />
+		<property name="referenceDataProductReferenceConverter" ref="referenceDataProductReferenceConverter" />
+		<property name="referenceProductConfiguredPopulator" ref="productConfiguredPopulator" />
+	</bean>
+
+	<alias alias="sapOfferRecommendationManagerFacade" name="offerRecommendationManagerFacade" />
+	<bean id="offerRecommendationManagerFacade" class="com.hybris.ymkt.recommendationaddon.facades.OfferRecommendationManagerFacade">
+		<property name="offerDiscoveryService" ref="offerDiscoveryService" />
+		<property name="offerInteractionService" ref="offerInteractionService" />
+	</bean>
+
+	<bean id="sapymktrecommendationaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<value>B2B</value>
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="sapymktrecommendationaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="sapymktrecommendationaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="sapymktrecommendationaddon" />
+	</bean>
+
+</beans>

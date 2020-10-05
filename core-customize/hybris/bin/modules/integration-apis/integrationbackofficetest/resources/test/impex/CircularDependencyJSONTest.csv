@@ -1,0 +1,11 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; CircularDependencyJSONTest; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; CircularDependencyJSONTest	; OrderEntry	; OrderEntry	; 	;  
+; CircularDependencyJSONTest	; Order     	; Order     	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; CircularDependencyJSONTest:OrderEntry	; order  	; OrderEntry:order	; CircularDependencyJSONTest:Order     	; true	;  
+; CircularDependencyJSONTest:Order     	; entries	; Order:entries   	; CircularDependencyJSONTest:OrderEntry	; 	;  
+; CircularDependencyJSONTest:Order     	; code   	; Order:code      	;                  	; true	;  

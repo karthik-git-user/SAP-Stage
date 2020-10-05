@@ -1,0 +1,7 @@
+#****************************
+#*** SAP Integration User ***
+#****************************
+
+INSERT_UPDATE Employee; UID[unique = true]        ; name                          ; groups(uid)[mode = append]                       ; loginDisabled
+                      ; sapInboundOMMReturnRequestUser ; SAP Inbound Return Request User ; sapInboundOMMReturnRequestGroup,integrationadmingroup ; TRUE
+

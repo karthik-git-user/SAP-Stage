@@ -1,0 +1,41 @@
+#*****************************************
+#******* B2C Customer Outbound     *******
+#*****************************************
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code)
+;OutboundB2CCustomer	;SAPCpiOutboundAddress  	;SAPCpiOutboundAddress
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; apartment            	; SAPCpiOutboundAddress:apartment             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; middleName2          	; SAPCpiOutboundAddress:middleName2           	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; middleName           	; SAPCpiOutboundAddress:middleName            	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; building             	; SAPCpiOutboundAddress:building              	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; postalCode           	; SAPCpiOutboundAddress:postalCode            	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; street               	; SAPCpiOutboundAddress:street                	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; telNumber            	; SAPCpiOutboundAddress:telNumber             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; regionIsoCode        	; SAPCpiOutboundAddress:regionIsoCode         	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; streetNumber         	; SAPCpiOutboundAddress:streetNumber          	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; defaultAddress       	; SAPCpiOutboundAddress:defaultAddress        	;                                          	; 	;
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; createDate       		; SAPCpiOutboundAddress:createDate        		;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; streetName           	; SAPCpiOutboundAddress:streetName            	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; pobox                	; SAPCpiOutboundAddress:pobox                 	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; houseNumber          	; SAPCpiOutboundAddress:houseNumber           	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; countryIsoCode       	; SAPCpiOutboundAddress:countryIsoCode        	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; titleCode            	; SAPCpiOutboundAddress:titleCode             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; documentAddressId    	; SAPCpiOutboundAddress:documentAddressId     	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; gender               	; SAPCpiOutboundAddress:gender                	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; city                 	; SAPCpiOutboundAddress:city                  	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; faxNumber            	; SAPCpiOutboundAddress:faxNumber             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; cellphone            	; SAPCpiOutboundAddress:cellphone             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; lastName             	; SAPCpiOutboundAddress:lastName              	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; sapAddressUUID       	; SAPCpiOutboundAddress:sapAddressUUID        	;                                          	; true	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; district             	; SAPCpiOutboundAddress:district              	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; email                	; SAPCpiOutboundAddress:email                 	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; phone2               	; SAPCpiOutboundAddress:phone2                	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; firstName            	; SAPCpiOutboundAddress:firstName             	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; sapAddressUsage      	; SAPCpiOutboundAddress:sapAddressUsage       	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; languageIsoCode      	; SAPCpiOutboundAddress:languageIsoCode       	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundAddress 	; dateOfBirth          	; SAPCpiOutboundAddress:dateOfBirth           	;                                          	; 	;  
+; OutboundB2CCustomer:SAPCpiOutboundCustomer	; sapCpiOutboundAddress	; SAPCpiOutboundCustomer:sapCpiOutboundAddress	; OutboundB2CCustomer:SAPCpiOutboundAddress	; 	;
+; OutboundB2CCustomer:SAPCpiOutboundCustomer	; sapConsumerID        	; SAPCpiOutboundCustomer:sapConsumerID        	;                                          	; 	;    

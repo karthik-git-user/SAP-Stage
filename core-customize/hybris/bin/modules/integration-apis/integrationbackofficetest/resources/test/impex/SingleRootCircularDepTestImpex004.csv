@@ -1,0 +1,11 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; SingleRootCircularDepTestImpex004; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; SingleRootCircularDepTestImpex004	; OrderEntry	; OrderEntry	; 	;
+; SingleRootCircularDepTestImpex004	; Order     	; Order     	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; SingleRootCircularDepTestImpex004:OrderEntry	; order  	; OrderEntry:order	; SingleRootCircularDepTestImpex004:Order     	; true	;
+; SingleRootCircularDepTestImpex004:Order     	; code   	; Order:code      	;                 	; true	;
+; SingleRootCircularDepTestImpex004:Order     	; entries	; Order:entries   	; SingleRootCircularDepTestImpex004:OrderEntry	; 	;

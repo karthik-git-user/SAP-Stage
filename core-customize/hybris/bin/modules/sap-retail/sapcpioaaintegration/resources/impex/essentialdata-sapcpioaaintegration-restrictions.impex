@@ -1,0 +1,18 @@
+#*******************************************
+#*** Create SAP Integration User Groups ****
+#*******************************************
+INSERT_UPDATE UserGroup; UID[unique = true]                         ; locname[lang = en]                                     ; description
+                       ; sapOaaApiGroup         		        ; Inbound Oaa API Group 						 ; Group with access to Inbound Oaa API
+
+#**************************************************************************
+#*** Assign SAP Integration User Groups to The Parent Integration Group ***
+#**************************************************************************
+INSERT_UPDATE UserGroup; UID[unique = true]        				    ; groups(uid)[mode = append]
+                       ; sapOaaApiGroup 						; integrationadmingroup ;
+
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+INSERT_UPDATE SearchRestriction; code[unique = true]                   				 ; name[lang = en]                             			; query                                                                                                                                                                                                                                               ; principal(UID)       ; restrictedType(code); active; generate
+                               ; sapOaaPOSRestriction        					 ; SAP OAA Point Of Service Restriction         				; ({code}='InboundOaaPointOfSercvice' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapOaaApiGroup' }} )) OR ({code}!='InboundOaaPointOfSercvice')                               		   ; integrationadmingroup ; IntegrationObject   ; true  ; true
+                               ; sapOaaStockLevelRestriction        			 ; SAP OAA Stock Level Restriction         			; ({code}='InboundOaaStockLevel' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapOaaApiGroup' }} )) OR ({code}!='InboundOaaStockLevel')                                ; integrationadmingroup ; IntegrationObject   ; true  ; true

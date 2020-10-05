@@ -1,0 +1,26 @@
+{
+    "user": {
+        "mappings": [
+            {
+                "sourcePath": "$",
+                "targetPath": "$"
+            },
+            {
+                "sourcePath": "$.id",
+                "targetVariable": "entityIdSourceSystem"
+            }
+        ]
+    },
+    "group": {
+        "mappings": [
+            {
+                "sourcePath": "$",
+                "targetPath": "$"
+            },
+            {
+                "sourcePath": "$.id",
+                "targetVariable": "entityIdSourceSystem"
+            }
+        ]
+    }
+}

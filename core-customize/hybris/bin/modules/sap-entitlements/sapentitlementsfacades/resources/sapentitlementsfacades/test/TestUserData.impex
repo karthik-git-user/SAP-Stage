@@ -1,0 +1,27 @@
+    
+$emsOAuthUrl = https://ems-integration-service-exampleurl.cfapps.exampleregion.hana.ondemand.com/client-credentials-token?tenantId=exampletenant
+$emsApiUrl = https://ems-external-api-service-exampleurl.cfapps.exampleregion.hana.ondemand.com/sap/ems/api/inboundinterfaceentitlementquery
+$emsClientId = exampleclientid
+$emsClientSecret = examplepassword
+
+
+
+INSERT_UPDATE DestinationTarget ; id[unique=true] ;
+                                ; SapEntitlementsApi ;
+                              
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; oAuthUrl; scope;
+                                ; $emsClientId              ; $emsOAuthUrl ; ;
+
+INSERT_UPDATE ConsumedOAuthCredential; id[unique = true]  	    ; clientId[unique = true]; clientSecret; oAuthUrl;
+                                     ; sapEntitlementsApiCredentials ; $emsClientId 	     ; $emsClientSecret; $emsOAuthUrl;
+
+INSERT_UPDATE Customer	;uid[unique=true]	;customerID		;name		;description	;sessionLanguage(isocode)	;sessionCurrency(isocode)	;groups(uid)	;password
+						;johnsmith			;100000			;John Smith;				;en							;USD						;customergroup	;1234
+
+INSERT_UPDATE Endpoint ; id[unique = true]             ; name                          ; version[unique = true] ; specUrl    ;                                                                                                                                                                 
+                       ; SapEntitlementsEndpoint ; SapEntitlementsEndpoint ; unknown                ;  $emsApiUrl;
+ 
+INSERT_UPDATE ConsumedDestination ; id[unique=true]                   ; url      ; additionalProperties(key,value)[map-delimiter=|]      ; endpoint(id)                 ; destinationTarget(id) ; credential(id)      ;              
+                                  ; sapEntitlementsApi ; $emsApiUrl ;  ; SapEntitlementsEndpoint ; SapEntitlementsApi       ; sapEntitlementsApiCredentials 
+           
+         

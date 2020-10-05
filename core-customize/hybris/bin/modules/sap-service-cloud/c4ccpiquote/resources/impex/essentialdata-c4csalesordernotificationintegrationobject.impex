@@ -1,0 +1,15 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; C4COrderNotificationOutbound ; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; C4COrderNotificationOutbound	; C4CSalesOrderNotification         ; C4CSalesOrderNotification 
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate 
+; C4COrderNotificationOutbound:C4CSalesOrderNotification       		; businessTransactionDocumentReferenceListCompleteTransmissionIndicator        	; C4CSalesOrderNotification:businessTransactionDocumentReferenceListCompleteTransmissionIndicator         	;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification       		; itemListCompleteTransmissionIndicator        	; C4CSalesOrderNotification:itemListCompleteTransmissionIndicator        	;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification       		; typeCode        		; C4CSalesOrderNotification:typeCode         		;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification       		; itemTypeCode        	; C4CSalesOrderNotification:itemTypeCode         	;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification       		; c4cQuoteId        	; C4CSalesOrderNotification:c4cQuoteId         		;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification        	; orderId        		; C4CSalesOrderNotification:orderId         		;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification        	; schemeId        		; C4CSalesOrderNotification:schemeId         		;                                 	;  ;
+; C4COrderNotificationOutbound:C4CSalesOrderNotification        	; actionCode        	; C4CSalesOrderNotification:actionCode        		;                                 	;  ;	

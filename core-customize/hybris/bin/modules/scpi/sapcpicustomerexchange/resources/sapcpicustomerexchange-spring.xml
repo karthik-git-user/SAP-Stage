@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+
+
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Outbound Customer Conversion Service -->
+    <alias name="sapCpiCustomerDefaultConversionService" alias="sapCpiCustomerConversionService"/>
+    <bean id="sapCpiCustomerDefaultConversionService"
+          class="de.hybris.platform.sap.sapcpicustomerexchange.service.impl.SapCpiCustomerDefaultConversionService">
+        <property name="sapCpiCustomerDestinationService" ref="sapCpiCustomerDestinationService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="customerNameStrategy" ref="customerNameStrategy"/>
+    </bean>
+
+    <!-- Send Outbound Customer Service -->
+    <alias name="sapCpiCustomerOutboundService" alias="customerExportService"/>
+    <bean id="sapCpiCustomerOutboundService"
+          class="de.hybris.platform.sap.sapcpicustomerexchange.service.impl.SapCpiCustomerOutboundService"
+          parent="defaultCustomerExportService">
+        <property name="sapCpiCustomerConversionService" ref="sapCpiCustomerConversionService"/>
+        <property name="sapCpiOutboundService" ref="sapCpiOutboundService"/>
+    </bean>
+
+    <!-- B2C Customer Persistence Hook -->
+    <bean id="sapCpiCustomerPersistenceHook"
+          class="de.hybris.platform.sap.sapcpicustomerexchange.inbound.events.SapCpiCustomerPersistenceHook">
+        <property name="customerImportService" ref="customerImportService"/>
+    </bean>
+
+    <!-- Outbound Customer Destination Service -->
+    <alias name="sapCpiCustomerDefaultDestinationService" alias="sapCpiCustomerDestinationService"/>
+    <bean id="sapCpiCustomerDefaultDestinationService" class="de.hybris.platform.sap.sapcpicustomerexchange.service.impl.SapCpiCustomerDefaultDestinationService">
+        <property name="mdmEnabled" value="${sapcpicustomerexchange.mdm.destination.enabled}" />
+        <property name="sapCoreSAPGlobalConfigurationDAO" ref="sapCoreSAPGlobalConfigurationDAO"/>
+    </bean>
+
+</beans>

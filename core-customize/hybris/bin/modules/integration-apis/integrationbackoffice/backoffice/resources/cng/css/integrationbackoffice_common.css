@@ -1,0 +1,48 @@
+/* Common */
+.yw-integrationbackoffice-modal-body {
+    border-top: 1px solid #d5d8dc;
+    border-bottom: 1px solid #d5d8dc;
+    padding: 15px 20px 35px 20px;
+}
+
+.yw-integrationbackoffice-modal-body-no-button {
+    border-top: 1px solid #d5d8dc;
+    padding: 15px 20px 20px 20px;
+}
+
+.yw-integrationbackoffice-modal-label {
+    color: #787878;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 14px;
+}
+
+.yw-integrationbackoffice-modal-button {
+    float: right;
+    margin: 10px;
+}
+
+.yw-integrationbackoffice-modal-cancel-button {
+    float: right;
+    margin: 10px 5px 10px 10px;
+    background-color: transparent !important;
+    color: #7f90a4 !important;
+    border-color:transparent;
+    box-shadow : none;
+}
+
+/* Toolbar */
+.yw-integrationbackoffice-toolbar .yw-toolbar-after {
+    float: right;
+    padding: 5px 15px 0 0;
+}
+
+.yw-integrationbackoffice-toolbar .z-hbox-separator {
+    visibility: hidden;
+}
+
+.yw-use-full-qualifier-container {
+    margin: -10px -20px 10px;
+    padding: 0 20px;
+    border-bottom: 1px solid #cccccc;
+}

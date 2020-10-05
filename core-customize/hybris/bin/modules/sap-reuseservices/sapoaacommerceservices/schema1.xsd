@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://www.sap.com/abapxml" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import schemaLocation="schema2.xsd"/>
+
+  <xs:element name="abap" type="abap"/>
+
+  <xs:element name="values" type="values"/>
+
+</xs:schema>
+

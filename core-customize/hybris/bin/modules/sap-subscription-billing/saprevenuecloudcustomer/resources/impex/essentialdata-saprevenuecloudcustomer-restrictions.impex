@@ -1,0 +1,17 @@
+#*******************************************
+#*** Create SAP Integration User Groups ****
+#*******************************************
+INSERT_UPDATE UserGroup; UID[unique = true]                         ; locname[lang = en]                                     ; description
+                       ; revenueCloudCustomerApiGroup               ; Inbound Revenue Cloud Customer API Group 				 ; Group with access to Inbound Revenue Cloud Customer API
+
+#**************************************************************************
+#*** Assign SAP Integration User Groups to The Parent Integration Group ***
+#**************************************************************************
+INSERT_UPDATE UserGroup; UID[unique = true]        				    ; groups(uid)[mode = append]
+                       ; revenueCloudCustomerApiGroup 				; integrationadmingroup ;
+
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+INSERT_UPDATE SearchRestriction; code[unique = true]                   				 ; name[lang = en]                             			; query                                                                                                                                                                                                                                               ; principal(UID)       ; restrictedType(code); active; generate                          
+                               ; revenueCloudCustomerRestriction        			 ; Revenue Cloud Customer Restriction         			; ({code}='RevenueCloudCustomer' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'revenueCloudCustomerApiGroup' }} )) OR ({code}!='RevenueCloudCustomer')                                ; integrationadmingroup ; IntegrationObject   ; true  ; true                         

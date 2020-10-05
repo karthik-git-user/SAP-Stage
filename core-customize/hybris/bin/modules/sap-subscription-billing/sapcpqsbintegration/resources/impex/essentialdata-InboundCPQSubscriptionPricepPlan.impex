@@ -1,0 +1,172 @@
+
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundQuote; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+
+                                       ; CPQInboundQuote   ; QuoteEntry                                       ; QuoteEntry
+                                       ; CPQInboundQuote	; BillingTime          	; BillingTime          	; 	;
+                                       ; CPQInboundQuote	; BillingEvent         	; BillingEvent         	; 	;
+                                       ; CPQInboundQuote	; OneTimeChargeEntry   	; OneTimeChargeEntry   	; 	;
+                                       ; CPQInboundQuote	; CpqSubscriptionDetail	; CpqSubscriptionDetail	; 	;
+                                       ; CPQInboundQuote	; Currency             	; Currency             	; 	;
+                                       ; CPQInboundQuote	; Quote                	; Quote                	; true	;
+                                       ; CPQInboundQuote	; RecurringChargeEntry 	; RecurringChargeEntry 	; 	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundQuote:QuoteEntry   ; cpqSubscriptionDetails         ; QuoteEntry:cpqSubscriptionDetails    ; CPQInboundQuote:CpqSubscriptionDetail    		;  ; true
+                                                ; CPQInboundQuote:Quote                	; billingTime             	; Quote:billingTime                            	; CPQInboundQuote:BillingTime          	; 	;
+                                                ; CPQInboundQuote:BillingEvent         	; code                    	; BillingEvent:code                            	;                                      	; true	;
+                                                ; CPQInboundQuote:BillingTime          	; code                    	; BillingTime:code                             	;                                      	; true	;
+                                                ; CPQInboundQuote:OneTimeChargeEntry   	; id                      	; OneTimeChargeEntry:id                        	;                                      	; true	;
+                                                ; CPQInboundQuote:OneTimeChargeEntry   	; billingEvent            	; OneTimeChargeEntry:billingEvent              	; CPQInboundQuote:BillingEvent         	; 	;
+                                                ; CPQInboundQuote:OneTimeChargeEntry   	; subscriptionBillingId   	; OneTimeChargeEntry:subscriptionBillingId     	;                                      	; true	;
+                                                ; CPQInboundQuote:OneTimeChargeEntry   	; price                   	; OneTimeChargeEntry:price                     	;                                      	; 	;
+                                                ; CPQInboundQuote:CpqSubscriptionDetail	; oneTimeChargeEntries    	; CpqSubscriptionDetail:oneTimeChargeEntries   	; CPQInboundQuote:OneTimeChargeEntry   	; 	; true
+                                                ; CPQInboundQuote:CpqSubscriptionDetail	; subscriptionPricePlanId 	; CpqSubscriptionDetail:subscriptionPricePlanId	;                                      	; 	;
+                                                ; CPQInboundQuote:CpqSubscriptionDetail	; recurringChargeEntries  	; CpqSubscriptionDetail:recurringChargeEntries 	; CPQInboundQuote:RecurringChargeEntry 	; 	; true
+                                                ; CPQInboundQuote:Currency             	; isocode                 	; Currency:isocode                             	;                                      	; true	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; price                   	; RecurringChargeEntry:price                   	;                                      	; 	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; cycleEnd                	; RecurringChargeEntry:cycleEnd                	;                                      	; 	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; cycleStart              	; RecurringChargeEntry:cycleStart              	;                                      	; 	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; currency                	; RecurringChargeEntry:currency                	; CPQInboundQuote:Currency             	; 	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; id                      	; RecurringChargeEntry:id                      	;                                      	; true	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; isAdvanceBilled         	; RecurringChargeEntry:isAdvanceBilled         	;                                      	; 	;
+                                                ; CPQInboundQuote:RecurringChargeEntry 	; isProrated              	; RecurringChargeEntry:isProrated              	;                                      	; 	;
+                                               ; CPQInboundQuote:RecurringChargeEntry 	; subscriptionBillingId   	; RecurringChargeEntry:subscriptionBillingId   	;                                      	; true	;
+                                                ; CPQInboundQuote:CpqSubscriptionDetail  ; effectiveDate 			; CpqSubscriptionDetail:effectiveDate			;                            	;  ;
+                                                ; CPQInboundQuote:CpqSubscriptionDetail  ; itemId 			        ; CpqSubscriptionDetail:itemId			;                            	;  ;
+                                                ; CPQInboundQuote:CpqSubscriptionDetail  ; ratePlanId				; CpqSubscriptionDetail:ratePlanId				;                            	;  ;
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundBlockUsageCharge; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                       ; CPQInboundBlockUsageCharge	; UsageChargeType        	; UsageChargeType        	; 	;
+                                       ; CPQInboundBlockUsageCharge	; PerUnitUsageCharge     	; PerUnitUsageCharge     	; true	;
+                                       ; CPQInboundBlockUsageCharge	; CpqSubscriptionDetail  	; CpqSubscriptionDetail  	; 	;
+                                       ; CPQInboundBlockUsageCharge	; PerUnitUsageChargeEntry	; PerUnitUsageChargeEntry	; 	;
+                                       ; CPQInboundBlockUsageCharge	; UsageUnit              	; UsageUnit              	; 	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundBlockUsageCharge:UsageChargeType        	; code                      	; UsageChargeType:code                         	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; cpqSubscriptionUsageCharge	; PerUnitUsageCharge:cpqSubscriptionUsageCharge	; CPQInboundBlockUsageCharge:CpqSubscriptionDetail  	; true	; true
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; minBlocks                 	; PerUnitUsageCharge:minBlocks                 	;                                                   	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; CPQInboundBlockUsageCharge:UsageChargeType        	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; CPQInboundBlockUsageCharge:UsageUnit              	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; blockSize                 	; PerUnitUsageCharge:blockSize                 	;                                                   	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; CPQInboundBlockUsageCharge:PerUnitUsageChargeEntry	; 	; true
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; includedQty               	; PerUnitUsageCharge:includedQty               	;                                                   	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageCharge     	; id                        	; PerUnitUsageCharge:id                        	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:CpqSubscriptionDetail  	; itemId                    	; CpqSubscriptionDetail:itemId                 	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:CpqSubscriptionDetail  	; ratePlanId                	; CpqSubscriptionDetail:ratePlanId             	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:CpqSubscriptionDetail  	; subscriptionPricePlanId   	; CpqSubscriptionDetail:subscriptionPricePlanId	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageChargeEntry	; subscriptionBillingId     	; PerUnitUsageChargeEntry:subscriptionBillingId	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageChargeEntry	; price                     	; PerUnitUsageChargeEntry:price                	;                                                   	; 	;
+                                                ; CPQInboundBlockUsageCharge:PerUnitUsageChargeEntry	; id                        	; PerUnitUsageChargeEntry:id                   	;                                                   	; true	;
+                                                ; CPQInboundBlockUsageCharge:UsageUnit              	; id                        	; UsageUnit:id                                 	;                                                   	; true	;
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundPercentageUsageCharge; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                       ; CPQInboundPercentageUsageCharge	; UsageChargeType        	; UsageChargeType        	; 	;
+                                       ; CPQInboundPercentageUsageCharge	; PerUnitUsageChargeEntry	; PerUnitUsageChargeEntry	; 	;
+                                       ; CPQInboundPercentageUsageCharge	; UsageUnit              	; UsageUnit              	; 	;
+                                       ; CPQInboundPercentageUsageCharge	; PerUnitUsageCharge     	; PerUnitUsageCharge     	; true	;
+                                       ; CPQInboundPercentageUsageCharge	; CpqSubscriptionDetail  	; CpqSubscriptionDetail  	; 	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundPercentageUsageCharge:UsageChargeType        	; code                      	; UsageChargeType:code                         	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageChargeEntry	; price                     	; PerUnitUsageChargeEntry:price                	;                                                        	; 	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageChargeEntry	; id                        	; PerUnitUsageChargeEntry:id                   	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageChargeEntry	; fixedPrice                	; PerUnitUsageChargeEntry:fixedPrice           	;                                                        	; 	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageChargeEntry	; subscriptionBillingId     	; PerUnitUsageChargeEntry:subscriptionBillingId	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:UsageUnit              	; id                        	; UsageUnit:id                                 	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; CPQInboundPercentageUsageCharge:UsageChargeType        	; 	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; CPQInboundPercentageUsageCharge:PerUnitUsageChargeEntry	; 	; true
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; cpqSubscriptionUsageCharge	; PerUnitUsageCharge:cpqSubscriptionUsageCharge	; CPQInboundPercentageUsageCharge:CpqSubscriptionDetail  	; true	; true
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; id                        	; PerUnitUsageCharge:id                        	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; ratio                     	; PerUnitUsageCharge:ratio                     	;                                                        	; 	;
+                                                ; CPQInboundPercentageUsageCharge:PerUnitUsageCharge     	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; CPQInboundPercentageUsageCharge:UsageUnit              	; 	;
+                                                ; CPQInboundPercentageUsageCharge:CpqSubscriptionDetail  	; itemId                    	; CpqSubscriptionDetail:itemId                 	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:CpqSubscriptionDetail  	; subscriptionPricePlanId   	; CpqSubscriptionDetail:subscriptionPricePlanId	;                                                        	; true	;
+                                                ; CPQInboundPercentageUsageCharge:CpqSubscriptionDetail  	; ratePlanId                	; CpqSubscriptionDetail:ratePlanId             	;                                                        	; true	;
+
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundTierUsageCharge; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                       ; CPQInboundTierUsageCharge	; PerUnitUsageCharge   	; PerUnitUsageCharge   	; true	;
+                                       ; CPQInboundTierUsageCharge	; UsageUnit            	; UsageUnit            	; 	;
+                                       ; CPQInboundTierUsageCharge	; UsageChargeType      	; UsageChargeType      	; 	;
+                                       ; CPQInboundTierUsageCharge	; TierUsageChargeEntry 	; TierUsageChargeEntry 	; 	;
+                                       ; CPQInboundTierUsageCharge	; CpqSubscriptionDetail	; CpqSubscriptionDetail	; 	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; 	; true
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; CPQInboundTierUsageCharge:UsageUnit            	; 	;
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; id                        	; PerUnitUsageCharge:id                        	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; minBlocks                 	; PerUnitUsageCharge:minBlocks                 	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; cpqSubscriptionUsageCharge	; PerUnitUsageCharge:cpqSubscriptionUsageCharge	; CPQInboundTierUsageCharge:CpqSubscriptionDetail	; true	; true
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; CPQInboundTierUsageCharge:UsageChargeType      	; 	;
+                                                ; CPQInboundTierUsageCharge:PerUnitUsageCharge   	; blockSize                 	; PerUnitUsageCharge:blockSize                 	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:UsageUnit            	; id                        	; UsageUnit:id                                 	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:UsageChargeType      	; code                      	; UsageChargeType:code                         	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; id                        	; TierUsageChargeEntry:id                      	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; subscriptionBillingId     	; TierUsageChargeEntry:subscriptionBillingId   	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; tierStart                 	; TierUsageChargeEntry:tierStart               	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; tierEnd                   	; TierUsageChargeEntry:tierEnd                 	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; fixedPrice                	; TierUsageChargeEntry:fixedPrice              	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:TierUsageChargeEntry 	; price                     	; TierUsageChargeEntry:price                   	;                                                	; 	;
+                                                ; CPQInboundTierUsageCharge:CpqSubscriptionDetail	; ratePlanId                	; CpqSubscriptionDetail:ratePlanId             	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:CpqSubscriptionDetail	; subscriptionPricePlanId   	; CpqSubscriptionDetail:subscriptionPricePlanId	;                                                	; true	;
+                                                ; CPQInboundTierUsageCharge:CpqSubscriptionDetail	; itemId                    	; CpqSubscriptionDetail:itemId                 	;                                                	; true	;
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundVolumeUsageCharge; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                       ; CPQInboundVolumeUsageCharge	; UsageUnit            	; UsageUnit            	; 	;
+                                       ; CPQInboundVolumeUsageCharge	; CpqSubscriptionDetail	; CpqSubscriptionDetail	; 	;
+                                       ; CPQInboundVolumeUsageCharge	; TierUsageChargeEntry 	; TierUsageChargeEntry 	; 	;
+                                       ; CPQInboundVolumeUsageCharge	; VolumeUsageCharge    	; VolumeUsageCharge    	; true	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundVolumeUsageCharge:UsageUnit            	; id                        	; UsageUnit:id                                 	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:CpqSubscriptionDetail	; subscriptionPricePlanId   	; CpqSubscriptionDetail:subscriptionPricePlanId	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:CpqSubscriptionDetail	; ratePlanId                	; CpqSubscriptionDetail:ratePlanId             	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:CpqSubscriptionDetail	; itemId                    	; CpqSubscriptionDetail:itemId                 	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; price                     	; TierUsageChargeEntry:price                   	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; subscriptionBillingId     	; TierUsageChargeEntry:subscriptionBillingId   	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; id                        	; TierUsageChargeEntry:id                      	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; tierEnd                   	; TierUsageChargeEntry:tierEnd                 	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; tierStart                 	; TierUsageChargeEntry:tierStart               	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; fixedPrice                	; TierUsageChargeEntry:fixedPrice              	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; minBlocks                 	; VolumeUsageCharge:minBlocks                  	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; cpqSubscriptionUsageCharge	; VolumeUsageCharge:cpqSubscriptionUsageCharge 	; CPQInboundVolumeUsageCharge:CpqSubscriptionDetail	; true	; true
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; blockSize                 	; VolumeUsageCharge:blockSize                  	;                                                  	; 	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; subscriptionBillingId     	; VolumeUsageCharge:subscriptionBillingId      	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; usageUnit                 	; VolumeUsageCharge:usageUnit                  	; CPQInboundVolumeUsageCharge:UsageUnit            	; 	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; id                        	; VolumeUsageCharge:id                         	;                                                  	; true	;
+                                                ; CPQInboundVolumeUsageCharge:VolumeUsageCharge    	; usageChargeEntries        	; VolumeUsageCharge:usageChargeEntries         	; CPQInboundVolumeUsageCharge:TierUsageChargeEntry 	; 	; true
+
+    INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                                   ; CPQInboundOverageUsageCharge; INBOUND
+
+    INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                       ; CPQInboundOverageUsageCharge	; UsageCharge            	; UsageCharge            	; 	;
+                                       ; CPQInboundOverageUsageCharge	; OverageUsageChargeEntry	; OverageUsageChargeEntry	; true	;
+
+    INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                                ; CPQInboundOverageUsageCharge:UsageCharge            	; id                   	; UsageCharge:id                               	;                                         	; true	;
+                                                ; CPQInboundOverageUsageCharge:OverageUsageChargeEntry	; usageCharge          	; OverageUsageChargeEntry:usageCharge          	; CPQInboundOverageUsageCharge:UsageCharge	; 	;
+                                                ; CPQInboundOverageUsageCharge:OverageUsageChargeEntry	; subscriptionBillingId	; OverageUsageChargeEntry:subscriptionBillingId	;                                         	; true	;
+                                                ; CPQInboundOverageUsageCharge:OverageUsageChargeEntry	; price                	; OverageUsageChargeEntry:price                	;                                         	; 	;
+                                                ; CPQInboundOverageUsageCharge:OverageUsageChargeEntry	; id                   	; OverageUsageChargeEntry:id                   	;                                         	; true	;
+                                                ; CPQInboundOverageUsageCharge:OverageUsageChargeEntry	; fixedPrice           	; OverageUsageChargeEntry:fixedPrice           	;                                         	; 	;

@@ -1,0 +1,29 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; InboundOaaPointOfSercvice; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; InboundOaaPointOfSercvice     ; BaseStore                        ; BaseStore                        ;               ; 
+; InboundOaaPointOfSercvice     ; Address                            ; Address                            ;               ; 
+; InboundOaaPointOfSercvice     ; PointOfServiceTypeEnum           ; PointOfServiceTypeEnum           ;               ; 
+; InboundOaaPointOfSercvice     ; PointOfService               ; PointOfService               ; true     ; 
+; InboundOaaPointOfSercvice     ; Country                            ; Country                            ;               ; 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; InboundOaaPointOfSercvice:BaseStore               ; uid                    ; BaseStore:uid                               ;                                                                 ; true     ; 
+; InboundOaaPointOfSercvice:Address                   ; town                                 ; Address:town                               ;                                                                 ;               ; 
+; InboundOaaPointOfSercvice:Address                   ; streetnumber                 ; Address:streetnumber                               ;                                                                 ;               ; 
+; InboundOaaPointOfSercvice:Address                   ; pobox                               ; Address:pobox                             ;                                                                 ;               ; 
+; InboundOaaPointOfSercvice:Address                   ; postalcode                      ; Address:postalcode                    ;                                                                 ;               ; 
+; InboundOaaPointOfSercvice:Address                   ; streetname                     ; Address:streetname                                   ;                                                                 ;               ; 
+; InboundOaaPointOfSercvice:Address                   ; duplicate                          ; Address:duplicate                       ;                                                                 ; true     ; 
+; InboundOaaPointOfSercvice:Address                   ; publicKey                         ; Address:publicKey                       ;                                                                 ; true     ; 
+; InboundOaaPointOfSercvice:Address                   ; country                            ; Address:country                          ; InboundOaaPointOfSercvice:Country                     ;               ; 
+; InboundOaaPointOfSercvice:PointOfServiceTypeEnum  ; code                                  ; PointOfServiceTypeEnum:code                           ;                                                         ; true     ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; name                                ; PointOfService:name                                   ;                                                         ; true     ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; type                                   ; PointOfService:type                   ; InboundOaaPointOfSercvice:PointOfServiceTypeEnum    ;               ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; description                      ; PointOfService:description                            ;                                                         ;               ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; address                            ; PointOfService:address                                ; InboundOaaPointOfSercvice:Address                   ;               ; true
+; InboundOaaPointOfSercvice:PointOfService                      ; sapoaa_cacShippingPoint           ; PointOfService:sapoaa_cacShippingPoint               ;                                                         ;               ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; displayName                   ; PointOfService:displayName                            ;                                                         ;               ; 
+; InboundOaaPointOfSercvice:PointOfService                      ; baseStore                        ; PointOfService:baseStore                              ; InboundOaaPointOfSercvice:BaseStore               ;               ; 
+; InboundOaaPointOfSercvice:Country                   ; isocode                             ; Country:isocode                           ;                                                                 ; true     ; 

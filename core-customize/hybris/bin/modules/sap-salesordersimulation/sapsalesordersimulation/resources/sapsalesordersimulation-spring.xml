@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">	
+	
+	<!-- SAP Sales Order Simulate Outbound Request Service -->
+	<alias name="defaultSalesOrderSimulationOutboundRequestImpl"
+		alias="salesOrderSimulationOutboundRequest" />
+	<bean id="defaultSalesOrderSimulationOutboundRequestImpl"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.SalesOrderSimulationOutboundRequestImpl">
+		<property name="destinationService" ref="destinationService" />
+		<property name="sessionService" ref="sessionService" />
+
+	</bean>
+	<alias name="defaultSalesOrderSimulationService"
+		alias="salesOrderSimulationService" />
+	<bean id="defaultSalesOrderSimulationService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultSalesOrderSimulationService">
+		<property name="deliveryService" ref="deliveryService" />
+		<property name="userService" ref="userService" />
+		<property name="b2bUnitService" ref="b2bUnitService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="salesOrderSimulationOutboundRequest"
+			ref="salesOrderSimulationOutboundRequest" />
+					<property name="sapUnitService" ref="sapUnitService"/>
+		<property name="moduleConfigurationAccess" ref="sapPricingConfigurationAccess" />
+		<property name="priceDataFactory" ref="priceDataFactory"/>
+		<property name="salesordersimulationUtil" ref="salesordersimulationUtil"/>
+		
+	</bean>
+
+	<alias alias="promotionsService" name="sapPromotionEngineService" />
+	<bean id="sapPromotionEngineService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultSapPromotionEngineService"
+		parent="promotionEngineService">
+		<property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+	</bean>
+
+	<alias alias="calculationService"
+		name="sapCartCalculationService" />
+	<bean id="sapCartCalculationService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.SapCartCalculationService"
+		parent="defaultCalculationService">
+		<property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+		
+		<property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+			<property name="pricingService" ref="pricingService" />
+		
+	</bean>
+
+
+	<alias name="sapProductCarouselFacade" alias="productCarouselFacade"/>
+	<bean id="sapProductCarouselFacade" class="de.hybris.platform.sap.sapsalesordersimulation.facade.SAPProductCarouselFacade" parent="defaultProductCarouselFacade" >
+		 <property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+		 <property name="priceDataFactory" ref="priceDataFactory"/>
+		 <property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+	</bean>
+
+	
+
+	<alias alias="stockService" name="sapLiveStockService"/>
+	<bean id="sapLiveStockService" class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.SapLiveStockService" parent="defaultStockService">
+		<property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+		<property name="baseStoreService" ref="baseStoreService"/>
+		 <property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+			<property name="userService" ref="userService" />
+			<property name="b2bUnitService" ref="b2bUnitService" />
+			<property name="sapProductAvailabilityCache" ref="sapProductAvailabilityCache" />
+			<property name="availabilityService" ref="availabilityService" />
+			
+			
+	</bean>
+	
+	<alias alias="sapSimulateSalesOrderEnablementService" name="defaultSapSimulateSalesOrdeEnablementService" />
+	<bean id="defaultSapSimulateSalesOrdeEnablementService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultSimulateSalesOrderEnablementService">
+		<property name="moduleConfigurationAccess" ref="sapPricingConfigurationAccess" />
+	</bean>
+	
+	
+	<alias name="sapExternalTaxesService" alias="externalTaxesService" />
+	<bean id="sapExternalTaxesService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.SapExternalTaxesService" parent="defaultExternalTaxesService">
+		 <property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+	</bean>
+	<alias alias="priceService" name="liveSapPricingCatalogService" />
+	<bean id="liveSapPricingCatalogService"
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.LiveSapPricingCatalogService" parent="netPriceService">
+		<property name="sapSimulateSalesOrderEnablementService" ref="sapSimulateSalesOrderEnablementService" />
+		<property name="pricingService" ref="pricingService" />
+
+	</bean>
+	
+	
+	<bean id="sapPricingConfigurationAccess" parent="sapCoreModuleConfigurationAccess">
+		<property name="moduleId" value="sapsalesordersimulation" />		
+	</bean>
+	
+	<alias alias="b2bCreditLimitEvaluationStrategy" name="liveB2BCreditlimitEvaluationStrategy"/>
+	<bean id="liveB2BCreditlimitEvaluationStrategy"
+	      class="de.hybris.platform.sap.sapsalesordersimulation.strategy.LiveB2BCreditLimitEvaluationStrategy"
+	      parent="defaultB2BCreditlimitEvaluationStrategy">
+				
+		<property name="salesOrderSimulationService"
+			ref="salesOrderSimulationService" />
+			<property name="sapSimulateSalesOrderEnablementService"
+			ref="sapSimulateSalesOrderEnablementService" />
+		
+	</bean>
+	
+
+	<bean id="sapProductAvailabilityCache"
+		class="de.hybris.platform.sap.core.sapsalesordersimulation.cache.service.impl.SapProductAvailabilityCache">
+		<property name="sapAtpCheckAvailabilityCacheRegion" ref="sapAtpCheckAvailabilityCacheRegion" />
+	</bean>
+	
+	<alias alias="availabilityService" name="sapDefaultAvailabilityService"/>
+	<bean id="sapDefaultAvailabilityService" 
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultAvailabilityService">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="userService" ref="userService" />
+		<property name="b2bUnitService" ref="b2bUnitService" />
+		<property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+		<property name="sapProductAvailabilityCache" ref="sapProductAvailabilityCache" />
+		
+	</bean>
+	
+	<alias alias="pricingService" name="sapDefaultPricingService"/>
+	<bean id="sapDefaultPricingService" 
+		class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultPricingService">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="userService" ref="userService" />
+		<property name="b2bUnitService" ref="b2bUnitService" />
+		<property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+		<property name="sapPricingCacheRegion" ref="sapPricingCacheRegion" />
+		<property name="moduleConfigurationAccess" ref="sapPricingConfigurationAccess" />
+		<property name="commonI18NService" ref="commonI18NService" />
+		<property name="salesordersimulationUtil" ref="salesordersimulationUtil" />
+		
+	</bean>
+	
+	<!-- redefine commerceStockService -->	
+	<alias alias="commerceStockService" name="defaultSapProductAvailabilityService"/>
+	<bean id="defaultSapProductAvailabilityService" parent="defaultCommerceStockService"
+	      class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultSapProductAvailabilityService">		
+	      <property name="sapSimulateSalesOrderEnablementService" ref="sapSimulateSalesOrderEnablementService" />
+	      <property name="moduleConfigurationAccess" ref="sapPricingConfigurationAccess" />
+	      <property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+	     <property name="availabilityService" ref="availabilityService" />
+	</bean>
+	 
+	<alias alias="futureStockService" name="defaultSapFutureStockService"/>
+	<bean id="defaultSapFutureStockService" parent="defaultFutureStockService"
+	      class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.DefaultSapFutureStockService">
+	       <property name="availabilityService" ref="availabilityService" />  
+	       <property name="sapSimulateSalesOrderEnablementService" ref="sapSimulateSalesOrderEnablementService" />
+	</bean>
+	
+	<bean id="salesordersimulationUtil" 
+	      class="de.hybris.platform.sap.sapsalesordersimulation.service.impl.SalesOrderSimulationUtil">
+	      <property name="baseStoreService" ref="baseStoreService" />
+		<property name="userService" ref="userService" />
+		<property name="b2bUnitService" ref="b2bUnitService" />
+	</bean>
+	
+	<alias name="salesOrderSimulateSapSalesConditionsContributor" alias="sapSalesConditionsContributor" />
+	<bean id="salesOrderSimulateSapSalesConditionsContributor" class="de.hybris.platform.sap.sapsalesordersimulation.contributor.SalesOrderSimulaitonSalesConditionsContributor" parent="defaultSapSalesConditionsContributor">
+	</bean>
+
+	<bean id="commercePlaceCreditCheckMethodHookMergeDirective" depends-on="commercePlaceOrderMethodHooks" parent="listMergeDirective">
+        <property name="add" ref="commercePlaceOrderCreditCheckMethodHook"/>
+    </bean>
+	<bean id="commercePlaceOrderCreditCheckMethodHook" class="de.hybris.platform.sap.core.sapsalesordersimulation.order.hook.impl.CommercePlaceOrderCreditCheckMethodHook">
+	    <property name="userService" ref="userService" />
+    	<property name="salesOrderSimulationService" ref="salesOrderSimulationService" />
+    	<property name="sapSimulateSalesOrderEnablementService" ref="sapSimulateSalesOrderEnablementService" />
+	</bean>
+	
+</beans>

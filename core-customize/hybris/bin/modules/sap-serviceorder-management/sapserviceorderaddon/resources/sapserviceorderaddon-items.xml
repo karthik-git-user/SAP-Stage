@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+<itemtypes>
+
+	<typegroup name="CMS Actions">
+		<itemtype code="CancelServiceOrderAction"
+		          jaloclass="com.sap.hybris.sapserviceorderaddon.jalo.actions.CancelServiceOrderAction"
+		          extends="SimpleCMSAction" autocreate="true" generate="true">
+		</itemtype>
+		
+		<itemtype code="RescheduleServiceOrderAction"
+		          jaloclass="com.sap.hybris.sapserviceorderaddon.jalo.actions.RescheduleServiceOrderAction"
+		          extends="SimpleCMSAction" autocreate="true" generate="true">
+		</itemtype>
+	</typegroup>
+</itemtypes>
+</items>

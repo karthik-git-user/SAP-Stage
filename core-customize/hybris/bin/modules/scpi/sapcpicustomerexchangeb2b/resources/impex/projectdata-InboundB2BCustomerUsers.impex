@@ -1,0 +1,7 @@
+#****************************
+#*** SAP Integration User ***
+#****************************
+
+INSERT_UPDATE Employee; UID[unique = true]        ; name                          ; groups(uid)[mode = append]                       ; loginDisabled
+                      ; sapInboundB2BCustomerUser ; SAP Inbound B2B Customer User ; sapInboundB2BCustomerGroup,integrationadmingroup ; TRUE
+

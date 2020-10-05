@@ -1,0 +1,19 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; BasicJSONTest; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; BasicJSONTest	; CatalogVersion	; CatalogVersion	; 	;
+; BasicJSONTest	; Product       	; Product       	; true	;
+; BasicJSONTest	; Catalog       	; Catalog       	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; BasicJSONTest:CatalogVersion	; active            	; CatalogVersion:active     	;                             	; 	;
+; BasicJSONTest:CatalogVersion	; catalog           	; CatalogVersion:catalog    	; BasicJSONTest:Catalog       	; true	;
+; BasicJSONTest:CatalogVersion	; version           	; CatalogVersion:version    	;                             	; true	;
+; BasicJSONTest:Product       	; manufacturerAID   	; Product:manufacturerAID   	;                             	; 	;
+; BasicJSONTest:Product       	; numberContentUnits	; Product:numberContentUnits	;                             	; 	;
+; BasicJSONTest:Product       	; catalogVersion    	; Product:catalogVersion    	; BasicJSONTest:CatalogVersion	; true	;
+; BasicJSONTest:Product       	; offlineDate       	; Product:offlineDate       	;                             	; 	;
+; BasicJSONTest:Product       	; code              	; Product:code              	;                             	; true	;
+; BasicJSONTest:Product       	; numberOfReviews   	; Product:numberOfReviews   	;                             	; 	;
+; BasicJSONTest:Catalog       	; id                	; Catalog:id                	;                             	; true	;

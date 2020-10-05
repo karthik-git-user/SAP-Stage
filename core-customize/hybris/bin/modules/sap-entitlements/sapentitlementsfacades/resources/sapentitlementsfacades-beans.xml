@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="com.sap.hybris.sapentitlementsfacades.data.EntitlementData">
+		<property name="id" type="String" />
+		<property name="entitlementNumber" type="Integer" />
+		<property name="product" type="de.hybris.platform.commercefacades.product.data.ProductData" />
+		<property name="name" type="String" />
+		<property name="description" type="String" />
+		<property name="status" type="String" />
+		<property name="quantity" type="String" />
+		<property name="validFrom" type="java.util.Date" />
+		<property name="validTo" type="java.util.Date" />
+		<property name="orderNumber" type="String" />
+		<property name="type" type="String" />
+		<property name="right" type="String" />
+		<property name="region" type="String" />
+		<property name="attributes" type="java.util.List&lt;com.sap.hybris.sapentitlementsfacades.data.EntitlementAttributeData>" />
+		<property name="relatedEntitlements" type="java.util.List&lt;com.sap.hybris.sapentitlementsfacades.data.RelatedEntitlementData>" />		
+	</bean>
+	
+	<bean class="com.sap.hybris.sapentitlementsfacades.data.EntitlementDataList">
+		<property name="entitlements" type="java.util.List&lt;com.sap.hybris.sapentitlementsfacades.data.EntitlementData>"/>
+	</bean>
+		
+	<bean
+	class="com.sap.hybris.sapentitlementsfacades.data.RelatedEntitlementData">
+		<property name="id" type="String" />
+		<property name="entitlementNumber" type="String" />
+		<property name="name" type="String" />
+	</bean>
+	
+	
+	<bean
+	class="com.sap.hybris.sapentitlementsfacades.data.EntitlementAttributeData">
+		<property name="attributeCode" type="String" />
+		<property name="attributeValue" type="Object" />		
+	</bean>
+
+</beans>

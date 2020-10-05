@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+            	
+    
+    
+    <extension abstractclassprefix="Generated" classprefix="Sapproductconfigceppricing" jaloLogicFree="true" name="sapproductconfigceppricing" usemaven="false">
+                        		
+        
+        <requires-extension name="sapproductconfigbackofficecps"/>
+                   
+        
+        <requires-extension name="sapproductconfigruntimecps"/>
+                
+        <requires-extension name="sapproductconfigservices"/>
+                
+        
+        <requires-extension name="sapcpiadapter"/>
+                
+        
+        <requires-extension name="sapcpiorderexchange"/>
+                
+        
+        <coremodule generated="true" manager="de.hybris.platform.sap.productconfig.cep.pricing.jalo.SapproductconfigceppricingManager" packageroot="de.hybris.platform.sap.productconfig.cep.pricing"/>
+                        		 
+        
+        <meta key="backoffice-module" value="true"/>
+             
+    
+    </extension>
+            
+
+
+</extensioninfo>

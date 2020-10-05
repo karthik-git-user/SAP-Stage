@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        
+    
+    <extension abstractclassprefix="Generated" classprefix="Sapfsmserviceorder" jaloLogicFree="true" managername="SapfsmserviceorderManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapfsmserviceorder" usemaven="false">
+                
+        
+        <requires-extension name="sapserviceorder"/>
+                
+        
+        <coremodule generated="true" manager="de.hybris.platform.sap.sapfsmserviceorder.jalo.SapfsmserviceorderManager" packageroot="de.hybris.platform.sap.sapfsmserviceorder"/>
+                	
+    
+    
+    </extension>
+    
+</extensioninfo>

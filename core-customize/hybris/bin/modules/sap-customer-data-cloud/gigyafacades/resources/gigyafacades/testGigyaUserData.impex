@@ -1,0 +1,13 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+INSERT_UPDATE Currency ; isocode[unique=true] ; name[lang=en] ; active ; base  ; conversion ; digits ; symbol ;  ;  
+                       ; EUR                  ; Euro          ; true   ; true  ; 1          ; 2      ; E      
+                       ; USD                  ; US Dollar     ; true   ; false ; 1,38       ; 2      ; $      
+
+INSERT_UPDATE UserGroup ; uid[unique=true] ; groups(uid) ; 
+                        ; customergroup    ;             ;  
+
+INSERT_UPDATE Customer ; description ; uid[unique=true] ; gyUID      ; originalUid              ; contactEmail             ; name                          ; groups(uid)   ; sessionCurrency(isocode)[default='USD'] ;  
+                       ; Customer K  ; customer01       ; customer01 ; customer.k@rustic-hw.com ; customer.k@rustic-hw.com ; Customer K,Test Custom Retail ; customergroup ;                                         

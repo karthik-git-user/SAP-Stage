@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<config xmlns="http://www.hybris.com/cockpit/config">
+
+
+	 <context merge-by="module" type="SAPConfiguration" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+           
+            <editorArea:tab xmlns="http://www.hybris.com/cockpitng/component/editorArea" name="backoffice.tab.salesOrderSimulation" position="2">
+                <editorArea:section name="backoffice.section.salesOrderSimulation">
+                	<editorArea:attribute qualifier="sapliveatpcheckactive"/>
+                    <editorArea:attribute qualifier="saplivecreditcheckactive"/>
+                    <editorArea:attribute qualifier="saplivecatalogpricing"/>
+                    <editorArea:attribute qualifier="saplivecartpricing"/>
+                    <editorArea:attribute qualifier="saplivecacheprice"/>
+                    <editorArea:attribute qualifier="salesordersimulate_pricesub"/>
+                     <editorArea:attribute qualifier="salesordersimulate_discountsub"/>
+                   
+                    <editorArea:attribute qualifier="salesordersimulate_taxessub"/>
+                    <editorArea:attribute qualifier="salesordersimulate_deliverysub"/>
+                    <editorArea:attribute qualifier="salesordersimulate_paymentsub"/>
+               
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+
+</config>

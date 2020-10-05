@@ -1,0 +1,53 @@
+# USE CTRL-SPACE for type-ahead support
+INSERT_UPDATE IntegrationObject; code[unique = true]; 
+; CPQOutboundQuote
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; CPQOutboundQuote  ; SAPCPQOutboundQuote                   ; SAPCPQOutboundQuote 
+; CPQOutboundQuote  ; SAPCPQOutboundQuoteItem               ; SAPCPQOutboundQuoteItem 
+; CPQOutboundQuote  ; SAPCPQOutboundQuoteCustomer           ; SAPCPQOutboundQuoteCustomer
+; CPQOutboundQuote  ; SAPCPQOutboundQuoteComment            ; SAPCPQOutboundQuoteComment
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier)   ; returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; name                              ; SAPCPQOutboundQuote:name                              ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; description                       ; SAPCPQOutboundQuote:description                       ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; version                           ; SAPCPQOutboundQuote:version                           ;                                                       ; true 
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; quoteId                           ; SAPCPQOutboundQuote:quoteId                           ;                                                       ; true 
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; creationDate                      ; SAPCPQOutboundQuote:creationDate                      ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; quoteStatus                       ; SAPCPQOutboundQuote:quoteStatus                       ;                                                       ; 
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; globalComment                     ; SAPCPQOutboundQuote:globalComment                     ;                                                       ;   
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; externalQuoteId                   ; SAPCPQOutboundQuote:externalQuoteId                   ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; distributionChannel               ; SAPCPQOutboundQuote:distributionChannel               ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; divison                           ; SAPCPQOutboundQuote:divison                           ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; pricingProcedure             	    ;SAPCPQOutboundQuote:pricingProcedure                  
+;              ;
+
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; marketID                          ; SAPCPQOutboundQuote:marketID                          ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; marketCode                        ; SAPCPQOutboundQuote:marketCode                        ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; pricebookId                       ; SAPCPQOutboundQuote:pricebookId                       ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; origin                            ; SAPCPQOutboundQuote:origin                            ;                                                       ;
+
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; sapCPQOutboundQuoteItems          ; SAPCPQOutboundQuote:sapCPQOutboundQuoteItems          ; CPQOutboundQuote:SAPCPQOutboundQuoteItem              ;  
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; sapCPQOutboundQuoteCustomers      ; SAPCPQOutboundQuote:sapCPQOutboundQuoteCustomers      ; CPQOutboundQuote:SAPCPQOutboundQuoteCustomer          ; 
+; CPQOutboundQuote:SAPCPQOutboundQuote              ; sapCPQOutboundQuoteComments       ; SAPCPQOutboundQuote:sapCPQOutboundQuoteComments       ; CPQOutboundQuote:SAPCPQOutboundQuoteComment           ; 
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; productCode                       ; SAPCPQOutboundQuoteItem:productCode                   ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; quantity                          ; SAPCPQOutboundQuoteItem:quantity                      ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; itemNumber                        ; SAPCPQOutboundQuoteItem:itemNumber                    ;                                                       ; true 
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; quoteId                           ; SAPCPQOutboundQuoteItem:quoteId                       ;                                                       ; true 
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; price                             ; SAPCPQOutboundQuoteItem:price                         ;                                                       ;  
+
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; partNumber                        ; SAPCPQOutboundQuoteItem:partNumber                    ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; configurationId                   ; SAPCPQOutboundQuoteItem:configurationId               ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; productSystemId                   ; SAPCPQOutboundQuoteItem:productSystemId               ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; externalItemID                    ; SAPCPQOutboundQuoteItem:externalItemID                ;                                                       ;
+
+; CPQOutboundQuote:SAPCPQOutboundQuoteItem          ; sapCPQOutboundQuoteItemComments   ; SAPCPQOutboundQuoteItem:sapCPQOutboundQuoteItemComments; CPQOutboundQuote:SAPCPQOutboundQuoteComment          ;  
+; CPQOutboundQuote:SAPCPQOutboundQuoteCustomer      ; id                                ; SAPCPQOutboundQuoteCustomer:id                        ;                                                       ;  
+; CPQOutboundQuote:SAPCPQOutboundQuoteCustomer      ; customerCode                      ; SAPCPQOutboundQuoteCustomer:customerCode              ;                                                       ; true 
+; CPQOutboundQuote:SAPCPQOutboundQuoteCustomer      ; roleType                          ; SAPCPQOutboundQuoteCustomer:roleType                  ;                                                       ; 
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; quoteId                           ; SAPCPQOutboundQuoteComment:quoteId                    ;                                                       ;true
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; commentId                         ; SAPCPQOutboundQuoteComment:commentId                  ;                                                       ;true
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; email                             ; SAPCPQOutboundQuoteComment:email                      ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; userName                          ; SAPCPQOutboundQuoteComment:userName                   ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; userCompany                       ; SAPCPQOutboundQuoteComment:userCompany                ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; comment                           ; SAPCPQOutboundQuoteComment:comment                    ;                                                       ;
+; CPQOutboundQuote:SAPCPQOutboundQuoteComment       ; source                            ; SAPCPQOutboundQuoteComment:source                     ;                                                       ;

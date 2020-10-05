@@ -1,0 +1,21 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+##******************************This file is generated - please do not edit it. It will be regenerated after every build.********************************#
+
+$contentCatalog=powertoolsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteUid=powertools
+
+# Language
+$lang=en
+
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;ConsentManagementLink;"Consent Management"
+
+
+INSERT_UPDATE ConsentTemplate 	;id[unique = true] 	;version[unique = true]	;baseSite(uid)[unique = true, default = $siteUid]		;name[lang = $lang]             		 ;description[lang = $lang]                         				 	
+								;QUALTRICS_ENABLE 	;1 						;														;"Template consent to give feedback"	 ;"I agree to give feedback regarding the website experience." 	    
+ 

@@ -1,0 +1,27 @@
+#*********************************
+#*** B2C Customer Confirmation ***
+#*********************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundB2CCustomerConfirmation
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)
+                                   ; InboundB2CCustomerConfirmation        ; Customer           ; Customer
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+                                            ; InboundB2CCustomerConfirmation:Customer                            ; customerID                  ; Customer:customerID                                ;                                                           ; true
+
+
+#**********************************
+#*** SAP Integration User Group ***
+#**********************************
+
+INSERT_UPDATE UserGroup; UID[unique = true]         ; locname[lang = en]             ; description                    ; groups(uid)[mode = append]
+                       ; sapInboundB2CCustomerGroup ; SAP Inbound B2C Customer Group ; SAP Inbound B2C Customer Group ; integrationusergroup
+
+#***************************************************
+#*** SAP Integration Flexible Search Restriction ***
+#***************************************************
+
+INSERT_UPDATE SearchRestriction; code[unique = true]              ; name[lang = en]                      ; query                                                                                                                                                                                                                                  ; principal(UID)       ; restrictedType(code); active; generate
+                               ; sapInboundB2CCustomerRestriction ; SAP Inbound B2C Customer Restriction ; ({code}='InboundB2CCustomerConfirmation' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundB2CCustomerGroup' }} )) OR ({code}!='InboundB2CCustomerConfirmation') ; integrationusergroup ; IntegrationObject   ; true  ; true

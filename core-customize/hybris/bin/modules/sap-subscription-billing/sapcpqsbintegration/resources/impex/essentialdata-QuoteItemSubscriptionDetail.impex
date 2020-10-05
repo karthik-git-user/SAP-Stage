@@ -1,0 +1,23 @@
+# USE CTRL-SPACE for type-ahead support
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; CPQInboundQuote ; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) ; root[default = false]
+                                   ; CPQInboundQuote  	; CpqSubscriptionDetail 	                   ; CpqSubscriptionDetail
+                                   ; CPQInboundQuote  	; CpqPricingParameter                                 ; CpqPricingParameter
+                                   ; CPQInboundQuote   ; QuoteEntry                                       ; QuoteEntry
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; effectiveDate 			; CpqSubscriptionDetail:effectiveDate			;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; itemId 			        ; CpqSubscriptionDetail:itemId			;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; ratePlanId				; CpqSubscriptionDetail:ratePlanId				;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; contractStartDate		; CpqSubscriptionDetail:contractStartDate		;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; contractEndDate			; CpqSubscriptionDetail:contractEndDate		;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; contractLength			; CpqSubscriptionDetail:contractLength			;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; minimumContractEndDate	; CpqSubscriptionDetail:minimumContractEndDate	;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; minimumContractLength	; CpqSubscriptionDetail:minimumContractLength	;                            	;  ;
+                                            ; CPQInboundQuote:CpqSubscriptionDetail  ; pricingParameters		; CpqSubscriptionDetail:pricingParameters		;  CPQInboundQuote:CpqPricingParameter                           	;  ; true
+                                            ; CPQInboundQuote:CpqPricingParameter			 ; code						;CpqPricingParameter:code		;                            	;  ;
+                                            ; CPQInboundQuote:CpqPricingParameter			 ; value					;CpqPricingParameter:value		;                            	;  ;
+                                            ; CPQInboundQuote:CpqPricingParameter			 ; itemId					;CpqPricingParameter:itemId		;                            	;  ;
+                                            ; CPQInboundQuote:QuoteEntry   ; cpqSubscriptionDetails         ; QuoteEntry:cpqSubscriptionDetails    ; CPQInboundQuote:CpqSubscriptionDetail    		;  ; true

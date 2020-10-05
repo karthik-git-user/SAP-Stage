@@ -1,0 +1,13 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundBaseSite; 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; OutboundBaseSite	; BaseSite   	; BaseSite 
+; OutboundBaseSite	; GigyaConfig	; GigyaConfig 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundBaseSite:BaseSite   	; uid            	; BaseSite:uid               	;                                 	; true		;  
+; OutboundBaseSite:BaseSite   	; gigyaConfig    	; BaseSite:gigyaConfig       	; OutboundBaseSite:GigyaConfig		; 		;  
+; OutboundBaseSite:GigyaConfig	; gigyaApiKey    	; GigyaConfig:gigyaApiKey    	;                                 	; 		;  
+; OutboundBaseSite:GigyaConfig	; gigyaDataCenter	; GigyaConfig:gigyaDataCenter	;                                 	; 		;
+; OutboundBaseSite:GigyaConfig	; code           	; GigyaConfig:code           	;                                 	; true		;  

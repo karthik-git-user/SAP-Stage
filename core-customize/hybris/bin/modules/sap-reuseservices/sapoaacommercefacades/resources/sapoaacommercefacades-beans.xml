@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="com.sap.retail.oaa.commerce.facades.schedulelines.OaaScheduleLineData">
+		<property name="confirmedQuantity" type="Double"/>
+		<property name="confirmedDate" type="java.util.Date"/>
+	</bean>
+	
+	<bean class="de.hybris.platform.commercefacades.order.data.OrderEntryData">
+		<property name="oaaScheduleLines"
+		          type="java.util.List&lt;com.sap.retail.oaa.commerce.facades.schedulelines.OaaScheduleLineData>"/>
+		<property name="sapSource"
+				  type ="de.hybris.platform.commercefacades.storelocator.data.PointOfServiceData" />
+        <property name="sapVendor"
+				  type ="java.lang.String" />
+	</bean>		
+
+</beans>

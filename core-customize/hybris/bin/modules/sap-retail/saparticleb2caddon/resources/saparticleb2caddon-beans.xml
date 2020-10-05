@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="beans.xsd">
+
+<!-- Data object for article component data -->
+     <bean class="com.sap.retail.commercesuite.saparticleb2caddon.articlecomponent.data.ArticleComponentData">
+	   <property name="component" type="de.hybris.platform.commercefacades.product.data.ProductData" />
+	   <property name="quantity"  type="Integer" />   
+	   <property name="unit" type="String" />
+	</bean>
+
+<!-- Enhance product data object by article component data -->
+	<bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+		<property name="articleComponents" type="java.util.List&lt;com.sap.retail.commercesuite.saparticleb2caddon.articlecomponent.data.ArticleComponentData>" /> 
+	</bean>
+	
+</beans>

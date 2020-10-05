@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="ProceduresSubtotal" generate="true"
+			autocreate="true" dynamic="true">
+			<description> This enumeration denotes Pricing procedures </description>
+			<value code="NetAmount" />
+			<value code="TaxAmount" />
+			<value code="CostAmount" />
+			<value code="Subtotal1Amount" />
+			<value code="Subtotal2Amount" />
+			<value code="Subtotal3Amount" />
+			<value code="Subtotal4Amount" />
+			<value code="Subtotal5Amount" />
+			<value code="Subtotal6Amount" />
+			
+		</enumtype>
+	</enumtypes>
+
+	<itemtypes>
+		<itemtype code="SAPConfiguration" autocreate="false"
+			generate="false" >
+			<attributes>
+				<attribute type="java.lang.Boolean" qualifier="saplivecatalogpricing">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					<description>Determines whether the site should use external catalog pricing</description>
+				</attribute>
+				<attribute type="java.lang.Boolean" qualifier="saplivecartpricing">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					<description>Determines whether the site should use external external order pricing</description>
+				</attribute>
+				<attribute type="java.lang.Boolean" qualifier="saplivecacheprice">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					<description>Determines whether the site should cache external catalog prices</description>
+				</attribute>
+				<attribute type="ProceduresSubtotal" qualifier="salesordersimulate_pricesub">
+					<persistence type="property" />
+					<modifiers optional="true" />
+					<description>Assigned procedure for price.</description>
+				</attribute>
+				<attribute type="ProceduresSubtotal" qualifier="salesordersimulate_discountsub">
+					<modifiers optional="true" />
+					<description>Assigned procedure for discounts.</description>
+					<persistence type="property" />
+				</attribute>
+
+				<attribute type="ProceduresSubtotal" qualifier="salesordersimulate_taxessub">
+					<persistence type="property" />
+					<modifiers optional="true" />
+					<description>Assigned procedure for taxes.</description>
+				</attribute>
+				<attribute type="ProceduresSubtotal" qualifier="salesordersimulate_deliverysub">
+					<persistence type="property" />
+					<modifiers optional="true" />
+					<description>Assigned procedure for delivery.</description>
+				</attribute>
+				<attribute type="ProceduresSubtotal" qualifier="salesordersimulate_paymentsub">
+					<persistence type="property" />
+					<modifiers optional="true" />
+					<description>Assigned procedure for payment.</description>
+				</attribute>
+				
+				
+		
+				<attribute qualifier="saplivecreditcheckactive"  type="java.lang.Boolean">
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					<description>Determines whether the site should use SAP credit check</description>
+				</attribute>
+
+			
+				<attribute qualifier="sapliveatpcheckactive"  type="java.lang.Boolean" >
+					<persistence type="property" />
+					<modifiers optional="false" />
+					<defaultvalue>java.lang.Boolean.FALSE</defaultvalue>
+					<description>Determines whether the site should use perform live availability-to-purchase(ATP) check</description>
+				</attribute>
+			
+			</attributes>
+		</itemtype>
+	</itemtypes>
+	
+</items>

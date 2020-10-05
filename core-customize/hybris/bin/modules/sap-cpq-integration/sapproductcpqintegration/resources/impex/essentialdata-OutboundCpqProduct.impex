@@ -1,0 +1,41 @@
+INSERT_UPDATE IntegrationObject; code[unique = true];
+; SAPCpqOutboundProduct 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; SAPCpqOutboundProduct	; Unit                 	; Unit 
+; SAPCpqOutboundProduct	; SAPConfiguration     	; SAPConfiguration 
+; SAPCpqOutboundProduct	; Category             	; Category 
+; SAPCpqOutboundProduct	; Catalog              	; Catalog 
+; SAPCpqOutboundProduct	; Media                	; Media 
+; SAPCpqOutboundProduct	; CatalogVersion       	; CatalogVersion 
+; SAPCpqOutboundProduct	; Product              	; Product 
+; SAPCpqOutboundProduct	; ArticleApprovalStatus	; ArticleApprovalStatus 
+; SAPCpqOutboundProduct	; BaseStore            	; BaseStore 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false] 
+; SAPCpqOutboundProduct:Unit                 	; code                                   	; Unit:code                                               	;                                            	; true 
+; SAPCpqOutboundProduct:SAPConfiguration     	; saporderexchange_itemPriceConditionType	; SAPConfiguration:saporderexchange_itemPriceConditionType	;                                            	;  
+; SAPCpqOutboundProduct:SAPConfiguration     	; core_name                              	; SAPConfiguration:core_name                              	;                                            	; true 
+; SAPCpqOutboundProduct:Category             	; catalogVersion                         	; Category:catalogVersion                                 	; SAPCpqOutboundProduct:CatalogVersion       	; true 
+; SAPCpqOutboundProduct:Category             	; code                                   	; Category:code                                           	;                                            	; true 
+; SAPCpqOutboundProduct:Catalog              	; id                                     	; Catalog:id                                              	;                                            	; true 
+; SAPCpqOutboundProduct:Catalog              	; baseStores                             	; Catalog:baseStores                                      	; SAPCpqOutboundProduct:BaseStore            	;  
+; SAPCpqOutboundProduct:Media                	; catalogVersion                         	; Media:catalogVersion                                    	; SAPCpqOutboundProduct:CatalogVersion       	; true 
+; SAPCpqOutboundProduct:Media                	; realFileName                           	; Media:realFileName                                      	;                                            	;  
+; SAPCpqOutboundProduct:Media                	; code                                   	; Media:code                                              	;                                            	; true 
+; SAPCpqOutboundProduct:CatalogVersion       	; version                                	; CatalogVersion:version                                  	;                                            	; true 
+; SAPCpqOutboundProduct:CatalogVersion       	; catalog                                	; CatalogVersion:catalog                                  	; SAPCpqOutboundProduct:Catalog              	; true 
+; SAPCpqOutboundProduct:Product              	; unit                                   	; Product:unit                                            	; SAPCpqOutboundProduct:Unit                 	;  
+; SAPCpqOutboundProduct:Product              	; offlineDate                            	; Product:offlineDate                                     	;                                            	;  
+; SAPCpqOutboundProduct:Product              	; supercategories                        	; Product:supercategories                                 	; SAPCpqOutboundProduct:Category             	;  
+; SAPCpqOutboundProduct:Product              	; name                                   	; Product:name                                            	;                                            	;  
+; SAPCpqOutboundProduct:Product              	; catalogVersion                         	; Product:catalogVersion                                  	; SAPCpqOutboundProduct:CatalogVersion       	; true 
+; SAPCpqOutboundProduct:Product              	; picture                                	; Product:picture                                         	; SAPCpqOutboundProduct:Media                	;  
+; SAPCpqOutboundProduct:Product              	; approvalStatus                         	; Product:approvalStatus                                  	; SAPCpqOutboundProduct:ArticleApprovalStatus	;  
+; SAPCpqOutboundProduct:Product              	; onlineDate                             	; Product:onlineDate                                      	;                                            	;  
+; SAPCpqOutboundProduct:Product              	; summary                                	; Product:summary                                         	;                                            	;  
+; SAPCpqOutboundProduct:Product              	; code                                   	; Product:code                                            	;                                            	; true 
+; SAPCpqOutboundProduct:Product              	; description                            	; Product:description                                     	;                                            	;  
+; SAPCpqOutboundProduct:ArticleApprovalStatus	; code                                   	; ArticleApprovalStatus:code                              	;                                            	; true 
+; SAPCpqOutboundProduct:BaseStore            	; SAPConfiguration                       	; BaseStore:SAPConfiguration                              	; SAPCpqOutboundProduct:SAPConfiguration     	;  
+; SAPCpqOutboundProduct:BaseStore            	; uid                                    	; BaseStore:uid                                           	;                                            	; true 

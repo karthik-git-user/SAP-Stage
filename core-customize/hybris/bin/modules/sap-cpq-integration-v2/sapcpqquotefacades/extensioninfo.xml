@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+               
+    
+    
+    <extension abstractclassprefix="Generated" classprefix="Sapcpqquotefacades" jaloLogicFree="true" managername="SapcpqquotefacadesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapcpqquotefacades" usemaven="false">
+                          
+      
+        
+        
+        <requires-extension name="sapcpqquoteintegration"/>
+              
+        
+        
+        <coremodule generated="true" manager="com.sap.hybris.sapcpqquotefacades.jalo.SapcpqquotefacadesManager" packageroot="com.sap.hybris.sapcpqquotefacades"/>
+                        					
+	
+        
+           
+    
+    
+    </extension>
+                  
+
+
+
+</extensioninfo>

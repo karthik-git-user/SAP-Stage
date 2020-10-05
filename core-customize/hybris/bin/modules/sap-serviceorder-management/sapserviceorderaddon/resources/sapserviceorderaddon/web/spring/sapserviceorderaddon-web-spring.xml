@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+           
+    <context:annotation-config/> 
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultSapserviceorderaddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="sapserviceorderaddon"/>
+	</bean>
+
+	<bean id="defaultSapserviceorderaddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultSapserviceorderaddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getSapserviceorderaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultSapserviceorderaddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="SapserviceorderaddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getSapserviceorderaddonBeforeViewHandler"/>
+	</bean>
+
+	<context:component-scan base-package="com.sap.hybris.sapserviceorderaddon" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver"/>
+	
+	<!-- Default checkout group -->
+
+	<alias name="defaultSapServiceOrderB2bMultiStepCheckoutGroup" alias="b2bServiceCheckoutGroup" />
+	<bean id="defaultSapServiceOrderB2bMultiStepCheckoutGroup"  class="de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.CheckoutGroup">
+		<property name="groupId"  value="defaultGroup"/>
+		<property name="checkoutStepMap">
+			<map merge="true">
+				<entry key="multi" value-ref="multiStepCheckout"/>
+				<entry key="payment-type" value-ref="paymentTypeCheckoutStep"/>
+				<entry key="delivery-address" value-ref="deliveryAddressCheckoutStep"/>
+				<entry key="delivery-method" value-ref="deliveryMethodForServiceOrderCheckoutStep"/>
+				<entry key="pickup-location" value-ref="pickupLocationCheckoutStep"/>
+				<entry key="service-details" value-ref="serviceDetailsCheckoutStep"/>
+				<entry key="payment-method" value-ref="paymentMethodCheckoutStep"/>
+				<entry key="summary" value-ref="summaryCheckoutStep"/>
+			</map>
+		</property>
+		<property name="validationResultsMap">
+			<map merge="true">
+				<entry key="FAILED" value-ref="REDIRECT_TO_CART"/>
+				<entry key="REDIRECT_TO_PAYMENT_TYPE" value-ref="REDIRECT_TO_PAYMENT_TYPE"/>
+				<entry key="REDIRECT_TO_DELIVERY_ADDRESS" value-ref="REDIRECT_TO_DELIVERY_ADDRESS"/>
+				<entry key="REDIRECT_TO_PICKUP_LOCATION" value-ref="REDIRECT_TO_PICKUP_LOCATION"/>
+				<entry key="REDIRECT_TO_CART" value-ref="REDIRECT_TO_CART"/>
+				<entry key="REDIRECT_TO_PAYMENT_METHOD" value-ref="REDIRECT_TO_PAYMENT_METHOD"/>
+				<entry key="REDIRECT_TO_DELIVERY_METHOD" value-ref="REDIRECT_TO_DELIVERY_METHOD"/>
+				<entry key="REDIRECT_TO_SUMMARY" value-ref="REDIRECT_TO_SUMMARY"/>
+			</map>
+		</property>
+		<property name="checkoutProgressBar">
+			<map merge="true">
+				<entry key="1" value-ref="paymentTypeCheckoutStep"/>
+				<entry key="2" value-ref="deliveryAddressCheckoutStep"/>
+				<entry key="3" value-ref="deliveryMethodForServiceOrderCheckoutStep"/>
+				<entry key="4" value-ref="serviceDetailsCheckoutStep"/>
+				<entry key="5" value-ref="paymentMethodCheckoutStep"/>
+				<entry key="6" value-ref="defaultSummaryCheckoutStep"/>
+			</map>
+		</property>
+	</bean>
+
+	<!---Default checkout group-->
+	
+	<alias name="defaultServiceDetailsCheckoutStep" alias="serviceDetailsCheckoutStep" />
+	<bean id="defaultServiceDetailsCheckoutStep" parent="checkoutStep">
+	    <property name="checkoutGroup" ref="b2bServiceCheckoutGroup"/>
+	    <property name="transitions">
+	        <map merge="true">
+	            <entry key="previous" value-ref="REDIRECT_TO_DELIVERY_METHOD"/>
+	            <entry key="current" value-ref="REDIRECT_TO_SERVICE_DETAILS"/>
+	            <entry key="next" value-ref="REDIRECT_TO_PAYMENT_METHOD"/>
+	        </map>
+	    </property>
+	    <property name="progressBarId" value="serviceDetails"/>
+	</bean>
+	 
+	<bean id="REDIRECT_TO_SERVICE_DETAILS" class="java.lang.String">
+	    <constructor-arg value="redirect:/checkout/multi/service-details"/>
+	</bean>  
+	
+	<alias name="defaultDeliveryMethodForServiceOrderCheckoutStep" alias="deliveryMethodForServiceOrderCheckoutStep"/>
+	<bean id="defaultDeliveryMethodForServiceOrderCheckoutStep" parent="checkoutStep">
+	    <property name="checkoutGroup" ref="b2bServiceCheckoutGroup"/>
+	    <property name="checkoutStepValidator" ref="deliveryMethodCheckoutValidator"/>
+	    <property name="transitions">
+	        <map merge="true">
+	            <entry key="previous" value-ref="REDIRECT_TO_DELIVERY_ADDRESS"/>
+	            <entry key="current" value-ref="REDIRECT_TO_DELIVERY_METHOD"/>
+	            <entry key="next" value-ref="REDIRECT_TO_SERVICE_DETAILS"/>
+	        </map>
+	    </property>
+	    <property name="progressBarId" value="deliveryMethod"/>
+	</bean>
+	
+	<!--Checkout GroupMap can be added at the bootom of your spring file-->
+	<util:map id="checkoutFlowGroupMap" >
+	    <entry key="b2bServiceCheckoutGroup"  value-ref="b2bServiceCheckoutGroup"/>
+	</util:map>
+	
+	
+	<bean id="cancelServiceOrderActionRenderer"  parent="genericAddOnCMSComponentRenderer"/>
+
+	<bean id="cancelServiceOrderActionRendererMapping" parent="addonCmsComponentRendererMapping" >
+		<property name="typeCode" value="CancelServiceOrderAction" />
+		<property name="renderer" ref="cancelServiceOrderActionRenderer" />
+	</bean>
+	
+	<bean id="rescheduleServiceOrderActionRenderer"  parent="genericAddOnCMSComponentRenderer"/>
+
+	<bean id="rescheduleServiceOrderActionRendererMapping" parent="addonCmsComponentRendererMapping" >
+		<property name="typeCode" value="RescheduleServiceOrderAction" />
+		<property name="renderer" ref="rescheduleServiceOrderActionRenderer" />
+	</bean>
+	
+</beans>

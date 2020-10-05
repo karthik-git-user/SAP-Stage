@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="defaultSapBillingInvoiceDaoImpl" alias="sapBillingInvoiceDaoImpl" />
+	<bean id="defaultSapBillingInvoiceDaoImpl" class="com.sap.hybris.sapbillinginvoiceservices.dao.impl.SapBillingInvoiceDaoImpl">
+		<property name="flexibleSearchService" ref="flexibleSearchService"/>
+		<property name="paginatedFlexibleSearchService" ref="paginatedFlexibleSearchService"/>
+		
+	</bean>
+	
+	<alias name="defaultSapBillingInvoiceServiceImpl" alias="sapBillingInvoiceService" />
+	<bean name="defaultSapBillingInvoiceServiceImpl" class="com.sap.hybris.sapbillinginvoiceservices.service.impl.SapBillingInvoiceServiceImpl">
+		<property name="billingInvoiceDao" ref="sapBillingInvoiceDaoImpl"/>
+		<property name="sapBillingInvoiceClientImpl" ref="sapBillingInvoiceClientImpl"/>
+		<property name="userService" ref="userService"/>
+	</bean>  
+	
+	<alias name="defaultSapBillingInvoiceClientImpl" alias="sapBillingInvoiceClientImpl" />
+	<bean name="defaultSapBillingInvoiceClientImpl" class="com.sap.hybris.sapbillinginvoiceservices.client.impl.SapBillingInvoiceClientImpl">
+		<property name="sapPlantLogSysOrgService" ref="sapPlantLogSysOrgService"/>
+		<property name="configurationService" ref="configurationService" />
+		<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+		
+	</bean> 
+			
+</beans>

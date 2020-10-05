@@ -1,0 +1,58 @@
+$cpiTenantHostName=https://tester.hana.ondemand.com
+
+$customerFilter=({{ SELECT {pk} FROM {Customer} }})                                                                                                    
+$consentPers=({{ SELECT {ct.pk} FROM {ConsentTemplate AS ct} WHERE {ct.id}='SAPYMKT_PERS' }})                                                          
+$consentFilterInteraction=({{ SELECT {cons.customer} FROM {Consent AS cons} WHERE {cons.consentTemplate} IN $consentPers AND ?session.user.currentTime > {cons.consentGivenDate} AND \
+({cons.consentWithdrawnDate} IS NULL OR ?session.user.currentTime < {cons.consentWithdrawnDate}) AND {item.modifiedtime} > {cons.consentGivenDate} }}) 
+                                                                                                                                                       
+################################################################                                                                                       
+# This sets up the credential (username/password) called “mktCPIBasicCredentails”                                                                      
+# ##############################################################                                                                                       
+INSERT_UPDATE BasicCredential ; id[unique = true]      ; username ; password 
+                              ; mktCPIBasicCredentails ; username ; password 
+                              
+###############################################################
+# This sets up the endpoint called "mktCPIProductReviewEndpoint."
+# #############################################################
+INSERT_UPDATE Endpoint ; id[unique = true]           ; version[unique = true] ; name                        ; specUrl                                                                                                             
+                       ; mktCPIProductReviewEndpoint ; unknown                ; mktCPIProductReviewEndpoint ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-PRODUCT-REVIEW-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/$metadata" 
+                       
+##############################################################
+# This sets up a ConsumedDestination called "mktCPIProductReviewDestination."
+# It uses the Endpoint and BasicCredential created above. The user calls
+# the Outbound Service with the destination ID (e.g. "mktCPIProductReviewDestination").
+# The Outbound Service looks up the details of the destination by ID,
+# so it knows where to send the data
+# ############################################################
+INSERT_UPDATE DestinationTarget ; id[unique = true]                    
+                                ; mktCPIProductReviewDestinationTarget 
+                                
+INSERT_UPDATE ConsumedDestination ; id[unique = true]              ; url                                                                                                                       ; endpoint(id, version)               ; credential(id)         ; destinationTarget(id)[default = mktCPIProductReviewDestinationTarget] ; additionalProperties(key, value)[map-delimiter=|]                                                                  
+                                  ; mktCPIProductReviewDestination ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-PRODUCT-REVIEW-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/CustomerReviews" ; mktCPIProductReviewEndpoint:unknown ; mktCPIBasicCredentails ;                                                                       ; "csrfURL->$cpiTenantHostName/gw/odata/SAP/REPLICATE-PRODUCT-REVIEW-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1" 
+                                  
+################################################################
+# Setup Outbound Sync configuration container
+# ##############################################################
+INSERT_UPDATE OutboundSyncStreamConfigurationContainer ; id[unique = true]                         ;  
+                                                       ; mktCPIProductReviewOutboundSyncDataStream ;  
+                                                       
+INSERT_UPDATE OutboundSyncJob ; code[unique = true]                     ; streamConfigurationContainer(id)          
+                              ; mktCPIoDataProductReviewOutboundSyncJob ; mktCPIProductReviewOutboundSyncDataStream 
+                              
+INSERT_UPDATE OutboundChannelConfiguration ; code[unique = true]                    ; integrationObject(code)  ; destination(id)                
+                                           ; outboundSyncMktCPIProductReviewChannel ; MKTOutboundProductReview ; mktCPIProductReviewDestination 
+                                           
+# Set up a Product Review stream that will detect changes made to the Product Review and include it in the mktCPIProductReviewOutboundSyncDataStream StreamConfigurationContainer
+INSERT_UPDATE OutboundSyncStreamConfiguration ; streamId[unique = true]           ; container(id)                             ; itemTypeForStream(code) ; outboundChannelConfiguration(code)     ; whereClause                                                                                                                                                                                                                                                                                                                                                                                                                                     ;  
+                                              ; mktCPIProductReviewOutboundStream ; mktCPIProductReviewOutboundSyncDataStream ; CustomerReview          ; outboundSyncMktCPIProductReviewChannel ; {item.product} IN ({{ SELECT {p.pk} FROM {Product as p} WHERE {p.catalogVersion} IN ({{SELECT {CatalogVersion.pk} FROM {CatalogVersion LEFT JOIN Catalog ON {CatalogVersion.catalog} = {Catalog.pk}} WHERE {CatalogVersion.version}='Online' AND {Catalog.id}='electronicsProductCatalog'}}) }}) AND {item.blocked}=0 AND {item.approvalstatus} IN ({{ SELECT {c.pk} FROM {CustomerReviewApprovalType as c} WHERE {c.code}='approved' }}) 
+                                              
+                                              
+INSERT_UPDATE OutboundSyncCronJob ; code[unique = true]                    ; job(code)                               ; sessionLanguage(isoCode)[default = en] 
+                                  ; mktCPIProductReviewOutboundSyncCronJob ; mktCPIoDataProductReviewOutboundSyncJob ;                                        
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  
+                                  

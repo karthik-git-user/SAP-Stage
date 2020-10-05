@@ -1,0 +1,41 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# The files in this addon are licensed under the Apache Software License, v. 2 
+# except as noted otherwise in the LICENSE file.
+# -----------------------------------------------------------------------
+#
+$cdcSiteUid=powertools-cdc
+$cdcContentCatalog=powertools-cdcContentCatalog
+$cdcContentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$cdcContentCatalog]),CatalogVersion.version[default=Staged])[default=$cdcContentCatalog:Staged]
+
+$productCatalog=powertoolsProductCatalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+
+$storeUid=powertools
+$language=en
+
+$storefrontContextRoot=$config-storefrontContextRoot
+
+
+
+# Import config properties into impex macros
+UPDATE GenericItem[processor=de.hybris.platform.commerceservices.impex.impl.ConfigPropertyImportProcessor] ; pk[unique=true]
+$storefrontContextRoot=$config-storefrontContextRoot  
+
+
+# CMS Site              
+INSERT_UPDATE CMSSite ; uid[unique=true] ; theme(code) ; channel(code) ; stores(uid) ; contentCatalogs(id) ; defaultCatalog(id) ; defaultLanguage(isoCode) ; urlPatterns                                                                                                                                                                                                ; active ; previewURL                               ; startingPage(uid,$cdcContentCV) ; urlEncodingAttributes ; defaultPromotionGroup(Identifier)[default=powertoolsPromoGrp]
+                      ; $cdcSiteUid      ; lambda      ; B2B           ; $storeUid   ; $cdcContentCatalog  ; $productCatalog    ; $language                ; (?i)^https?://[^/]+(/[^?]*)?\?(.*\&)?(site=powertools-cdc)(|\&.*)$,(?i)^https?://powertools-cdc\.[^/]+(|/.*|\?.*)$                                                                                         ; true   ; $storefrontContextRoot/?site=$cdcSiteUid ; homepage                        ; storefront,language   ;
+
+
+UPDATE CMSSite;uid[unique=true];name[lang=$language]
+;$cdcSiteUid;"CDC Powertools Site"
+
+
+### Put cdc powertools into smart edit whitelist 
+INSERT_UPDATE SmartEditConfiguration;key[unique=true];value
+;whiteListedStorefronts;"[""$fullPathPowertools""]"
+
+

@@ -1,0 +1,71 @@
+# USE CTRL-SPACE for type-ahead support
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; CPQInboundQuote ; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) ; root[default = false]
+; CPQInboundQuote   ; Quote             ; Quote         ; true
+; CPQInboundQuote   ; CatalogVersion    ; CatalogVersion 
+; CPQInboundQuote   ; Unit              ; Unit
+; CPQInboundQuote   ; Product           ; Product 
+; CPQInboundQuote   ; Currency          ; Currency 
+; CPQInboundQuote   ; Catalog           ; Catalog 
+; CPQInboundQuote   ; Comment           ; Comment
+; CPQInboundQuote   ; User              ; User
+; CPQInboundQuote   ; QuoteEntry        ; QuoteEntry
+; CPQInboundQuote  	; CpqPricingDetail 	; CpqPricingDetail
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate 
+; CPQInboundQuote:Quote             ; code                      ; Quote:code                    ;                               ;  ;  
+; CPQInboundQuote:Quote             ; previousEstimatedTotal    ; Quote:previousEstimatedTotal  ;                               ;  ;
+; CPQInboundQuote:Quote             ; user                      ; Quote:user                    ; CPQInboundQuote:User          ;  ;
+; CPQInboundQuote:Quote             ; currency                  ; Quote:currency                ; CPQInboundQuote:Currency          ;  ;
+; CPQInboundQuote:Quote             ; assignee                  ; Quote:assignee                ; CPQInboundQuote:User              ;  ;
+; CPQInboundQuote:Quote             ; quoteExpirationDate       ; Quote:quoteExpirationDate     ;                               ;  ;
+; CPQInboundQuote:Quote             ; totalPrice                ; Quote:totalPrice              ;                               ;  ;
+; CPQInboundQuote:Quote             ; description               ; Quote:description             ;                               ;  ;
+; CPQInboundQuote:Quote             ; version                   ; Quote:version                 ;                               ;  ;
+; CPQInboundQuote:Quote             ; cpqExternalComments       ; Quote:cpqExternalComments     ;                               ;  ;
+; CPQInboundQuote:Quote             ; cpqExternalQuoteId        ; Quote:cpqExternalQuoteId          ;                               ;  ;
+; CPQInboundQuote:Quote             ; totalDiscounts            ; Quote:totalDiscounts          ;                               ;  ;
+; CPQInboundQuote:Quote             ; cpqHeaderDiscount         ; Quote:cpqHeaderDiscount       ;                               ;  ;
+; CPQInboundQuote:Quote             ; cpqQuoteProposalDocument  ; Quote:cpqQuoteProposalDocument   ;                                ;  ;
+; CPQInboundQuote:Quote             ; proposalMessage           ; Quote:proposalMessage         ;                               ;  ;
+; CPQInboundQuote:CatalogVersion    ; version                   ; CatalogVersion:version        ;                               ;  ;
+; CPQInboundQuote:CatalogVersion    ; catalog                   ; CatalogVersion:catalog        ; CPQInboundQuote:Catalog           ;  ;
+; CPQInboundQuote:Unit              ; code                      ; Unit:code                     ;                               ;  ;
+; CPQInboundQuote:User              ; uid                       ; User:uid                      ;                               ;  ;
+; CPQInboundQuote:Product           ; catalogVersion            ; Product:catalogVersion        ; CPQInboundQuote:CatalogVersion    ;  ;
+; CPQInboundQuote:Product           ; code                      ; Product:code                  ;                               ;  ;
+; CPQInboundQuote:Currency          ; isocode                   ; Currency:isocode              ;                               ;  ;
+; CPQInboundQuote:Catalog           ; id                        ; Catalog:id                    ;                               ;  ;
+; CPQInboundQuote:Quote             ; comments                  ; Quote:comments                ; CPQInboundQuote:Comment       ;  ; true
+; CPQInboundQuote:Comment           ; code                      ; Comment:code                  ;                               ;  ; true
+; CPQInboundQuote:Comment           ; text                      ; Comment:text                  ;                               ;  ; true
+; CPQInboundQuote:Comment           ; cpqCommentAuthorEmail     ; Comment:cpqCommentAuthorEmail ;           ;  ; true
+; CPQInboundQuote:Comment           ; creationtime              ; Comment:creationtime          ;           ;  ; true
+; CPQInboundQuote:Comment           ; source                    ; Comment:source                ;           ;  ; true
+; CPQInboundQuote:Quote             ; cpqSalesOrganization      ; Quote:cpqSalesOrganization    ;           ;  ;
+; CPQInboundQuote:Quote             ; cpqDistributionChannel    ; Quote:cpqDistributionChannel      ;           ;  ; 
+; CPQInboundQuote:Quote             ; cpqDivision               ; Quote:cpqDivision             ;           ;  ; 
+; CPQInboundQuote:QuoteEntry        ; cpqItemId                 ; QuoteEntry:cpqItemId          ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; entryNumber               ; QuoteEntry:entryNumber        ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; cpqExternalQuoteEntryId   ; QuoteEntry:cpqExternalQuoteEntryId ;                                  ;  ;
+; CPQInboundQuote:QuoteEntry        ; cpqEntryDiscount          ; QuoteEntry:cpqEntryDiscount   ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; basePrice                 ; QuoteEntry:basePrice          ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; quantity                  ; QuoteEntry:quantity           ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; cpqRank                   ; QuoteEntry:cpqRank          ;                         ;  ;
+; CPQInboundQuote:QuoteEntry        ; productId                 ; QuoteEntry:productId ;                                    ;  ;
+; CPQInboundQuote:QuoteEntry        ; totalPrice                ; QuoteEntry:totalPrice ;                                   ;  ;
+; CPQInboundQuote:QuoteEntry        ; productTypeName           ; QuoteEntry:productTypeName ;                                  ;  ;
+; CPQInboundQuote:QuoteEntry        ; discountPercent           ; QuoteEntry:discountPercent ;                                  ;  ;
+; CPQInboundQuote:QuoteEntry        ; unit                      ; QuoteEntry:unit           ; CPQInboundQuote:Unit                                  ;  ;
+; CPQInboundQuote:QuoteEntry        ; comments                  ; QuoteEntry:comments       ; CPQInboundQuote:Comment           ;  ; true
+; CPQInboundQuote:Quote             ; cpqQuoteEntries               ; Quote:cpqQuoteEntries        ; CPQInboundQuote:QuoteEntry             ;  ; true
+; CPQInboundQuote:CpqPricingDetail      ; pricingType				;CpqPricingDetail:pricingType		      ;                            	;  ;
+; CPQInboundQuote:CpqPricingDetail              ; itemId					;CpqPricingDetail:itemId			      ;                            	;  ; 
+; CPQInboundQuote:CpqPricingDetail              ; listPrice				;CpqPricingDetail:listPrice		      ;                            	;  ; 
+; CPQInboundQuote:CpqPricingDetail              ; netPrice					;CpqPricingDetail:netPrice			      ;                            	;  ; 
+; CPQInboundQuote:CpqPricingDetail              ; rolledUpDiscountAmount	;CpqPricingDetail:rolledUpDiscountAmount ;                            	;  ; 
+; CPQInboundQuote:CpqPricingDetail              ; discountPercent			;CpqPricingDetail:discountPercent	      ;                            	;  ;
+; CPQInboundQuote:QuoteEntry   		; cpqPricingDetails         ; QuoteEntry:cpqPricingDetails    ; CPQInboundQuote:CpqPricingDetail  		;  ; true
+; CPQInboundQuote:QuoteEntry        ; order                     ; QuoteEntry:order                ; CPQInboundQuote:Quote                    ; true ;

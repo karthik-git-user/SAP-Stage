@@ -1,0 +1,52 @@
+$cpiTenantHostName=https://tester.hana.ondemand.com
+
+$consentPers=({{ SELECT {ct.pk} FROM {ConsentTemplate AS ct} WHERE {ct.id}='SAPYMKT_PERS' }})        
+$consentFilter=({{ SELECT {cons.customer} FROM {Consent AS cons} WHERE {cons.consentTemplate} IN $consentPers AND ?session.user.currentTime > {cons.consentGivenDate} AND \
+({cons.consentWithdrawnDate} IS NULL OR ?session.user.currentTime < {cons.consentWithdrawnDate}) }}) 
+$customerFilter=({{ SELECT {pk} FROM {Customer} }})                                                  
+                                                                                                     
+################################################################                                     
+# This sets up the credential (username/password) called "mktCPIBasicCredentails"                    
+# ##############################################################                                     
+INSERT_UPDATE BasicCredential ; id[unique = true]      ; username ; password 
+                              ; mktCPIBasicCredentails ; username ; password 
+                              
+                              
+###############################################################
+# This sets up the endpoint called "mktCPICustomerEndpoint."
+# #############################################################
+INSERT_UPDATE Endpoint ; id[unique = true]      ; version[unique = true] ; name                   ; specUrl                                                                                                       
+                       ; mktCPICustomerEndpoint ; unknown                ; mktCPICustomerEndpoint ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/$metadata" 
+                       
+##############################################################
+# This sets up a ConsumedDestination called "mktCPICustomerDestination."
+# It uses the Endpoint and BasicCredential created above. The user calls
+# the Outbound Service with the destination ID (e.g. "mktCPICustomerDestination").
+# The Outbound Service looks up the details of the destination by ID,
+# so it knows where to send the data
+# ############################################################
+INSERT_UPDATE DestinationTarget ; id[unique = true]               
+                                ; mktCPICustomerDestinationTarget 
+                                
+INSERT_UPDATE ConsumedDestination ; id[unique = true]         ; url                                                                                                           ; endpoint(id, version)          ; credential(id)         ; destinationTarget(id)[default = mktCPICustomerDestinationTarget] ; additionalProperties(key, value)[map-delimiter=|]                                                            
+                                  ; mktCPICustomerDestination ; "$cpiTenantHostName/gw/odata/SAP/REPLICATE-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1/Customers" ; mktCPICustomerEndpoint:unknown ; mktCPIBasicCredentails ;                                                                  ; "csrfURL->$cpiTenantHostName/gw/odata/SAP/REPLICATE-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-MARKETING-CLOUD;v=1" 
+                                  
+################################################################
+# Setup Outbound Sync configuration container
+# ##############################################################
+INSERT_UPDATE OutboundSyncStreamConfigurationContainer ; id[unique = true]                 ;  
+                                                       ; mktCPICustOutboundSyncDataStreams ;  
+                                                       
+INSERT_UPDATE OutboundSyncJob ; code[unique = true]                ; streamConfigurationContainer(id)  
+                              ; mktCPIoDataCustomerOutboundSyncJob ; mktCPICustOutboundSyncDataStreams 
+                              
+INSERT_UPDATE OutboundChannelConfiguration ; code[unique = true]               ; integrationObject(code) ; destination(id)           
+                                           ; outboundSyncMktCPICustomerChannel ; MktOutboundCustomer     ; mktCPICustomerDestination 
+                                           
+# Set up a Customer stream that will detect changes made to the Customer and include it in the mktCPICustOutboundSyncDataStreams StreamConfigurationContainer
+INSERT_UPDATE OutboundSyncStreamConfiguration ; streamId[unique = true]      ; container(id)                     ; itemTypeForStream(code) ; outboundChannelConfiguration(code) ; whereClause                                                                                    ;  
+                                              ; mktCPICustomerOutboundStream ; mktCPICustOutboundSyncDataStreams ; Customer                ; outboundSyncMktCPICustomerChannel  ; {item.uid} != 'anonymous' AND {item.pk} IN $consentFilter                                      
+                                              ; mktCPIAddressOutboundStream  ; mktCPICustOutboundSyncDataStreams ; Address                 ; outboundSyncMktCPICustomerChannel  ; {item.original} IS NULL AND {item.owner} IN $customerFilter AND {item.owner} IN $consentFilter 
+                                              
+INSERT_UPDATE OutboundSyncCronJob ; code[unique = true]               ; job(code)                          ; sessionLanguage(isoCode)[default = en] 
+                                  ; mktCPICustomerOutboundSyncCronJob ; mktCPIoDataCustomerOutboundSyncJob ;                                        

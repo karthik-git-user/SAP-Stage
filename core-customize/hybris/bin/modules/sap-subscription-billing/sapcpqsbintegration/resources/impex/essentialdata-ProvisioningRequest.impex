@@ -1,0 +1,30 @@
+##************* Added Subscription Order related attributes to Order Integration Object***********
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; OutboundOMMOrderOMSOrder; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; OutboundOMMOrderOMSOrder	; CpqSubscriptionDetail       	; CpqSubscriptionDetail       	; 	;
+                                   ; OutboundOMMOrderOMSOrder	; SAPCpiOutboundOrderItem     	; SAPCpiOutboundOrderItem     	; 	;
+                                   ; OutboundOMMOrderOMSOrder	; CpqPricingParameter         	; CpqPricingParameter         	; 	;
+                                   ; OutboundOMMOrderOMSOrder	; SAPCpiOutboundOrder         	; SAPCpiOutboundOrder         	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; itemId                       	; CpqSubscriptionDetail:itemId                     	;                                                      	; true	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; minimumContractLength        	; CpqSubscriptionDetail:minimumContractLength      	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; effectiveDate                	; CpqSubscriptionDetail:effectiveDate              	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; subscriptionPricePlanId      	; CpqSubscriptionDetail:subscriptionPricePlanId    	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; ratePlanId                   	; CpqSubscriptionDetail:ratePlanId                 	;                                                      	; true	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; sapCpiOutboundOrderItem      	; CpqSubscriptionDetail:sapCpiOutboundOrderItem    	; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItem     	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; contractLength               	; CpqSubscriptionDetail:contractLength             	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; minimumContractEndDate       	; CpqSubscriptionDetail:minimumContractEndDate     	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; contractEndDate              	; CpqSubscriptionDetail:contractEndDate            	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; pricingParameters            	; CpqSubscriptionDetail:pricingParameters          	; OutboundOMMOrderOMSOrder:CpqPricingParameter         	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; contractStartDate            	; CpqSubscriptionDetail:contractStartDate          	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItem     	; overwriteContractTerm        	; SAPCpiOutboundOrderItem:overwriteContractTerm    	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItem     	; cpqSubscriptionDetails       	; SAPCpiOutboundOrderItem:cpqSubscriptionDetails   	; OutboundOMMOrderOMSOrder:CpqSubscriptionDetail       	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqPricingParameter         	; value                        	; CpqPricingParameter:value                        	;                                                      	; 	;
+                                            ; OutboundOMMOrderOMSOrder:CpqPricingParameter         	; itemId                       	; CpqPricingParameter:itemId                       	;                                                      	; true	;
+                                            ; OutboundOMMOrderOMSOrder:CpqPricingParameter         	; code                         	; CpqPricingParameter:code                         	;                                                      	; true	;
+
+
+

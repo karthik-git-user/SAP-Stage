@@ -1,0 +1,21 @@
+#*******************************************
+#*** Create SAP Integration User Groups ****
+#*******************************************
+INSERT_UPDATE UserGroup ; UID[unique = true] ; locname[lang = en]    ; description                         
+                        ; sapAdmApiGroup     ; Inbound Adm API Group ; Group with access to Inbound Adm API
+
+#**************************************************************************
+#*** Assign SAP Integration User Groups to The Parent Integration Group ***
+#**************************************************************************
+INSERT_UPDATE UserGroup ; UID[unique = true] ; groups(uid)[mode = append]
+                        ; sapAdmApiGroup     ; integrationadmingroup     ;  
+
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+INSERT_UPDATE SearchRestriction ; code[unique = true]                      ; name[lang = en]                                 ; query                                                                                                                                                                                                        ; principal(UID)        ; restrictedType(code) ; active ; generate
+                                ; sapRetailInboundProductRestriction       ; SAP Retail Inbound Product Restriction          ; ({code}='RetailInboundProduct' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapAdmApiGroup' }} )) OR ({code}!='RetailInboundProduct')  ; integrationadmingroup ; IntegrationObject    ; true   ; true    
+                                ; sapRetailGenericVariantRestriction       ; SAP Retail Generic Variant Restriction          ; ({code}='RetailGenericVariant' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapAdmApiGroup' }} )) OR ({code}!='RetailGenericVariant')       ; integrationadmingroup ; IntegrationObject    ; true   ; true    
+                                ; sapRetailVariantCategoriesRestriction    ; SAP Retail Variant Categories Restriction       ; ({code}='RetailVariantCategories' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapAdmApiGroup' }} )) OR ({code}!='RetailVariantCategories')    ; integrationadmingroup ; IntegrationObject    ; true   ; true    
+                                ; sapRetailVariantValueCategoryRestriction ; SAP Retail Variant Value Categories Restriction ; ({code}='RetailVariantValueCategory' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapAdmApiGroup' }} )) OR ({code}!='RetailVariantValueCategory') ; integrationadmingroup ; IntegrationObject    ; true   ; true    
+                                

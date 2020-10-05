@@ -1,0 +1,233 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundSubscriptionPricePlan; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundSubscriptionPricePlan	; RecurringChargeEntry 	; RecurringChargeEntry 	; 	;
+                                   ; InboundSubscriptionPricePlan	; Unit                 	; Unit                 	; 	;
+                                   ; InboundSubscriptionPricePlan	; OneTimeChargeEntry   	; OneTimeChargeEntry   	; 	;
+                                   ; InboundSubscriptionPricePlan	; BillingTime          	; BillingTime          	; 	;
+                                   ; InboundSubscriptionPricePlan	; SubscriptionPricePlan	; SubscriptionPricePlan	; true	;
+                                   ; InboundSubscriptionPricePlan	; Catalog              	; Catalog              	; 	;
+                                   ; InboundSubscriptionPricePlan	; Product              	; Product              	; 	;
+                                   ; InboundSubscriptionPricePlan	; CatalogVersion       	; CatalogVersion       	; 	;
+                                   ; InboundSubscriptionPricePlan	; Currency             	; Currency             	; 	;
+                                   ; InboundSubscriptionPricePlan	; BillingEvent         	; BillingEvent         	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; isAdvanceBilled       	; RecurringChargeEntry:isAdvanceBilled        	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; cycleEnd              	; RecurringChargeEntry:cycleEnd               	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; price                 	; RecurringChargeEntry:price                  	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; subscriptionBillingId 	; RecurringChargeEntry:subscriptionBillingId  	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; isProrated            	; RecurringChargeEntry:isProrated             	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; catalogVersion        	; RecurringChargeEntry:catalogVersion         	; InboundSubscriptionPricePlan:CatalogVersion      	; true	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; billingTime           	; RecurringChargeEntry:billingTime            	; InboundSubscriptionPricePlan:BillingTime         	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; cycleStart            	; RecurringChargeEntry:cycleStart             	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:RecurringChargeEntry 	; id                    	; RecurringChargeEntry:id                     	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:Unit                 	; code                  	; Unit:code                                   	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; catalogVersion        	; OneTimeChargeEntry:catalogVersion           	; InboundSubscriptionPricePlan:CatalogVersion      	; true	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; id                    	; OneTimeChargeEntry:id                       	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; price                 	; OneTimeChargeEntry:price                    	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; billingEvent          	; OneTimeChargeEntry:billingEvent             	; InboundSubscriptionPricePlan:BillingEvent        	; 	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; name                  	; OneTimeChargeEntry:name                     	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:OneTimeChargeEntry   	; subscriptionBillingId 	; OneTimeChargeEntry:subscriptionBillingId    	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:BillingTime          	; code                  	; BillingTime:code                            	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; pricePlanId           	; SubscriptionPricePlan:pricePlanId           	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; unit                  	; SubscriptionPricePlan:unit                  	; InboundSubscriptionPricePlan:Unit                	; 	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; startTime             	; SubscriptionPricePlan:startTime             	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; currency              	; SubscriptionPricePlan:currency              	; InboundSubscriptionPricePlan:Currency            	; 	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; product               	; SubscriptionPricePlan:product               	; InboundSubscriptionPricePlan:Product             	; true	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; endTime               	; SubscriptionPricePlan:endTime               	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; recurringChargeEntries	; SubscriptionPricePlan:recurringChargeEntries	; InboundSubscriptionPricePlan:RecurringChargeEntry	; 	; true
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; catalogVersion        	; SubscriptionPricePlan:catalogVersion        	; InboundSubscriptionPricePlan:CatalogVersion      	; true	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; price                 	; SubscriptionPricePlan:price                 	;                                                  	; 	;
+                                            ; InboundSubscriptionPricePlan:SubscriptionPricePlan	; oneTimeChargeEntries  	; SubscriptionPricePlan:oneTimeChargeEntries  	; InboundSubscriptionPricePlan:OneTimeChargeEntry  	; 	; true
+                                            ; InboundSubscriptionPricePlan:Catalog              	; id                    	; Catalog:id                                  	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:Product              	; code                  	; Product:code                                	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:Product              	; catalogVersion        	; Product:catalogVersion                      	; InboundSubscriptionPricePlan:CatalogVersion      	; true	;
+                                            ; InboundSubscriptionPricePlan:CatalogVersion       	; version               	; CatalogVersion:version                      	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:CatalogVersion       	; catalog               	; CatalogVersion:catalog                      	; InboundSubscriptionPricePlan:Catalog             	; true	;
+                                            ; InboundSubscriptionPricePlan:Currency             	; isocode               	; Currency:isocode                            	;                                                  	; true	;
+                                            ; InboundSubscriptionPricePlan:BillingEvent         	; code                  	; BillingEvent:code                           	;                                                  	; true	;
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundBlockUsageCharge; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundBlockUsageCharge	; Currency               	; Currency               	; 	;
+                                   ; InboundBlockUsageCharge	; Catalog                	; Catalog                	; 	;
+                                   ; InboundBlockUsageCharge	; PerUnitUsageCharge     	; PerUnitUsageCharge     	; true	;
+                                   ; InboundBlockUsageCharge	; CatalogVersion         	; CatalogVersion         	; 	;
+                                   ; InboundBlockUsageCharge	; UsageUnit              	; UsageUnit              	; 	;
+                                   ; InboundBlockUsageCharge	; PerUnitUsageChargeEntry	; PerUnitUsageChargeEntry	; 	;
+                                   ; InboundBlockUsageCharge	; SubscriptionPricePlan  	; SubscriptionPricePlan  	; 	;
+                                   ; InboundBlockUsageCharge	; UsageChargeType        	; UsageChargeType        	; 	;
+                                   ; InboundBlockUsageCharge	; BillingTime            	; BillingTime            	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundBlockUsageCharge:Currency               	; isocode                   	; Currency:isocode                             	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:Catalog                	; id                        	; Catalog:id                                   	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; includedQty               	; PerUnitUsageCharge:includedQty               	;                                                	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; InboundBlockUsageCharge:UsageUnit              	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; subscriptionPricePlanUsage	; PerUnitUsageCharge:subscriptionPricePlanUsage	; InboundBlockUsageCharge:SubscriptionPricePlan  	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; blockSize                 	; PerUnitUsageCharge:blockSize                 	;                                                	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; catalogVersion            	; PerUnitUsageCharge:catalogVersion            	; InboundBlockUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; 	; true
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; minBlocks                 	; PerUnitUsageCharge:minBlocks                 	;                                                	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; InboundBlockUsageCharge:UsageChargeType        	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageCharge     	; id                        	; PerUnitUsageCharge:id                        	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:CatalogVersion         	; version                   	; CatalogVersion:version                       	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:CatalogVersion         	; catalog                   	; CatalogVersion:catalog                       	; InboundBlockUsageCharge:Catalog                	; true	;
+                                            ; InboundBlockUsageCharge:UsageUnit              	; id                        	; UsageUnit:id                                 	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; fixedPrice                	; PerUnitUsageChargeEntry:fixedPrice           	;                                                	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; price                     	; PerUnitUsageChargeEntry:price                	;                                                	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; catalogVersion            	; PerUnitUsageChargeEntry:catalogVersion       	; InboundBlockUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; currency                  	; PerUnitUsageChargeEntry:currency             	; InboundBlockUsageCharge:Currency               	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; subscriptionBillingId     	; PerUnitUsageChargeEntry:subscriptionBillingId	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; billingTime               	; PerUnitUsageChargeEntry:billingTime          	; InboundBlockUsageCharge:BillingTime            	; 	;
+                                            ; InboundBlockUsageCharge:PerUnitUsageChargeEntry	; id                        	; PerUnitUsageChargeEntry:id                   	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:SubscriptionPricePlan  	; startTime                 	; SubscriptionPricePlan:startTime              	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:SubscriptionPricePlan  	; catalogVersion            	; SubscriptionPricePlan:catalogVersion         	; InboundBlockUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundBlockUsageCharge:SubscriptionPricePlan  	; pricePlanId               	; SubscriptionPricePlan:pricePlanId            	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:UsageChargeType        	; code                      	; UsageChargeType:code                         	;                                                	; true	;
+                                            ; InboundBlockUsageCharge:BillingTime            	; code                      	; BillingTime:code                             	;                                                	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundVolumeCharge; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundVolumeCharge	; TierUsageChargeEntry 	; TierUsageChargeEntry 	; 	;
+                                   ; InboundVolumeCharge	; CatalogVersion       	; CatalogVersion       	; 	;
+                                   ; InboundVolumeCharge	; UsageUnit            	; UsageUnit            	; 	;
+                                   ; InboundVolumeCharge	; SubscriptionPricePlan	; SubscriptionPricePlan	; 	;
+                                   ; InboundVolumeCharge	; Catalog              	; Catalog              	; 	;
+                                   ; InboundVolumeCharge	; VolumeUsageCharge    	; VolumeUsageCharge    	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; fixedPrice                	; TierUsageChargeEntry:fixedPrice             	;                                          	; 	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; subscriptionBillingId     	; TierUsageChargeEntry:subscriptionBillingId  	;                                          	; true	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; tierStart                 	; TierUsageChargeEntry:tierStart              	;                                          	; 	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; catalogVersion            	; TierUsageChargeEntry:catalogVersion         	; InboundVolumeCharge:CatalogVersion       	; true	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; price                     	; TierUsageChargeEntry:price                  	;                                          	; 	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; tierEnd                   	; TierUsageChargeEntry:tierEnd                	;                                          	; 	;
+                                            ; InboundVolumeCharge:TierUsageChargeEntry 	; id                        	; TierUsageChargeEntry:id                     	;                                          	; true	;
+                                            ; InboundVolumeCharge:CatalogVersion       	; version                   	; CatalogVersion:version                      	;                                          	; true	;
+                                            ; InboundVolumeCharge:CatalogVersion       	; catalog                   	; CatalogVersion:catalog                      	; InboundVolumeCharge:Catalog              	; true	;
+                                            ; InboundVolumeCharge:UsageUnit            	; id                        	; UsageUnit:id                                	;                                          	; true	;
+                                            ; InboundVolumeCharge:SubscriptionPricePlan	; startTime                 	; SubscriptionPricePlan:startTime             	;                                          	; true	;
+                                            ; InboundVolumeCharge:SubscriptionPricePlan	; catalogVersion            	; SubscriptionPricePlan:catalogVersion        	; InboundVolumeCharge:CatalogVersion       	; true	;
+                                            ; InboundVolumeCharge:SubscriptionPricePlan	; pricePlanId               	; SubscriptionPricePlan:pricePlanId           	;                                          	; true	;
+                                            ; InboundVolumeCharge:Catalog              	; id                        	; Catalog:id                                  	;                                          	; true	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; catalogVersion            	; VolumeUsageCharge:catalogVersion            	; InboundVolumeCharge:CatalogVersion       	; true	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; usageChargeEntries        	; VolumeUsageCharge:usageChargeEntries        	; InboundVolumeCharge:TierUsageChargeEntry 	; 	; true
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; blockSize                 	; VolumeUsageCharge:blockSize                 	;                                          	; 	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; usageUnit                 	; VolumeUsageCharge:usageUnit                 	; InboundVolumeCharge:UsageUnit            	; 	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; name                      	; VolumeUsageCharge:name                      	;                                          	; 	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; id                        	; VolumeUsageCharge:id                        	;                                          	; true	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; subscriptionPricePlanUsage	; VolumeUsageCharge:subscriptionPricePlanUsage	; InboundVolumeCharge:SubscriptionPricePlan	; 	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; minBlocks                 	; VolumeUsageCharge:minBlocks                 	;                                          	; 	;
+                                            ; InboundVolumeCharge:VolumeUsageCharge    	; subscriptionBillingId     	; VolumeUsageCharge:subscriptionBillingId     	;                                          	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundOverageUsageCharge; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundOverageUsageCharge	; Catalog                	; Catalog                	; 	;
+                                   ; InboundOverageUsageCharge	; OverageUsageChargeEntry	; OverageUsageChargeEntry	; true	;
+                                   ; InboundOverageUsageCharge	; CatalogVersion         	; CatalogVersion         	; 	;
+                                   ; InboundOverageUsageCharge	; UsageCharge            	; UsageCharge            	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundOverageUsageCharge:Catalog                	; id                   	; Catalog:id                                   	;                                         	; true	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; usageCharge          	; OverageUsageChargeEntry:usageCharge          	; InboundOverageUsageCharge:UsageCharge   	; 	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; subscriptionBillingId	; OverageUsageChargeEntry:subscriptionBillingId	;                                         	; true	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; catalogVersion       	; OverageUsageChargeEntry:catalogVersion       	; InboundOverageUsageCharge:CatalogVersion	; true	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; fixedPrice           	; OverageUsageChargeEntry:fixedPrice           	;                                         	; 	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; id                   	; OverageUsageChargeEntry:id                   	;                                         	; true	;
+                                            ; InboundOverageUsageCharge:OverageUsageChargeEntry	; price                	; OverageUsageChargeEntry:price                	;                                         	; 	;
+                                            ; InboundOverageUsageCharge:CatalogVersion         	; version              	; CatalogVersion:version                       	;                                         	; true	;
+                                            ; InboundOverageUsageCharge:CatalogVersion         	; catalog              	; CatalogVersion:catalog                       	; InboundOverageUsageCharge:Catalog       	; true	;
+                                            ; InboundOverageUsageCharge:UsageCharge            	; catalogVersion       	; UsageCharge:catalogVersion                   	; InboundOverageUsageCharge:CatalogVersion	; true	;
+                                            ; InboundOverageUsageCharge:UsageCharge            	; id                   	; UsageCharge:id                               	;                                         	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundPercentageUsageCharge; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundPercentageUsageCharge	; SubscriptionPricePlan  	; SubscriptionPricePlan  	; 	;
+                                   ; InboundPercentageUsageCharge	; UsageChargeType        	; UsageChargeType        	; 	;
+                                   ; InboundPercentageUsageCharge	; PerUnitUsageCharge     	; PerUnitUsageCharge     	; true	;
+                                   ; InboundPercentageUsageCharge	; PerUnitUsageChargeEntry	; PerUnitUsageChargeEntry	; 	;
+                                   ; InboundPercentageUsageCharge	; CatalogVersion         	; CatalogVersion         	; 	;
+                                   ; InboundPercentageUsageCharge	; UsageUnit              	; UsageUnit              	; 	;
+                                   ; InboundPercentageUsageCharge	; BillingTime            	; BillingTime            	; 	;
+                                   ; InboundPercentageUsageCharge	; Currency               	; Currency               	; 	;
+                                   ; InboundPercentageUsageCharge	; Catalog                	; Catalog                	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundPercentageUsageCharge:SubscriptionPricePlan  	; startTime                 	; SubscriptionPricePlan:startTime              	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:SubscriptionPricePlan  	; catalogVersion            	; SubscriptionPricePlan:catalogVersion         	; InboundPercentageUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundPercentageUsageCharge:SubscriptionPricePlan  	; pricePlanId               	; SubscriptionPricePlan:pricePlanId            	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:UsageChargeType        	; code                      	; UsageChargeType:code                         	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; InboundPercentageUsageCharge:UsageUnit              	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; ratio                     	; PerUnitUsageCharge:ratio                     	;                                                     	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; id                        	; PerUnitUsageCharge:id                        	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; catalogVersion            	; PerUnitUsageCharge:catalogVersion            	; InboundPercentageUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; InboundPercentageUsageCharge:UsageChargeType        	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; 	; true
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageCharge     	; subscriptionPricePlanUsage	; PerUnitUsageCharge:subscriptionPricePlanUsage	; InboundPercentageUsageCharge:SubscriptionPricePlan  	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; currency                  	; PerUnitUsageChargeEntry:currency             	; InboundPercentageUsageCharge:Currency               	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; price                     	; PerUnitUsageChargeEntry:price                	;                                                     	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; catalogVersion            	; PerUnitUsageChargeEntry:catalogVersion       	; InboundPercentageUsageCharge:CatalogVersion         	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; subscriptionBillingId     	; PerUnitUsageChargeEntry:subscriptionBillingId	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; id                        	; PerUnitUsageChargeEntry:id                   	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; fixedPrice                	; PerUnitUsageChargeEntry:fixedPrice           	;                                                     	; 	;
+                                            ; InboundPercentageUsageCharge:PerUnitUsageChargeEntry	; billingTime               	; PerUnitUsageChargeEntry:billingTime          	; InboundPercentageUsageCharge:BillingTime            	; 	;
+                                            ; InboundPercentageUsageCharge:CatalogVersion         	; version                   	; CatalogVersion:version                       	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:CatalogVersion         	; catalog                   	; CatalogVersion:catalog                       	; InboundPercentageUsageCharge:Catalog                	; true	;
+                                            ; InboundPercentageUsageCharge:UsageUnit              	; id                        	; UsageUnit:id                                 	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:BillingTime            	; code                      	; BillingTime:code                             	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:Currency               	; isocode                   	; Currency:isocode                             	;                                                     	; true	;
+                                            ; InboundPercentageUsageCharge:Catalog                	; id                        	; Catalog:id                                   	;                                                     	; true	;
+
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundTierUsageCharge; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundTierUsageCharge	; UsageUnit            	; UsageUnit            	; 	;
+                                   ; InboundTierUsageCharge	; TierUsageChargeEntry 	; TierUsageChargeEntry 	; 	;
+                                   ; InboundTierUsageCharge	; CatalogVersion       	; CatalogVersion       	; 	;
+                                   ; InboundTierUsageCharge	; SubscriptionPricePlan	; SubscriptionPricePlan	; 	;
+                                   ; InboundTierUsageCharge	; PerUnitUsageCharge   	; PerUnitUsageCharge   	; true	;
+                                   ; InboundTierUsageCharge	; UsageChargeType      	; UsageChargeType      	; 	;
+                                   ; InboundTierUsageCharge	; Catalog              	; Catalog              	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundTierUsageCharge:UsageUnit            	; id                        	; UsageUnit:id                                 	;                                             	; true	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; catalogVersion            	; TierUsageChargeEntry:catalogVersion          	; InboundTierUsageCharge:CatalogVersion       	; true	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; price                     	; TierUsageChargeEntry:price                   	;                                             	; 	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; subscriptionBillingId     	; TierUsageChargeEntry:subscriptionBillingId   	;                                             	; true	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; tierEnd                   	; TierUsageChargeEntry:tierEnd                 	;                                             	; 	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; id                        	; TierUsageChargeEntry:id                      	;                                             	; true	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; tierStart                 	; TierUsageChargeEntry:tierStart               	;                                             	; 	;
+                                            ; InboundTierUsageCharge:TierUsageChargeEntry 	; fixedPrice                	; TierUsageChargeEntry:fixedPrice              	;                                             	; 	;
+                                            ; InboundTierUsageCharge:CatalogVersion       	; version                   	; CatalogVersion:version                       	;                                             	; true	;
+                                            ; InboundTierUsageCharge:CatalogVersion       	; catalog                   	; CatalogVersion:catalog                       	; InboundTierUsageCharge:Catalog              	; true	;
+                                            ; InboundTierUsageCharge:SubscriptionPricePlan	; startTime                 	; SubscriptionPricePlan:startTime              	;                                             	; true	;
+                                            ; InboundTierUsageCharge:SubscriptionPricePlan	; pricePlanId               	; SubscriptionPricePlan:pricePlanId            	;                                             	; true	;
+                                            ; InboundTierUsageCharge:SubscriptionPricePlan	; catalogVersion            	; SubscriptionPricePlan:catalogVersion         	; InboundTierUsageCharge:CatalogVersion       	; true	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; id                        	; PerUnitUsageCharge:id                        	;                                             	; true	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; usageChargeType           	; PerUnitUsageCharge:usageChargeType           	; InboundTierUsageCharge:UsageChargeType      	; 	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; subscriptionBillingId     	; PerUnitUsageCharge:subscriptionBillingId     	;                                             	; true	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; catalogVersion            	; PerUnitUsageCharge:catalogVersion            	; InboundTierUsageCharge:CatalogVersion       	; true	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; minBlocks                 	; PerUnitUsageCharge:minBlocks                 	;                                             	; 	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; usageUnit                 	; PerUnitUsageCharge:usageUnit                 	; InboundTierUsageCharge:UsageUnit            	; 	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; blockSize                 	; PerUnitUsageCharge:blockSize                 	;                                             	; 	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; subscriptionPricePlanUsage	; PerUnitUsageCharge:subscriptionPricePlanUsage	; InboundTierUsageCharge:SubscriptionPricePlan	; 	;
+                                            ; InboundTierUsageCharge:PerUnitUsageCharge   	; usageChargeEntries        	; PerUnitUsageCharge:usageChargeEntries        	; InboundTierUsageCharge:TierUsageChargeEntry 	; 	; true
+                                            ; InboundTierUsageCharge:UsageChargeType      	; code                      	; UsageChargeType:code                         	;                                             	; true	;
+                                            ; InboundTierUsageCharge:Catalog              	; id                        	; Catalog:id                                   	;                                             	; true	;

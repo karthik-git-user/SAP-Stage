@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config">
+
+	<context merge-by="module" parent="auto" type="SAPConfiguration" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab position="5" xmlns="http://www.hybris.com/cockpitng/component/editorArea" name="hmc.tab.sapoaacos">
+				<section name="hmc.section.sapoaacos">
+					<attribute qualifier="sapcos_casStrategyId"/>
+				</section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+</config>

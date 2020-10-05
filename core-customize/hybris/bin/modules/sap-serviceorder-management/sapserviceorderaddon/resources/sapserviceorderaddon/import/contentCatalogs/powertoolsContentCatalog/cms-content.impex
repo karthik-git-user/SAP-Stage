@@ -1,0 +1,95 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+
+
+#
+# Import the CMS content for the Powertools site
+#
+$contentCatalog=powertoolsContentCatalog
+$productCatalog=powertoolsProductCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+
+# Language
+$lang=en
+
+INSERT_UPDATE ApplicableCmsActionsTypeForCmsComponent;target(code)[unique=true];source(code)[unique=true];
+;JspIncludeComponent;CancelServiceOrderAction;
+
+# CMS Cancel Service Order Action
+INSERT_UPDATE CancelServiceOrderAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;CancelServiceOrderAction;/my-account/order/{orderCode}/cancelservice;Cancel Service Order Action;CancelServiceOrderAction
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV)[mode=append];&componentRef
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/b2b/accountOrderDetailOverview.jsp;CancelServiceOrderAction;AccountOrderDetailsOverviewComponent
+
+###### Cancel Service order page Start ######
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];title[lang=$lang]
+;;cancel-service-order;Cancel Service Order Page;AccountPageTemplate;cancel-service-order;;;;Cancel Service Order
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-cancel-service-order;Side Content Slot for My Account cancel-service-order;true;;;;
+;;BodyContent-cancel-service-order;Body Content Slot for My Account cancel-service-order;true;CancelServiceOrderHeadlineComponent,CancelServiceOrderComponent;;;
+
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='cancel-service-order'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-cancel-service-order;SideContent;;SideContent-cancel-service-order;;;
+;;BodyContent-cancel-service-order;BodyContent;;BodyContent-cancel-service-order;;;
+
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV)[mode=append];&componentRef
+;;CancelServiceOrderComponent;Cancel Service Order Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/cancel/accountCancelServiceOrderPage.jsp;;CancelServiceOrderComponent
+;;CancelServiceOrderHeadlineComponent;Cancel Service Order Headline Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/cancel/cancelServiceOrderHeadline.jsp;;CancelServiceOrderHeadlineComponent
+
+
+###### Cancel Service order page End ######
+
+
+
+INSERT_UPDATE ApplicableCmsActionsTypeForCmsComponent;target(code)[unique=true];source(code)[unique=true];
+;JspIncludeComponent;RescheduleServiceOrderAction;
+
+# CMS Reschedule Service Order Action
+INSERT_UPDATE RescheduleServiceOrderAction;$contentCV[unique=true];uid[unique=true];url;name;&actionRef
+;;RescheduleServiceOrderAction;/my-account/order/{orderCode}/rescheduleservice;Reschedule Service Order Action;RescheduleServiceOrderAction
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV)[mode=append];&componentRef
+;;AccountOrderDetailsOverviewComponent;Account Order Details Overview Info Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/b2b/accountOrderDetailOverview.jsp;RescheduleServiceOrderAction;AccountOrderDetailsOverviewComponent
+
+###### Reschedule Service order page Start ######
+
+# Functional Content Pages
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];title[lang=$lang]
+;;reschedule-service-order;Reschedule Service Order Page;AccountPageTemplate;reschedule-service-order;;;;Reschedule Service Order
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-reschedule-service-order;Side Content Slot for My Account reschedule-service-order;true;;;;
+;;BodyContent-reschedule-service-order;Body Content Slot for My Account reschedule-service-order;true;RescheduleServiceOrderHeadlineComponent,RescheduleServiceOrderComponent;;;
+
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='reschedule-service-order'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-reschedule-service-order;SideContent;;SideContent-reschedule-service-order;;;
+;;BodyContent-reschedule-service-order;BodyContent;;BodyContent-reschedule-service-order;;;
+
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV)[mode=append];&componentRef
+;;RescheduleServiceOrderHeadlineComponent;Reschedule Service Order Headline Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/reschedule/rescheduleServiceOrderHeadline.jsp;;RescheduleServiceOrderHeadlineComponent
+;;RescheduleServiceOrderComponent;Reschedule Service Order Component;/WEB-INF/views/addons/sapserviceorderaddon/responsive/pages/account/reschedule/accountRescheduleServiceOrderPage.jsp;;RescheduleServiceOrderComponent
+
+
+###### Reschedule Service order page End ######
+

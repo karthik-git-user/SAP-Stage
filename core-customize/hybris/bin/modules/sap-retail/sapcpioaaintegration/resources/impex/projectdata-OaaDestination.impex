@@ -1,0 +1,41 @@
+
+#***************************************************************************#
+#*** Please change only the sample data and do NOT change anything else! ***#                                                                                       #
+#***************************************************************************#
+
+#*********************************#
+#*** Sample Data To Be Changed ***#
+#*********************************#
+$ERPUri=http://testerp.wdf.sap.corp:44318/sap/bc/srt/Idoc?sap-client=910
+$ERPClient=ERPCLNT910
+$CARUri=https://testcar.wdf.sap.corp:44300
+$CARClient=CARCLNT410
+$CARClientId=410
+
+#**************************#
+#***  Basic CredentialS ***#
+#**************************#
+$CARUserName=CARUSERNAME
+$CARPassword=CARPASSWORD
+$ERPUserName=ERPUSERNAME
+$ERPPassword=ERPPASSWORD
+
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+                           
+#*****************************#      
+#***  SAP HTTP Destination ***#   
+#******************************#      
+INSERT_UPDATE SAPHTTPDestination ; &Item ; httpDestinationName[unique=true] ; password     ; targetURL ; userid       ; authenticationType(code,itemtype(code))    
+                                 ; Item6 ; $ERPClient                       ; $ERPPassword ; $ERPUri   ; $ERPUserName ; BASIC_AUTHENTICATION:HTTPAuthenticationType
+INSERT_UPDATE SAPHTTPDestination ; &Item ; httpDestinationName[unique=true] ; password     ; targetURL ; userid       ; authenticationType(code,itemtype(code))    
+                                 ; Item7 ; $CARClient                       ; $CARPassword ; $CARUri   ; $CARUserName ; BASIC_AUTHENTICATION:HTTPAuthenticationType
+
+#********************************#      
+#*** SAP Global Configuration ***#   
+#********************************# 
+
+INSERT_UPDATE SAPGlobalConfiguration ; &Item ; replicateregistereduser[allownull=true] ; sapcommon_erpHttpDestination(httpDestinationName) ; sapcommon_erpLogicalSystem[allownull=true] ; sapoaa_carHttpDestination(httpDestinationName) ; sapoaa_carClient
+                                     ; Item8 ;                                         ; $ERPClient                                        ;                                            ; $CARClient                                     ; $CARClientId    
+                                     

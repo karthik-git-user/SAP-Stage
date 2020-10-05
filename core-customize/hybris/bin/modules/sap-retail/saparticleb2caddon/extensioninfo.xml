@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    	
+    <extension abstractclassprefix="Generated" classprefix="Saparticleb2caddon" description="saparticleb2caddon extension" managername="Saparticleb2caddonManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="saparticleb2caddon">
+        		
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+                 
+		
+        <requires-extension name="acceleratorservices"/>
+        		
+        <requires-extension name="addonsupport"/>
+        		
+        <requires-extension name="cms2"/>
+        		
+        <requires-extension name="commercefacades"/>
+        		
+        <requires-extension name="commerceservices"/>
+        		
+        <requires-extension name="saparticlemodel"/>
+        		
+        <coremodule generated="true" manager="com.sap.retail.commercesuite.saparticleb2caddon.jalo.Saparticleb2caddonManager" packageroot="com.sap.retail.commercesuite.saparticleb2caddon"/>
+        	
+    </extension>
+    
+</extensioninfo>

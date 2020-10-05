@@ -1,0 +1,155 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundOMSServiceOrder; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; OutboundOMSServiceOrder	; SAPCpiOutboundPartnerRole     	; SAPCpiOutboundPartnerRole     	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundCardPayment     	; SAPCpiOutboundCardPayment     	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundConfig          	; SAPCpiOutboundConfig          	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundAddress         	; SAPCpiOutboundAddress         	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundPriceComponent  	; SAPCpiOutboundPriceComponent  	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundServiceOrderItem	; SAPCpiOutboundServiceOrderItem	; 	;  
+; OutboundOMSServiceOrder	; SAPCpiOutboundServiceOrder    	; SAPCpiOutboundServiceOrder    	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; partnerId                      	; SAPCpiOutboundPartnerRole:partnerId                         	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; orderId                        	; SAPCpiOutboundPartnerRole:orderId                           	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; partnerRoleCode                	; SAPCpiOutboundPartnerRole:partnerRoleCode                   	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; entryNumber                    	; SAPCpiOutboundPartnerRole:entryNumber                       	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; documentAddressId              	; SAPCpiOutboundPartnerRole:documentAddressId                 	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; paymentProvider                	; SAPCpiOutboundCardPayment:paymentProvider                   	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; validToMonth                   	; SAPCpiOutboundCardPayment:validToMonth                      	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; subscriptionId                 	; SAPCpiOutboundCardPayment:subscriptionId                    	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; requestId                      	; SAPCpiOutboundCardPayment:requestId                         	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; ccOwner                        	; SAPCpiOutboundCardPayment:ccOwner                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; validToYear                    	; SAPCpiOutboundCardPayment:validToYear                       	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; orderId                        	; SAPCpiOutboundCardPayment:orderId                           	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; client                         	; SAPCpiOutboundConfig:client                                 	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; receiverPort                   	; SAPCpiOutboundConfig:receiverPort                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; username                       	; SAPCpiOutboundConfig:username                               	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; url                            	; SAPCpiOutboundConfig:url                                    	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; receiverName                   	; SAPCpiOutboundConfig:receiverName                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; senderPort                     	; SAPCpiOutboundConfig:senderPort                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; senderName                     	; SAPCpiOutboundConfig:senderName                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; faxNumber                      	; SAPCpiOutboundAddress:faxNumber                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; firstName                      	; SAPCpiOutboundAddress:firstName                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; building                       	; SAPCpiOutboundAddress:building                              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; documentAddressId              	; SAPCpiOutboundAddress:documentAddressId                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; middleName2                    	; SAPCpiOutboundAddress:middleName2                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; lastName                       	; SAPCpiOutboundAddress:lastName                              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; email                          	; SAPCpiOutboundAddress:email                                 	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; orderId                        	; SAPCpiOutboundAddress:orderId                               	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; apartment                      	; SAPCpiOutboundAddress:apartment                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; regionIsoCode                  	; SAPCpiOutboundAddress:regionIsoCode                         	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; languageIsoCode                	; SAPCpiOutboundAddress:languageIsoCode                       	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; middleName                     	; SAPCpiOutboundAddress:middleName                            	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; telNumber                      	; SAPCpiOutboundAddress:telNumber                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; city                           	; SAPCpiOutboundAddress:city                                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; street                         	; SAPCpiOutboundAddress:street                                	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; countryIsoCode                 	; SAPCpiOutboundAddress:countryIsoCode                        	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; titleCode                      	; SAPCpiOutboundAddress:titleCode                             	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; houseNumber                    	; SAPCpiOutboundAddress:houseNumber                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; pobox                          	; SAPCpiOutboundAddress:pobox                                 	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; district                       	; SAPCpiOutboundAddress:district                              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; postalCode                     	; SAPCpiOutboundAddress:postalCode                            	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; absolute                       	; SAPCpiOutboundPriceComponent:absolute                       	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; priceQuantity                  	; SAPCpiOutboundPriceComponent:priceQuantity                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; conditionCode                  	; SAPCpiOutboundPriceComponent:conditionCode                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; conditionCounter               	; SAPCpiOutboundPriceComponent:conditionCounter               	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; currencyIsoCode                	; SAPCpiOutboundPriceComponent:currencyIsoCode                	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; entryNumber                    	; SAPCpiOutboundPriceComponent:entryNumber                    	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; unit                           	; SAPCpiOutboundPriceComponent:unit                           	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; orderId                        	; SAPCpiOutboundPriceComponent:orderId                        	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; value                          	; SAPCpiOutboundPriceComponent:value                          	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; productCode                    	; SAPCpiOutboundServiceOrderItem:productCode                  	;                                                       	; 	;
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; description                    	; SAPCpiOutboundServiceOrderItem:description                  	;                                                       	; 	;    
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; entryNumber                    	; SAPCpiOutboundServiceOrderItem:entryNumber                  	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; plant                          	; SAPCpiOutboundServiceOrderItem:plant                        	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; namedDeliveryDate              	; SAPCpiOutboundServiceOrderItem:namedDeliveryDate            	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; itemCategory                   	; SAPCpiOutboundServiceOrderItem:itemCategory                 	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; currencyIsoCode                	; SAPCpiOutboundServiceOrderItem:currencyIsoCode              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; orderId                        	; SAPCpiOutboundServiceOrderItem:orderId                      	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; quantity                       	; SAPCpiOutboundServiceOrderItem:quantity                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; productName                    	; SAPCpiOutboundServiceOrderItem:productName                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; unit                           	; SAPCpiOutboundServiceOrderItem:unit                         	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; skills                         	; SAPCpiOutboundServiceOrderItem:skills                       	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; sapCpiOutboundPriceComponents  	; SAPCpiOutboundServiceOrderItem:sapCpiOutboundPriceComponents	; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; transactionType                	; SAPCpiOutboundServiceOrder:transactionType                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; distributionChannel            	; SAPCpiOutboundServiceOrder:distributionChannel              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; division                       	; SAPCpiOutboundServiceOrder:division                         	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; orderId                        	; SAPCpiOutboundServiceOrder:orderId                          	;                                                       	; true	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundAddresses        	; SAPCpiOutboundServiceOrder:sapCpiOutboundAddresses          	; OutboundOMSServiceOrder:SAPCpiOutboundAddress         	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; creationDate                   	; SAPCpiOutboundServiceOrder:creationDate                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; purchaseOrderNumber            	; SAPCpiOutboundServiceOrder:purchaseOrderNumber              	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; currencyIsoCode                	; SAPCpiOutboundServiceOrder:currencyIsoCode                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiConfig                   	; SAPCpiOutboundServiceOrder:sapCpiConfig                     	; OutboundOMSServiceOrder:SAPCpiOutboundConfig          	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; baseStoreUid                   	; SAPCpiOutboundServiceOrder:baseStoreUid                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; deliveryMode                   	; SAPCpiOutboundServiceOrder:deliveryMode                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; salesOrganization              	; SAPCpiOutboundServiceOrder:salesOrganization                	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundPartnerRoles     	; SAPCpiOutboundServiceOrder:sapCpiOutboundPartnerRoles       	; OutboundOMSServiceOrder:SAPCpiOutboundPartnerRole     	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; shippingCondition              	; SAPCpiOutboundServiceOrder:shippingCondition                	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; paymentMode                    	; SAPCpiOutboundServiceOrder:paymentMode                      	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; channel                        	; SAPCpiOutboundServiceOrder:channel                          	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; responseMessage                	; SAPCpiOutboundServiceOrder:responseMessage                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundCardPayments     	; SAPCpiOutboundServiceOrder:sapCpiOutboundCardPayments       	; OutboundOMSServiceOrder:SAPCpiOutboundCardPayment     	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; responseStatus                 	; SAPCpiOutboundServiceOrder:responseStatus                   	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundPriceComponents  	; SAPCpiOutboundServiceOrder:sapCpiOutboundPriceComponents    	; OutboundOMSServiceOrder:SAPCpiOutboundPriceComponent  	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; commerceOrderId                	; SAPCpiOutboundServiceOrder:commerceOrderId                  	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; skillSummary                   	; SAPCpiOutboundServiceOrder:skillSummary                     	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; requestedServiceStartDateTime  	; SAPCpiOutboundServiceOrder:requestedServiceStartDateTime    	;                                                       	; 	;  
+; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundServiceOrderItems	; SAPCpiOutboundServiceOrder:sapCpiOutboundServiceOrderItems  	; OutboundOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; 	;  
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundOMSServiceOrder; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundOMSServiceOrder    ; SAPOrder          ; SAPOrder          ; true ;  
+; InboundOMSServiceOrder    ; SAPOrderStatus    ; SAPOrderStatus    ;      ;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundOMSServiceOrder:SAPOrder       ; serviceOrderId    ; SAPOrder:serviceOrderId   ;                                   ;   ;  
+; InboundOMSServiceOrder:SAPOrder       ; code              ; SAPOrder:code             ;                                   ; true  ;  
+; InboundOMSServiceOrder:SAPOrder       ; sapOrderStatus    ; SAPOrder:sapOrderStatus   ; InboundOMSServiceOrder:SAPOrderStatus ; true  ;  
+; InboundOMSServiceOrder:SAPOrderStatus ; code              ; SAPOrderStatus:code       ;                                   ; true  ;  
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundUpdateOMSServiceOrder; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; OutboundUpdateOMSServiceOrder	; SAPCpiOutboundServiceOrder    	; SAPCpiOutboundServiceOrder    	; true	;  
+; OutboundUpdateOMSServiceOrder	; SAPCpiOutboundServiceOrderItem	; SAPCpiOutboundServiceOrderItem	; 	;  
+; OutboundUpdateOMSServiceOrder	; SAPCpiOutboundConfig          	; SAPCpiOutboundConfig          	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiOutboundServiceOrderItems	; SAPCpiOutboundServiceOrder:sapCpiOutboundServiceOrderItems  	; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; 	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrder    	; serviceOrderId                 	; SAPCpiOutboundServiceOrder:serviceOrderId                   	;                                                             	; 	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrder    	; commerceOrderId                	; SAPCpiOutboundServiceOrder:commerceOrderId                  	;                                                             	; 	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrder    	; orderId                        	; SAPCpiOutboundServiceOrder:orderId                          	;                                                             	; true	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrder    	; sapCpiConfig                   	; SAPCpiOutboundServiceOrder:sapCpiConfig                     	; OutboundUpdateOMSServiceOrder:SAPCpiOutboundConfig          	; 	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; requestedServiceStartDateTime  	; SAPCpiOutboundServiceOrderItem:requestedServiceStartDateTime	;                                                             	; 	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundServiceOrderItem	; entryNumber                    	; SAPCpiOutboundServiceOrderItem:entryNumber                  	;                                                             	; true	;
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundConfig          	; url                            	; SAPCpiOutboundConfig:url                                    	;                                                             	; true	;  
+; OutboundUpdateOMSServiceOrder:SAPCpiOutboundConfig          	; username                       	; SAPCpiOutboundConfig:username                               	;                                                             	; 	;  
+
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundOMSCancelServiceOrder;  
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; OutboundOMSCancelServiceOrder	; SAPCpiOutboundServiceOrder	; SAPCpiOutboundServiceOrder	; true	;  
+; OutboundOMSCancelServiceOrder	; SAPCpiOutboundConfig      	; SAPCpiOutboundConfig      	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; transactionType	; SAPCpiOutboundServiceOrder:transactionType	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; serviceOrderId 	; SAPCpiOutboundServiceOrder:serviceOrderId 	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; commerceOrderId	; SAPCpiOutboundServiceOrder:commerceOrderId	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; orderId        	; SAPCpiOutboundServiceOrder:orderId        	;                               	; true	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; responseMessage	; SAPCpiOutboundServiceOrder:responseMessage	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; responseStatus 	; SAPCpiOutboundServiceOrder:responseStatus 	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; creationDate   	; SAPCpiOutboundServiceOrder:creationDate   	;                               	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundServiceOrder	; sapCpiConfig   	; SAPCpiOutboundServiceOrder:sapCpiConfig   	; OutboundOMSCancelServiceOrder:SAPCpiOutboundConfig	; 	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundConfig      	; url            	; SAPCpiOutboundConfig:url                  	;                                                   	; true	;  
+; OutboundOMSCancelServiceOrder:SAPCpiOutboundConfig      	; username       	; SAPCpiOutboundConfig:username             	;                                                   	; 	;  
+
+  

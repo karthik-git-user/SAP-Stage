@@ -1,0 +1,50 @@
+#*****************************
+#*** Inbound SAP OMS Order ***
+#*****************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundOMSOrder
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)
+                                   ; InboundOMSOrder                       ; SAPOrder           ; SAPOrder
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+                                            ; InboundOMSOrder:SAPOrder                                           ; code                        ; SAPOrder:code                                      ;                                                           ; true
+                                            ; InboundOMSOrder:SAPOrder                                           ; orderEntryNumber            ; SAPOrder:orderEntryNumber                          ;                                                           ;
+                                            ; InboundOMSOrder:SAPOrder                                           ; quantity                    ; SAPOrder:quantity                                  ;                                                           ;
+                                            ; InboundOMSOrder:SAPOrder                                           ; goodsIssueDate              ; SAPOrder:goodsIssueDate                            ;                                                           ;
+                                            ; InboundOMSOrder:SAPOrder                                           ; rejectionReason             ; SAPOrder:rejectionReason                           ;                                                           ;
+
+#*******************************
+#*** Inbound OMS Stock Level ***
+#*******************************
+
+INSERT_UPDATE IntegrationObject; code[unique = true];
+                               ; InboundOMSStockLevel
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code)
+                                   ; InboundOMSStockLevel                  ; StockLevel         ; StockLevel
+                                   ; InboundOMSStockLevel                  ; Warehouse          ; Warehouse
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+                                            ; InboundOMSStockLevel:StockLevel                                    ; available                   ; StockLevel:available                               ;
+                                            ; InboundOMSStockLevel:StockLevel                                    ; productCode                 ; StockLevel:productCode                             ;                                                           ; true
+                                            ; InboundOMSStockLevel:StockLevel                                    ; warehouse                   ; StockLevel:warehouse                               ; InboundOMSStockLevel:Warehouse                            ; true
+                                            ; InboundOMSStockLevel:Warehouse                                     ; code                        ; Warehouse:code                                     ;                                                           ; true
+                                            ; InboundOMSStockLevel:Warehouse                                     ; name                        ; Warehouse:name                                     ;                                                           ;
+
+#**********************************
+#*** SAP Integration User Group ***
+#**********************************
+
+INSERT_UPDATE UserGroup; UID[unique = true]      ; locname[lang = en]          ; description                 ; groups(uid)[mode = append]
+                       ; sapInboundOMSOrderGroup ; SAP Inbound OMS Order Group ; SAP Inbound OMS Order Group ; integrationusergroup
+                       ; sapInboundProductGroup  ; SAP Inbound Product Group   ; SAP Inbound Product Group   ; integrationusergroup
+
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+
+INSERT_UPDATE SearchRestriction; code[unique = true]               ; name[lang = en]                        ; query                                                                                                                                                                                                          ; principal(UID)       ; restrictedType(code); active; generate
+                               ; sapInboundOMSStockLeveRestriction ; SAP Inbound OMS Stock Leve Restriction ; ({code}='InboundOMSStockLevel' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundOMSStockLevel') ; integrationusergroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundOMSOrderRestriction     ; SAP Inbound OMS Order Restriction      ; ({code}='InboundOMSOrder' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundOMSOrderGroup' }} )) OR ({code}!='InboundOMSOrder')          ; integrationusergroup ; IntegrationObject   ; true  ; true

@@ -1,0 +1,21 @@
+# USE CTRL-SPACE for type-ahead support
+INSERT_UPDATE IntegrationObject; code[unique = true]; 
+; SubscriptionPricing
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; SubscriptionPricing  ;  SubscriptionPricingOutbound                 		   ; SubscriptionPricingOutbound
+; SubscriptionPricing  ;  SubscriptionPricingOutboundRequest                   ; SubscriptionPricingOutboundRequest
+; SubscriptionPricing  ;  CpqPricingParameter 				   					   ; CpqPricingParameter
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier)   ; returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+; SubscriptionPricing:SubscriptionPricingOutbound		            ; externalSystemId      		 ; SubscriptionPricingOutbound:externalSystemId        	   ;               														 ; true
+; SubscriptionPricing:SubscriptionPricingOutbound		            ; cpqQuoteId     		 		 ; SubscriptionPricingOutbound:cpqQuoteId        	   	   ;               														 ; 
+; SubscriptionPricing:SubscriptionPricingOutbound		            ; cpqQuoteVersion      		 	 ; SubscriptionPricingOutbound:cpqQuoteVersion        	   ;               														 ; 
+; SubscriptionPricing:SubscriptionPricingOutbound		            ; requests          		 ; SubscriptionPricingOutbound:requests          			   ; SubscriptionPricing:SubscriptionPricingOutboundRequest              ;
+; SubscriptionPricing:SubscriptionPricingOutboundRequest            ; id                         ; SubscriptionPricingOutboundRequest:id                       ;                                                       				 ;true
+; SubscriptionPricing:SubscriptionPricingOutboundRequest            ; method               	  	 ; SubscriptionPricingOutboundRequest:method                   ;                                                      				 ;
+; SubscriptionPricing:SubscriptionPricingOutboundRequest            ; url                  	  	 ; SubscriptionPricingOutboundRequest:url                      ;                                                    				 ;
+; SubscriptionPricing:SubscriptionPricingOutboundRequest            ; effectiveAt                ; SubscriptionPricingOutboundRequest:effectiveAt              ;                                                      				 ;
+; SubscriptionPricing:SubscriptionPricingOutboundRequest            ; pricingParameters          ; SubscriptionPricingOutboundRequest:pricingParameters        ; SubscriptionPricing:CpqPricingParameter             					 ;
+; SubscriptionPricing:SubscriptionPricingOutboundRequest	        ; ratePlanId      			 ; SubscriptionPricingOutboundRequest:ratePlanId           					   ;               														 					 ; 
+; SubscriptionPricing:CpqPricingParameter					            ; code                       ; CpqPricingParameter:code				                       ;                                                       				 ; true
+; SubscriptionPricing:CpqPricingParameter					            ; value                       ; CpqPricingParameter:value				                       ;                                                       				 ; 

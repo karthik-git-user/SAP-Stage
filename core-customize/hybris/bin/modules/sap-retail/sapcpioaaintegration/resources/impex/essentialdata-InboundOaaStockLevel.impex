@@ -1,0 +1,14 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; InboundOaaStockLevel; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; InboundOaaStockLevel                ; StockLevel         ; StockLevel         ; true     ; 
+; InboundOaaStockLevel                ; Warehouse       ; Warehouse       ;               ; 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; InboundOaaStockLevel:StockLevel          ; warehouse                                    ; StockLevel:warehouse                                                  ; InboundOaaStockLevel:Warehouse        ;               ; 
+; InboundOaaStockLevel:StockLevel          ; sapoaa_roughStockIndicator_availabilityDate    ; StockLevel:sapoaa_roughStockIndicator_availabilityDate                ;                                           ;               ; 
+; InboundOaaStockLevel:StockLevel          ; sapoaa_roughStockIndicator                   ; StockLevel:sapoaa_roughStockIndicator                               ;                                           ;               ; 
+; InboundOaaStockLevel:StockLevel          ; productCode                                ; StockLevel:productCode                                                ;                                           ; true     ; 
+; InboundOaaStockLevel:StockLevel          ; available                                        ; StockLevel:available                                                  ;                                           ;               ; 
+; InboundOaaStockLevel:Warehouse        ; code                                                ; Warehouse:code                                                        ;                                           ; true     ; 

@@ -1,0 +1,33 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+######
+## PARAMETERS REQUIRED FOR THIS SCRIPT
+##
+##   * contentCatalog   - content catalog id
+##   * addonExtensionName - extension name of the ui addon
+#######
+
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$jarResourceCmsCockpit=jar:com.sap.hybris.constants.SapcpqquoteintegrationaddonConstants&/sapcpqquoteintegrationaddon/import/cockpit/cmscockpit
+$contentCatalog=powertoolsContentCatalog
+$contentCatalogName=Powertools Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Online])[default=$contentCatalog:Online]
+$addonExtensionName=sapcpqquoteintegrationaddon
+
+
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-quote-detail;Side Content Slot for My Account Quote Details;true;;;;
+;;BodyContent-quote-detail;Body Content Slot for My Account Quote Details;true;AccountQuoteDetailsOverviewComponent,QuoteDetailsEntriesComponent,QuoteTotalsComponent
+
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+;;AccountQuoteDetailsOverviewComponent;Account Quote Details Overview Component;/WEB-INF/views/addons/$addonExtensionName/responsive/pages/account/accountQuoteDetailOverview.jsp;;AccountQuoteDetailsOverviewComponent
+;;QuoteDetailsEntriesComponent;Quote Details Entries Component;/WEB-INF/views/addons/$addonExtensionName/responsive/pages/quote/quoteDetailsEntries.jsp;;QuoteDetailsEntriesComponent
+;;QuoteTotalsComponent;Quote Totals Display Component;/WEB-INF/views/responsive/pages/quote/quoteTotalsDisplay.jsp;;QuoteTotalsComponent

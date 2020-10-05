@@ -1,0 +1,9 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; SalesQuoteConfirmationInbound ; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; SalesQuoteConfirmationInbound	; Quote         	; Quote 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate 
+; SalesQuoteConfirmationInbound:Quote         	; code           	; Quote:code            	;                                 	;  ;
+; SalesQuoteConfirmationInbound:Quote         	; c4cQuoteExternalQuoteId	; Quote:c4cQuoteExternalQuoteId 	;                                 	;  ;

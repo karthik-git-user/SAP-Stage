@@ -1,0 +1,107 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2020 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+# 
+# Update the Electronics BaseStore
+
+$storeUid=powertools
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import Delivery Modes / Zones
+#
+#% impex.setLocale(Locale.GERMAN)
+
+# Currencies
+$ukCurrency=GBP
+$jpCurrency=JPY
+$usCurrency=USD
+$europeCurrency=EUR
+$lang=en
+
+# Delivery Zones
+INSERT_UPDATE Zone                  ; code[unique=true]               ; countries(isocode)
+                                    ; uk                              ; GB,GG,IM,JE
+                                    ; continentalEurope               ; AD,AL,AT,BA,BE,BG,BY,CH,CY,CZ,DE,DK,EE,ES,FI,FO,FR,GI,GL,GR,HR,HU,IE,IS,IT,LI,LT,LU,LV,MC,MD,ME,MK,MT,NL,NO,PL,PT,RO,RS,RU,SE,SI,SK,SM,TR,UA,VA
+                                    ; usa                             ; US
+                                    ; ca                              ; CA
+                                    ; japan                           ; JP
+                                    ; china                           ; CN
+                                    ; otherAsianRegions	              ; VN,HK,KP,KR
+
+# Zone Delivery Modes
+INSERT_UPDATE ZoneDeliveryMode      ; code[unique=true]               ; net          ;name[lang=$lang]			                                                 ; active[default=true]
+                                    ; service-delivery                ; true	     ;"No Delivery Charges for Service"		
+
+
+INSERT_UPDATE BaseStore2DeliveryModeRel;source(uid)[unique=true];target(code)[unique=true]
+;$storeUid;service-delivery
+
+
+
+# UK
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='uk'][unique=true]                                                                                                           ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+                                   
+
+# Continental Europe
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='continentalEurope'][unique=true]                                                                                            ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+  				    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+                               
+
+# USA
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='usa'][unique=true]                                                                                                          ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+
+
+
+# Canada
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='ca'][unique=true]                                                                                                           ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+
+
+
+# Japan
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='japan'][unique=true]                                                                                                        ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+
+
+# China
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='china'][unique=true]                                                                                                        ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00
+
+
+
+# otherAsianRegions
+INSERT_UPDATE ZoneDeliveryModeValue ; deliveryMode(code)[unique=true] ; zone(code)[default='otherAsianRegions'][unique=true]                                                                                            ; currency(isocode)[unique=true] ; value  ; minimum[unique=true]
+                                    ; service-delivery                   ;                                                                                                                                                 ; $ukCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $usCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $jpCurrency                    ; 0,00  ; 0,00
+                                    ; service-delivery                   ;                                                                                                                                                 ; $europeCurrency                ; 0,00  ; 0,00

@@ -1,0 +1,7 @@
+INSERT_UPDATE OutboundChannelConfiguration; code[unique = true]; integrationObject(code); destination(id)
+                                          ; SapCpiC4cCustomerOutboundChannel    ; OutboundC4cCustomer        ; scpiOutboundCustomerConsumedDestination
+
+INSERT_UPDATE OutboundSyncStreamConfiguration; streamId[unique = true]; container(id)           ; itemTypeForStream(code); outboundChannelConfiguration(code); 
+                                 ; SapCpiC4cCustomerStream          ; outboundSyncDataStreams ; Customer                ; SapCpiC4cCustomerOutboundChannel;
+                                 ; SapCpiC4cCountryStream          ; outboundSyncDataStreams ; Country                ; SapCpiC4cCustomerOutboundChannel;
+                                 ; SapCpiC4cAddressStream          ; outboundSyncDataStreams ; Address                ; SapCpiC4cCustomerOutboundChannel;

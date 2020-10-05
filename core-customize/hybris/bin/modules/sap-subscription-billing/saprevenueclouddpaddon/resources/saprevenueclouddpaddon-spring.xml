@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop.xsd
+	   http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean id="saprevenueclouddpaddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!--
+								<value>B2B</value>
+				-->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false"/>
+				<property name="baseExtensionName" value="saprevenueclouddpaddon"/>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="saprevenueclouddpaddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener"  >
+		<property name="extensionName" value="saprevenueclouddpaddon" />
+	</bean>
+	
+	<alias alias="sapRevenueCloudSwitchAspect" name="sapRevenueCloudSwithUIComponentsAspect"/>
+	<bean id="sapRevenueCloudSwithUIComponentsAspect" class="com.sap.hybris.saprevenueclouddpaddon.aspect.SapRevenueCloudSwithUIComponentsAspect"/>
+	
+	
+	<alias alias="sapDigitalPaymentSplitAuthorizationStrategy" name="sapRevenueCloudDpSplitAuthorizationStrategy"/>
+	<bean id="sapRevenueCloudDpSplitAuthorizationStrategy" class="com.sap.hybris.saprevenueclouddpaddon.strategy.impl.SapRevenueCloudDpSplitAuthorizationStrategy">
+	<property name="sapDigitalPaymentAuthorizationService" ref="sapDigitalPaymentAuthorizationService"/>
+	<property name="commercePaymentAuthorizationStrategy" ref="commercePaymentAuthorizationStrategy"/>
+	<property name="sapRevenueCloudSplitOrderService" ref="sapRevenueCloudSplitOrderService"/>
+	<property name="modelService" ref="modelService"/>
+	</bean>
+
+	<alias alias="sapRevenueCloudDigitalPaymentService" name="defaultSapRevenueCloudDigitalPaymentService"/>
+	<bean id="defaultSapRevenueCloudDigitalPaymentService" class="com.sap.hybris.saprevenueclouddpaddon.service.impl.DefaultSapRevenueCloudDigitalPaymentService">
+		<property name="sapDigiPayPollCardStatusMap" ref="sapDigiPayPollCardStatusMap" />
+		<property name="modelService" ref="modelService"/>
+		<property name="baseStoreService" ref="baseStoreService"/>
+		<property name="sapDigitalPaymentService" ref="sapDigitalPaymentService"/>
+		<property name="userService" ref="userService" />
+		<property name="cartService" ref="cartService" />
+		<property name="addressConverter" ref="addressConverter" />
+		<property name="ccPaymentInfoReverseConverter" ref="cardPaymentInfoReverseConverter"/>
+		<property name="cisSapDigitalPaymentPaymentInfoConverter" ref="cisSapDigitalPaymentPaymentInfoConverter"/>
+		<property name="sapDigitalPaymentPollResultConverter" ref="sapDigitalPaymentPollResultConverter" />
+	</bean>
+
+	<alias alias="sapRevenueCloudDigitalPaymentFacade" name="defaultSapRevenueCloudDigitalPaymentFacade"/>
+	<bean id="defaultSapRevenueCloudDigitalPaymentFacade" class="com.sap.hybris.saprevenueclouddpaddon.facade.impl.DefaultSapRevenueCloudDigitalPaymentFacade">
+		<property name="sapRevenueCloudDigitalPaymentService" ref="sapRevenueCloudDigitalPaymentService"/>
+		<property name="sapDigitalPaymentService"  ref="sapDigitalPaymentService" />
+		<property name="cisSapDigitalPaymentFacade"  ref="cisSapDigitalPaymentFacade" />
+		<property name="ccPaymentInfoConverter"  ref="creditCardPaymentInfoConverter" />
+	</bean>
+
+	<alias alias="sapDigitalPaymentPollResultConverter" name="defaultSapDigitalPaymentPollResultConverter" />
+	<bean id="defaultSapDigitalPaymentPollResultConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.sap.hybris.saprevenueclouddpaddon.data.SapRcDigitalPaymentPollResultData"/>
+		<property name="populators">
+			<list>
+				<ref bean="sapRcDigitalPaymentPollResultPopulator"/>
+			</list>
+		</property>
+	</bean>
+
+	<alias alias="sapRcDigitalPaymentPollResultPopulator" name="defaultSapRcDigitalPaymentPollResultPopulator"/>
+	<bean id="defaultSapRcDigitalPaymentPollResultPopulator"
+		  class="com.sap.hybris.saprevenueclouddpaddon.populator.SapRevenueCloudDigitalPaymentPollResultPopulator">
+		<property name="sapDigiPayPollCardStatusMap" ref="sapDigiPayPollCardStatusMap" />
+	</bean>
+
+
+</beans>

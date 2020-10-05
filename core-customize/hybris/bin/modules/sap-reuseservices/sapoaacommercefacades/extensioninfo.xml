@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Sapoaacommercefacades" managername="SapoaacommercefacadesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapoaacommercefacades" usemaven="false">
+                   
+      
+        <requires-extension name="sapoaacommerceservices"/>
+               
+      
+        <requires-extension name="commercefacades"/>
+               
+      
+
+      
+        <coremodule generated="true" manager="com.sap.retail.oaa.commerce.facades.jalo.SapoaacommercefacadesManager" packageroot="com.sap.retail.oaa.commerce.facades"/>
+           
+    </extension>
+          
+
+</extensioninfo>

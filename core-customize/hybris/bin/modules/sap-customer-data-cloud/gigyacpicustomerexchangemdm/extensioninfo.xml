@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+               
+    
+    
+    <extension abstractclassprefix="Generated" classprefix="Gigyacpicustomerexchangemdm" jaloLogicFree="true" managername="GigyacpicustomerexchangemdmManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="gigyacpicustomerexchangemdm" usemaven="false">
+                          
+        
+        <requires-extension name="gigyaservices"/>
+                
+        <requires-extension name="sapcpicustomerexchangemdm"/>
+              
+        
+        <coremodule generated="true" manager="de.hybris.platform.gigya.gigyacpicustomerexchangemdm.jalo.GigyacpicustomerexchangemdmManager" packageroot="de.hybris.platform.gigya.gigyacpicustomerexchangemdm"/>
+                    					
+    
+    </extension>
+    
+</extensioninfo>

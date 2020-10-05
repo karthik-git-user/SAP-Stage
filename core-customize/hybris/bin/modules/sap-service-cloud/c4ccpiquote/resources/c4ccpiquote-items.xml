@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+		
+		<collectiontype code="quoteEntries"
+			elementtype="QuoteEntry" type="list" autocreate="true"
+			generate="false" />
+			
+			
+		<collectiontype code="priceComponentList"
+			elementtype="SAPC4CPriceComponent" type="list" autocreate="true"
+			generate="false" />
+			
+		<collectiontype code="c4cComments"
+			elementtype="SAPC4CComment" type="list" autocreate="true"
+			generate="false" />
+			
+	</collectiontypes>
+	
+	<relations>
+
+		<relation code="SAPC4CCpiOutboundQuote2SAPC4CCpiOutboundItem"
+			localized="false">
+			<sourceElement type="SAPC4CCpiOutboundQuote"
+				qualifier="sapC4COutboundQuote" cardinality="one" />
+			<targetElement type="SAPC4CCpiOutboundItem"
+				qualifier="sapC4COutboundQuoteItems" cardinality="many"
+				collectiontype="set">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+		
+	</relations>
+
+<itemtypes>
+
+		<itemtype code="SAPC4CPriceComponent"
+			jaloclass="com.sap.hybris.c4ccpiquote.jalo.SAPC4CPriceComponent"
+			extends="GenericItem" generate="true" autocreate="true">
+
+			<deployment table="SAPC4CPriceComponent" typecode="9368"/>
+			
+			<attributes>
+
+				<attribute qualifier="code" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="value" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="isoCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="originCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="entryNumber" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+				
+				<attribute qualifier="quoteId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+				
+
+			</attributes>
+
+		</itemtype>
+
+		<itemtype code="Quote" autocreate="false" generate="false">
+			<attributes>
+				
+				<attribute qualifier="quoteEntries"
+					type="quoteEntries">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute type="java.lang.String"
+					qualifier="c4cQuoteExternalQuoteId">
+					<description>Unique identifier of Quote in the Integrated System, eg. C4C</description>
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute type="java.lang.String" qualifier="c4cCpiSalesOrganization">
+					<description>Sales Organization</description>
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="c4cCpiDistributionChannel">
+					<description>Distribution Channel</description>
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute type="java.lang.String" qualifier="c4cCpiDivision">
+					<description>Division</description>
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="headerPriceComponentList"
+					type="priceComponentList">
+					<persistence type="property" /> 
+				</attribute>
+				<attribute qualifier="quoteOrderId"
+					type="java.lang.String">
+					<persistence type="property" /> 
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="QuoteEntry" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="itemPriceComponentList"
+					type="priceComponentList">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute type="java.lang.String"
+					qualifier="c4cItemId">
+					<description>Unique identifier of Product. Used to map this Quote Entry to a specific product in Commerce</description>
+					<modifiers read="true" write="true" search="true"
+						optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="Comment" autocreate="false" generate="false">
+			<attributes>
+				<attribute type="java.lang.String"
+					qualifier="commentCode">
+					<persistence type="property" />
+					<modifiers unique="true"/>
+					<description>Temporary placeholder to keep comments unique</description>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		
+		<itemtype code="SAPC4CCpiOutboundItem"
+			jaloclass="com.sap.hybris.c4ccpiquote.jalo.SAPC4CCpiOutboundItem"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+
+			<attributes>
+
+				<attribute qualifier="actionCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="scheduleLineCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="itemCustomDefinedPartyListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="lineItemId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="productId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="description" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="scheduleLineTypeCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="scheduleLineId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="quantity" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="unitCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="logicalSystemId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+			</attributes>
+
+		</itemtype>
+		
+		<itemtype code="SAPC4CCpiOutboundQuote"
+			jaloclass="com.sap.hybris.c4ccpiquote.jalo.SAPC4CCpiOutboundQuote"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+
+
+			<attributes>
+				
+				<attribute qualifier="predecessorIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="salesEmployeePartyListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="otherPartyListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="actionCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="businessTransactionDocumentReferenceCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="itemCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+
+				<attribute qualifier="quoteId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="senderSequenceNumberVaue" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="processingTypeCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="name" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="buyerID"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="salesOrganization"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="distributionChannel"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="division" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="currencyIsoCode"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="billPartyRoleCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="buyerPartyRoleCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="productRecepientRoleCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="partyId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="partyIdType" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="logicalSystemId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="c4cComments" type="c4cComments">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="cancellationReasonCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+			</attributes>
+
+		</itemtype>
+		
+		<itemtype code="SAPConfiguration" autocreate="false"
+			generate="false">
+			<attributes>
+			<!-- quoteType holds value for processing type code in backend c4c system, 
+					for e.g: ZAGR, AG etc. -->
+				<attribute qualifier="processingTypeCode" type="java.lang.String">
+					<description>quote processingType code in back end c4c system</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="logicalSystemId" type="java.lang.String">
+					<description>quote processingType code in back end c4c system</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="C4CSalesOrderNotification"
+			jaloclass="com.sap.hybris.c4ccpiquote.jalo.C4CSalesOrderNotification"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+
+
+			<attributes>
+			
+				<attribute qualifier="businessTransactionDocumentReferenceListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				
+				<attribute qualifier="itemListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="typeCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+			
+
+				<attribute qualifier="orderId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+				
+
+				<attribute qualifier="c4cQuoteId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="itemTypeCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="schemeId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="actionCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+
+		</itemtype>
+		
+		
+		<itemtype code="SAPC4CComment"
+			jaloclass="com.sap.hybris.c4ccpiquote.jalo.SAPC4CComment"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+
+
+			<attributes>
+				
+				<attribute qualifier="textListCompleteTransmissionIndicator" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="textActionCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="textTypeCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="textLanguageCode" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="commentText" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="commentCode" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+				
+			</attributes>
+			
+		</itemtype>
+		
+	</itemtypes>
+
+</items>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/util
+		     http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- PPS launcher -->
+	<bean id="sapPPSAppContextCreator" class="com.sap.ppengine.core.spring.impl.ApplicationContextCreatingBeanImpl">
+		<property name="contextInitializers" ref="sapPPSContextInitializers" />
+	</bean>
+
+	<alias name="sapDefaultPPSContextInitializers" alias="sapPPSContextInitializers" />
+	<util:list id="sapDefaultPPSContextInitializers">
+		<ref bean="sapPPSHybrisPropertySourceAdder" />
+	</util:list>
+
+	<alias name="sapDefaultPPSHybrisPropertySourceAdder" alias="sapPPSHybrisPropertySourceAdder" />
+	<bean id="sapDefaultPPSHybrisPropertySourceAdder" class="com.sap.ppengine.core.spring.impl.PropertySourceAdderImpl">
+		<property name="propertySource" ref="sapPPSHybrisPropertySource" />
+	</bean>
+
+	<alias name="sapDefaultPPSHybrisPropertySource" alias="sapPPSHybrisPropertySource" />
+	<bean id="sapDefaultPPSHybrisPropertySource" class="org.springframework.core.env.PropertiesPropertySource">
+		<constructor-arg value="hybrisSource" />
+		<constructor-arg>
+			<map>
+				<entry key="sap.core.ppsconfiglocation" value="${sapppspricing.pps.configfile}" />
+				<!-- Jndi name potentially used by hybris - not necessarily set! -->
+				<entry key="sap.sapppspricing.db.jndiname" value="#{ '${db.pool.fromJNDI}'.isEmpty() or '${db.pool.fromJNDI}'.startsWith('$') ? 'dummy' : '${db.pool.fromJNDI}'}" />
+				<!-- Property indicating the DataSource type: Jndi or Direct-->
+				<entry key="sap.sapppspricing.db.dstype" value="#{ '${db.pool.fromJNDI}'.isEmpty() or '${db.pool.fromJNDI}'.startsWith('$') ? 'Direct' : 'Jndi'}" />
+				<!-- Take over DB connection parameters of hybris as long as no sapppspricing specific properties for the DB are set -->
+				<!-- Note: sapppspricing.db.username and sapppspricing.db.username are not for productive use
+				     due to security considerations -->
+				<entry key="sap.dataaccess-common.db.url" value="${sapppspricing.db.url:${db.url}}" />
+				<entry key="sap.dataaccess-common.db.userName" value="${sapppspricing.db.username:${db.username}}" />
+				<entry key="sap.dataaccess-common.db.passWord" value="${sapppspricing.db.password:${db.password}}" />
+				<entry key="sap.dataaccess-common.db.driverClassName" value="${sapppspricing.db.driver:${db.driver}}" />
+				<entry key="sap.dataaccess-common.db.client" value="${sapppspricing.dbclient}" />
+			</map>
+		</constructor-arg>
+	</bean>
+	
+
+</beans>

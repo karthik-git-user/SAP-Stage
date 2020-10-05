@@ -1,0 +1,73 @@
+<div data-ng-cloak
+    class="se-login">
+    <div class="se-login--wrapper">
+        <div class="se-login--logo-wrapper"
+            data-ng-class="{'se-login--logo-wrapper_full': !modalController.initialized}">
+            <img src="static-resources/images/SAP_R_grad.svg"
+                class="se-login--logo">
+            <span class="se-login--logo-text"
+                data-translate="smarteditcep.application.name"></span>
+        </div>
+        <form autocomplete="off"
+            data-ng-submit="modalController.signinWithCredentials(loginDialogForm)"
+            class="se-login--form"
+            name='loginDialogForm'
+            novalidate>
+            <div class="se-login--auth-message"
+                data-ng-if="modalController.initialized">
+                <div data-translate="smarteditcep.logindialogform.reauth.message1"></div>
+                <div data-translate="smarteditcep.logindialogform.reauth.message2"></div>
+            </div>
+            <div class="se-login--form-group"
+                data-ng-if="loginDialogForm.errorMessage && loginDialogForm.posted && (loginDialogForm.$invalid || loginDialogForm.failed)">
+                <div class="fd-alert fd-alert--error  se-login--alert-error"
+                    id="invalidError"
+                    data-translate="{{ loginDialogForm.errorMessage }}"></div>
+            </div>
+            <div class="se-login--form-group">
+                <input class="fd-form__control"
+                    type="text"
+                    id="username_{{modalController.authURIKey}}"
+                    name="username"
+                    placeholder="{{ 'smarteditcep.authentication.form.input.username' | translate}}"
+                    autofocus
+                    data-ng-model="modalController.auth.username"
+                    autocomplete="username"
+                    required />
+            </div>
+            <div class="se-login--form-group">
+                <input class="fd-form__control"
+                    type="password"
+                    id='password_{{modalController.authURIKey}}'
+                    name='password'
+                    placeholder="{{ 'smarteditcep.authentication.form.input.password' | translate}}"
+                    data-ng-model="modalController.auth.password"
+                    autocomplete="current-password"
+                    required />
+            </div>
+            <div class="se-login--form-group">
+                <language-selector class="se-login-language"></language-selector>
+            </div>
+            <button class="fd-button--emphasized se-login--btn"
+                id="submit_{{modalController.authURIKey}}"
+                name="submit"
+                type="submit"
+                data-translate="smarteditcep.authentication.form.button.submit"></button>
+        </form>
+        <form
+            data-ng-if="modalController.ssoEnabled"
+            class="se-login--form"
+            name="loginDialogFormSSO"
+            novalidate
+            data-ng-submit="modalController.signinWithSSO(loginDialogForm)">
+            <button
+                class="fd-button--emphasized se-login--btn"
+                id="submitSSO_{{modalController.authURIKey}}"
+                name="submitSSO"
+                type="submit"
+                data-translate="smarteditcep.authentication.form.button.submit.sso"></button>
+    </form>
+    </div>
+</div>
+<img src="static-resources/images/best-run-sap-logo.svg"
+    class="se-login--logo__best-run">

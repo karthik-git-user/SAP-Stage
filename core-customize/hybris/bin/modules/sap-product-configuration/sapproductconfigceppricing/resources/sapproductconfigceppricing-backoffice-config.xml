@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+		xmlns:df="http://www.hybris.com/cockpitng/component/dynamicForms"
+		xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea" >
+
+	<context merge-by="type" type="SAPConfiguration" component="editor-area" parent="auto">
+		<editorArea:editorArea>
+			<editorArea:tab name="tab.sapproductconfiguration">
+			
+			   <editorArea:section name="section.sapproductconfiguration_pricingparameter_cep">
+					<editorArea:panel name="sapproductconfigPricingparameter">
+						<editorArea:attribute qualifier="sapproductconfig_enable_pricing" />
+						<editorArea:attribute qualifier="sapproductconfig_show_deltaprices" />
+					</editorArea:panel>
+				</editorArea:section>
+				
+
+				<editorArea:section name="section.sapproductconfiguration_cps_engine_common">
+					<editorArea:panel name="sapproductconfigPricingparameterCPS_common">
+					   <editorArea:attribute qualifier="sapproductconfig_basesite_cps" />
+						<editorArea:attribute qualifier="sapproductconfig_pricingprocedure_cps" />
+						<editorArea:attribute qualifier="sapproductconfig_show_baseprice_and_options" />
+					</editorArea:panel>
+				</editorArea:section>
+				
+				<editorArea:section name="section.sapproductconfiguration_cps_engine_cf">
+					<editorArea:panel name="sapproductconfigPricingparameterCPS_CF">
+					   <editorArea:attribute qualifier="sapproductconfig_pricingdetailsmode"/>
+						<editorArea:attribute qualifier="sapproductconfig_condfunc_baseprice_cps" />
+						<editorArea:attribute qualifier="sapproductconfig_condfunc_selectedoptions_cps" />
+					</editorArea:panel>
+				</editorArea:section>
+				
+				<editorArea:section name="section.sapproductconfiguration_cps_engine_ct">
+					<editorArea:panel name="sapproductconfigPricingparameterCPS_CT">
+					   <editorArea:attribute qualifier="sapproductconfig_pricingdetailsmode"/>
+						<editorArea:attribute qualifier="sapproductconfig_conditiontypes_baseprice_cps"/>
+						<editorArea:attribute qualifier="sapproductconfig_conditiontypes_selectedoptions_cps"/>
+					</editorArea:panel>
+				</editorArea:section>
+				
+				<editorArea:section name="section.sapproductconfiguration_cps_engine_st">
+					<editorArea:panel name="sapproductconfigPricingparameterCPS_ST">
+					   <editorArea:attribute qualifier="sapproductconfig_pricingdetailsmode"/>
+						<editorArea:attribute qualifier="sapproductconfig_subtotal_baseprice_cps"/>
+						<editorArea:attribute qualifier="sapproductconfig_subtotal_selectedoptions_cps"/>
+					</editorArea:panel>
+				</editorArea:section>
+				
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>	
+	
+	<context type="SAPConfiguration" component="editorAreaDynamicForms" merge-by="type">
+		<df:dynamicForms>
+			<df:section id="cps" qualifier="section.sapproductconfiguration_pricingparameter" visibleIf="false" />
+			<df:section id="cps" qualifier="section.sapproductconfiguration_cps_engine" visibleIf="false" />
+			<df:section id="cf" triggeredOn="*" qualifier="section.sapproductconfiguration_cps_engine_cf" visibleIf="sapproductconfig_pricingdetailsmode.getCode() == 'conditionFunction' &amp;&amp; sapproductconfig_show_baseprice_and_options" />
+			<df:section id="ct" triggeredOn="*" qualifier="section.sapproductconfiguration_cps_engine_ct" visibleIf="sapproductconfig_pricingdetailsmode.getCode() == 'conditionType' &amp;&amp; sapproductconfig_show_baseprice_and_options" />
+			<df:section id="st" triggeredOn="*" qualifier="section.sapproductconfiguration_cps_engine_st" visibleIf="sapproductconfig_pricingdetailsmode.getCode() == 'pricingSubtotal' &amp;&amp; sapproductconfig_show_baseprice_and_options" />
+		</df:dynamicForms>
+	</context>
+	
+</config>

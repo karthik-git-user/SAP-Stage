@@ -1,0 +1,13 @@
+#*******************************************
+#*** Create SAP Integration User Groups ****
+#*******************************************
+INSERT_UPDATE UserGroup; UID[unique = true]        ; locname[lang = en]            ; description                   ; groups(uid)[mode = append]
+                       ; sapInboundServiceManagementGroup ; SAP Inbound Service Management ; SAP Inbound Service Management Group ; integrationusergroup
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+INSERT_UPDATE SearchRestriction ; code[unique = true]                  ; name[lang = en]                                  ; query                                                                                                                                                                                                                        ; principal(UID)       ; restrictedType(code) ; active ; generate
+                                ; sapInboundOMSServiceOrderRestriction ; SAP Inbound ServiceOrderNotification Restriction ; ({code}='InboundOMSServiceOrder' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundServiceManagementGroup' }} )) OR ({code}!='InboundOMSServiceOrder') ; integrationusergroup ; IntegrationObject    ; true   ; true
+                                ; sapInboundServiceProductRestriction  ; SAP Inbound Service Product Restriction          ; ({code}='InboundProduct' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundServiceManagementGroup' }} )) OR ({code}!='InboundProduct')                 ; integrationusergroup ; IntegrationObject    ; true   ; true
+                                ; sapInboundSkill 					   ; SAP Inbound Service Skill Restriction 			  ; ({code}='InboundSkill' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundServiceManagementGroup' }} )) OR ({code}!='InboundSkill') 					 ; integrationusergroup ; IntegrationObject    ; true   ; true       
+                         

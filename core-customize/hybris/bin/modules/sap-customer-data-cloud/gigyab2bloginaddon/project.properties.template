@@ -1,0 +1,25 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+gigyab2bloginaddon.key=value
+
+# Specifies the location of the spring context file added automatically to the global platform application context.
+gigyab2bloginaddon.application-context=gigyab2bloginaddon-spring.xml
+
+yacceleratorstorefront.additionalWebSpringConfigs.gigyab2bloginaddon=classpath:/gigyab2bloginaddon/web/spring/gigyab2bloginaddon-web-spring.xml
+
+
+
+gigyab2bloginaddon.javascript.paths.responsive=/responsive/common/js/gigyab2bloginaddon.js
+gigyab2bloginaddon.css.paths.responsive=/responsive/common/css/gigyab2bloginaddon.css
+
+
+website.powertools-cdc.http=http\://powertools-cdc.local\:9001/yb2bacceleratorstorefront
+website.powertools-cdc.https=https\://powertools-cdc.local\:9002/yb2bacceleratorstorefront
+
+
+media.powertools-cdc.http=http\://powertools-cdc.local\:9001
+media.powertools-cdc.https=https\://powertools-cdc.local\:9002

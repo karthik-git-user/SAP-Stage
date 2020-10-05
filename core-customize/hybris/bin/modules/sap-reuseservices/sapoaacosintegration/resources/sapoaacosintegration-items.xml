@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<itemtypes>
+		<!-- Enhance SAP Base Store Configuration by PPS client specific configuration -->
+		<itemtype code="SAPConfiguration" autocreate="false" generate="true">
+			<attributes>
+				<attribute qualifier="sapcos_cacStrategyId" type="java.lang.String" generate="true">
+					<description>ID for CAC Sourcing Strategy</description>
+					<persistence type="property" />
+				</attribute>	
+				<attribute qualifier="sapcos_casStrategyId" type="java.lang.String" generate="true">
+					<description>ID for CAS Sourcing Strategy</description>
+					<persistence type="property" />
+				</attribute>			
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AbstractOrder" autocreate="false" generate="true">
+			<attributes>
+				<attribute qualifier="cosReservationId" type="java.lang.String">
+					<description>Id for the cart reservation in cos</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				
+				<attribute qualifier="cosReservationExpireFlag" type="java.lang.Boolean">
+					<description>Flag for the oaa reservation in cos</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<defaultvalue>java.lang.Boolean.TRUE</defaultvalue>
+					<persistence type="property" />
+				</attribute>
+			</attributes>		
+		</itemtype>
+		<itemtype code="AbstractOrderEntry" autocreate="false" generate="true">
+			<attributes>
+				<attribute qualifier="cosOrderItemId" type="java.lang.String">
+					<description>Unique Id for the each order entry</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>		
+		</itemtype>
+		
+
+	</itemtypes>
+</items>

@@ -1,0 +1,12 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; PopulateAttributesMapTestImpex006; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; PopulateAttributesMapTestImpex006	; Warehouse	; Warehouse	; 	;
+; PopulateAttributesMapTestImpex006	; Vendor   	; Vendor   	; true	;
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; PopulateAttributesMapTestImpex006:Warehouse	; code      	; Warehouse:code   	;                     	; true	;
+; PopulateAttributesMapTestImpex006:Vendor   	; code      	; Vendor:code      	;                     	; true	;
+; PopulateAttributesMapTestImpex006:Vendor   	; warehouses	; Vendor:warehouses	; PopulateAttributesMapTestImpex006:Warehouse	; 	;
+; PopulateAttributesMapTestImpex006:Vendor   	; name      	; Vendor:name      	;                     	; 	;

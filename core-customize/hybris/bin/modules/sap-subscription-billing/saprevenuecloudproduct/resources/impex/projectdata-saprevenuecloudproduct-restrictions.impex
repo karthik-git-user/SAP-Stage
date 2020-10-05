@@ -1,0 +1,105 @@
+#******************************************
+#*** Create SAP Integration Test Users ****
+#******************************************
+INSERT_UPDATE Employee; UID[unique = true]         				 ; name                           			    ; groups(uid)[mode = append]
+                      ; sapInboundRCConfigUser 					 ; SAP Inbound Revenue Cloud Config User 		; sapInboundRCConfigGroup,integrationadmingroup
+                      ; sapInboundProductUser       			 ; SAP Inbound Product User        				; sapInboundProductGroup,integrationadmingroup
+                      ; sapInboundSubscriptionPriceUser          ; SAP Inbound Subscription Price User          ; sapInboundSubscriptionPriceGroup,integrationadmingroup
+
+
+
+#**************************#
+#***  Basic CredentialS ***#
+#**************************#
+
+$scpiCredential = scpiCredential
+$password = samplePassword
+
+#********************#
+#*** Product URL ***#
+#********************#
+$productUrl = https://tester.hana.ondemand.com/gw/odata/SAP/ROUTE_PRODUCT_AND_PRICE_FROM_SAP_SUBSCRIPTION_BILLING_TO_SAP_COMMERCE_CLOUD
+$productVersion=v=1
+#*******************************#
+#*** Business Config URL ***#
+#*******************************#
+$businessConfigUrl = https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE_BUSINESS_CONFIGURATIONS_FROM_SAP_SUBSCRIPTION_BILLING_TO_SAP_COMMERCE_CLOUD
+$businessConfigVersion =v=1
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+
+#**************************#
+#***  Basic Credentials ***#
+#**************************#
+
+                                
+INSERT_UPDATE BasicCredential; id[unique = true]; username; password
+                             ; scpiCredential ;  $scpiCredential  ; $password
+
+
+#**********************************#
+#************  Endpoints  *********#
+#**********************************#
+INSERT_UPDATE Endpoint; id[unique = true]             ; version[unique = true] ; specUrl                                ; name
+                      ; scpiProductEndpoint           ; unknown                ; $productUrl      				        ; scpiProductEndpoint
+                      ; scpiBusinessConfigEndpoint    ; unknown                ; $businessConfigUrl 					; scpiBusinessConfigEndpoint
+
+
+#****************************#
+#***  Destination Target  ***#
+#****************************#
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; scpiDestinationTarget
+
+
+
+#*******************************#
+#***  Consumed Destinations  ***#
+#*******************************#
+INSERT_UPDATE ConsumedDestination; id[unique = true]                ; url                          ; endpoint(id, version)                 ; credential(id) ; destinationTarget(id)[default = scpiDestinationTarget];additionalProperties(key, value)[map-delimiter = |];
+                                 ; scpiProductDestination           ;"$productUrl;$productVersion/SapRevenueCloudProductCronjobs"               ; scpiProductEndpoint:unknown           ; scpiCredential ;scpiDestinationTarget ;"csrfURL->$productUrl;$productVersion"
+                                 ; scpiBusinessConfigDestination    ; "$businessConfigUrl;$businessConfigVersion/CronJobs"           ; scpiBusinessConfigEndpoint:unknown    ; scpiCredential ; scpiDestinationTarget;"csrfURL->$businessConfigUrl;$businessConfigVersion"
+                                 
+                               
+
+#******************************************************************************#
+#************  Revenue Cloud OutboundSapRevenueCloudProductCronjob  *********#
+#******************************************************************************#
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundSapRevenueCloudProductCronjob; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; OutboundSapRevenueCloudProductCronjob	; SapRevenueCloudProductCronjob     	; SapRevenueCloudProductCronjob 
+; OutboundSapRevenueCloudProductCronjob	; SapRevenueCloudReplicationModeEnum	; SapRevenueCloudReplicationModeEnum 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false] 
+; OutboundSapRevenueCloudProductCronjob:SapRevenueCloudProductCronjob     	; code           	; SapRevenueCloudProductCronjob:code           	;                                                                         	; true 
+; OutboundSapRevenueCloudProductCronjob:SapRevenueCloudProductCronjob     	; replicationTime	; SapRevenueCloudProductCronjob:replicationTime	;                                                                         	;  
+; OutboundSapRevenueCloudProductCronjob:SapRevenueCloudProductCronjob     	; replicationMode	; SapRevenueCloudProductCronjob:replicationMode	; OutboundSapRevenueCloudProductCronjob:SapRevenueCloudReplicationModeEnum	; true 
+; OutboundSapRevenueCloudProductCronjob:SapRevenueCloudReplicationModeEnum	; code           	; SapRevenueCloudReplicationModeEnum:code      	;                                                                         	; true 
+
+#**********************************************************************************#
+#***** Revenue Cloud OutboundSapRevenueCloudBusinessConfigCronjob  *********#
+#**********************************************************************************#
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; OutboundSapRevenueCloudBusinessConfigCronjob; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; OutboundSapRevenueCloudBusinessConfigCronjob	; CronJob	; CronJob 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; OutboundSapRevenueCloudBusinessConfigCronjob:CronJob	; code	; CronJob:code	;
+
+
+#**********************************************************************************#
+#*****     SAP Subscription Billing Configuration      ***************************#
+#**********************************************************************************#
+INSERT_UPDATE SAPRevenueCloudConfiguration ;name;replicateCustomer [default=false];defaultCountryCode;paymentMethod;invoiceMethod;
+                                           ;sap subscription config;false;US;Payment Card;Invoice;
+
+
+
+

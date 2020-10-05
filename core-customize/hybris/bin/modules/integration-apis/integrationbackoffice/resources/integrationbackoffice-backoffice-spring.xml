@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <alias name="defaultEditorAttributesFilteringService" alias="editorAttrFilterService"/>
+    <bean id="defaultEditorAttributesFilteringService"
+          class="de.hybris.platform.integrationbackoffice.widgets.editor.utility.DefaultEditorAttributesFilteringService">
+        <constructor-arg name="readService" ref="readService"/>
+    </bean>
+
+    <alias name="defaultReadService" alias="readService"/>
+    <bean id="defaultReadService" class="de.hybris.platform.integrationbackoffice.services.ReadService">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="typeService" ref="typeService"/>
+        <property name="ODataDefaultSchemaGenerator" ref="oDataSchemaGenerator"/>
+        <property name="readOnlyAttributesConfiguration" ref="defaultIntegrationServicesConfiguration"/>
+    </bean>
+
+    <bean id="writeService" class="de.hybris.platform.integrationbackoffice.services.WriteService">
+        <property name="readService" ref="readService"/>
+        <property name="modelService" ref="modelService"/>
+    </bean>
+
+    <alias name="defaultIntegrationObjectImpexGenerator" alias="integrationObjectImpexGenerator"/>
+    <bean id="defaultIntegrationObjectImpexGenerator"
+          class="de.hybris.platform.integrationbackoffice.widgets.modals.generator.DefaultIntegrationObjectImpexGenerator">
+    </bean>
+
+    <alias name="defaultIntegrationObjectJsonGenerator" alias="integrationObjectJsonGenerator"/>
+    <bean id="defaultIntegrationObjectJsonGenerator"
+          class="de.hybris.platform.integrationbackoffice.widgets.modals.generator.DefaultIntegrationObjectJsonGenerator">
+        <constructor-arg ref="readService"/>
+        <constructor-arg ref="defaultIntegrationServicesConfiguration"/>
+    </bean>
+
+    <alias name="defaultAuditReportBuilder" alias="auditReportBuilder"/>
+    <bean id="defaultAuditReportBuilder"
+          class="de.hybris.platform.integrationbackoffice.widgets.modals.builders.IntegrationObjectAuditReportBuilder">
+        <property name="auditViewService" ref="auditViewService"/>
+        <property name="rendererService" ref="rendererService"/>
+        <property name="commonI18NService" ref="commonI18NService"/>
+        <property name="userService" ref="userService"/>
+        <property name="reportViewConverterStrategies" ref="reportViewConverterStrategies"/>
+        <property name="configName" value="IOReport"/>
+        <property name="isDownload" value="false"/>
+    </bean>
+
+    <util:list id="adminRolesList" value-type="java.lang.String">
+        <value>backofficeadministratorrole</value>
+        <value>backofficeintegrationadministratorrole</value>
+    </util:list>
+
+    <alias name="defaultEditorAccessRights" alias="editorAccessRights"/>
+    <bean id="defaultEditorAccessRights"
+          class="de.hybris.platform.integrationbackoffice.widgets.editor.utility.EditorAccessRightsImpl">
+        <property name="userService" ref="userService"/>
+        <property name="adminRoles" ref="adminRolesList"/>
+    </bean>
+
+    <alias name="defaultPluralizingEntitySetNameGenerator" alias="pluralizer"/>
+    <bean id="defaultPluralizingEntitySetNameGenerator"
+          class="de.hybris.platform.odata2services.odata.schema.entity.PluralizingEntitySetNameGenerator"/>
+
+    <bean id="integrationbackofficeLabelLocator" class="com.hybris.cockpitng.util.labels.ResourcesLabelLocator"
+          scope="singleton" init-method="init" lazy-init="false">
+        <property name="location" value="/integrationbackoffice-backoffice-labels/"/>
+        <property name="name" value="labels"/>
+    </bean>
+
+    <alias name="defaultClassificationAttributesWithoutLocalizationRenderer"
+           alias="classificationAttributesWithoutLocalizationRenderer"/>
+    <bean id="defaultClassificationAttributesWithoutLocalizationRenderer"
+          class="de.hybris.platform.integrationbackoffice.widgets.modals.utility.ClassificationAttributesWithoutLocalizationRenderer"
+          parent="excelClassificationExportRenderer">
+        <property name="supportedAttributesPredicate">
+            <null/>
+        </property>
+    </bean>
+
+    <bean id="integrationObjectClassificationClassWizardHandler"
+          class="de.hybris.platform.integrationbackoffice.widgets.handlers.IntegrationObjectClassificationClassWizardHandler">
+        <property name="modelService" ref="modelService"/>
+    </bean>
+
+    <alias name="defaultClassificationAttributeQualifierProvider" alias="classificationAttributeQualifierProvider"/>
+    <bean id="defaultClassificationAttributeQualifierProvider"
+          class="de.hybris.platform.integrationbackoffice.widgets.providers.DefaultClassificationAttributeQualifierProvider"/>
+
+    <alias name="defaultIntegrationServicesConfiguration" alias="itemSearchConfiguration"/>
+
+    <alias name="defaultItemTypeMatchSelector" alias="itemTypeMatchSelector"/>
+    <bean id="defaultItemTypeMatchSelector" class="de.hybris.platform.integrationbackoffice.utility.DefaultItemTypeMatchSelector">
+        <property name="itemSearchConfiguration" ref="itemSearchConfiguration"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,15 @@
+$subscriptionPricingUrl=https://tester.hana.ondemand.com/gw/odata/SAP/GET_SUBSCRIPTION_PRODUCT_PRICING
+$subscriptionPricingUrlVersion=v=1
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;password;username
+
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;scpiSubscriptionPricingDestination
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SubscriptionPricingOutbounds;SubscriptionPricingOutbounds;;"$subscriptionPricingUrl;$subscriptionPricingUrlVersion";unknown
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$subscriptionPricingUrl;$subscriptionPricingUrlVersion";scpiCredentials;scpiSubscriptionPricingDestination;SubscriptionPricingOutbounds:unknown;scpiSubscriptionPricingDestination;"$subscriptionPricingUrl;$subscriptionPricingUrlVersion/SubscriptionPricingOutbounds"

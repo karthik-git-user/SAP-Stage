@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+	<itemtypes>
+		<itemtype code="AbstractOrder" autocreate="false" generate="false">
+			<description>Extending AbstractOrder type with additional attributes.</description>
+			<attributes>
+				<!-- Shared between Campaign tracking and ymktsync -->
+				<attribute qualifier="ymktTrackingId" type="java.lang.String">
+					<description>Hybris Marketing Campaign ID</description>
+					<modifiers read="true" optional="true" write="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="SAPOrderType" autocreate="true" generate="true" dynamic="true">
+			<value code="SALES"/>
+			<value code="SERVICE"/>
+			<value code="SUBSCRIPTION"/>
+		</enumtype>
+	</enumtypes>
+
+	<itemtypes>
+
+		<itemtype code="SAPOrder" autocreate="false" generate="false">
+			<description>Extending SAPOrder type with additional attributes for SCPI integration to handle OData actions.</description>
+			<attributes>
+
+				<attribute qualifier="orderEntryNumber" type="java.lang.Integer">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="quantity" type="java.lang.Integer">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="rejectionReason" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="goodsIssueDate" type="java.util.Date">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="sapOrderType" type="SAPOrderType">
+					<persistence type="property"/>
+					<defaultvalue>em().getEnumerationValue("SAPOrderType", "SALES")</defaultvalue>
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+	</itemtypes>
+
+</items>

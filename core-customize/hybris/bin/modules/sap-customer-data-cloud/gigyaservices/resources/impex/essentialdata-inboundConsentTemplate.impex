@@ -1,0 +1,16 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundConsentTemplate; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; InboundConsentTemplate	; BaseSite       	; BaseSite 
+; InboundConsentTemplate	; ConsentTemplate	; ConsentTemplate 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundConsentTemplate:BaseSite       	; uid                   	; BaseSite:uid                          	;                   		 ; true		;  
+; InboundConsentTemplate:ConsentTemplate	; baseSite              	; ConsentTemplate:baseSite              	; InboundConsentTemplate:BaseSite; true		;  
+; InboundConsentTemplate:ConsentTemplate	; version               	; ConsentTemplate:version               	;                   		 ; true		;  
+; InboundConsentTemplate:ConsentTemplate	; reconsentCutOffVersion	; ConsentTemplate:reconsentCutOffVersion	;                   		 ; 		;  
+; InboundConsentTemplate:ConsentTemplate	; name                  	; ConsentTemplate:name                  	;                   		 ; 		;  
+; InboundConsentTemplate:ConsentTemplate	; exposed               	; ConsentTemplate:exposed               	;                   		 ; 		;  
+; InboundConsentTemplate:ConsentTemplate	; id                    	; ConsentTemplate:id                    	;                   		 ; true		;  
+; InboundConsentTemplate:ConsentTemplate	; description           	; ConsentTemplate:description           	;                   		 ; 		;  

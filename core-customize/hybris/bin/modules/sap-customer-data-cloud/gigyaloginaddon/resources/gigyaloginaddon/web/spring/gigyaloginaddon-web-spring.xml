@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+    <context:component-scan base-package="de.hybris.platform.gigya.gigyaloginaddon.controllers" scope-resolver="de.hybris.platform.spring.IgnoreTenantScopeMetadataResolver" />
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultGigyaloginaddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="gigyaloginaddon"/>
+	</bean>
+
+	<bean id="defaultGigyaloginaddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultGigyaloginaddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getGigyaloginaddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultGigyaloginaddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="GigyaloginaddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getGigyaloginaddonBeforeViewHandler"/>
+	</bean>
+	
+	
+	<alias name="defaultGigyaAutoLoginStrategy" alias="gigyaAutoLoginStrategy"/>
+	<bean id="defaultGigyaAutoLoginStrategy" class="de.hybris.platform.gigya.gigyaloginaddon.strategies.DefaultGigyaAutoLoginStrategy" >
+		<property name="customerFacade" ref="customerFacade" />
+		<property name="guidCookieStrategy" ref="guidCookieStrategy" />
+		<property name="rememberMeServices" ref="rememberMeServices" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="userService" ref="userService" />
+		<property name="cookieGenerator" ref="gigyaSessionCookieGenerator"/>
+		<property name="userDetailsService" ref="coreUserDetailsService" />
+		<property name="sessionFixationStrategy" ref="fixation" />
+		<property name="cartRestorationStrategy" ref="cartRestorationStrategy" />
+	</bean>
+	
+	<bean id="gigyaBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList"
+		parent="listMergeDirective">
+		<property name="add" ref="gigyaBeforeViewHandler" />
+	</bean>
+	
+	<bean id="gigyaBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<bean class="de.hybris.platform.gigya.gigyaloginaddon.handlers.GigyaBeforeViewHandler" >
+				<property name="cmsSiteService" ref="cmsSiteService" />
+				<property name="commonI18NService" ref="commonI18NService" />
+			</bean>
+		</property>
+	</bean>
+	
+	<alias name="defaultGigyaRaasComponentRenderer" alias="gigyaRaasComponentRenderer"/>
+	<bean id="defaultGigyaRaasComponentRenderer" class="de.hybris.platform.gigya.gigyaloginaddon.renderers.GigyaRaasComponentRenderer" parent="addOnJspIncludeCMSComponentRenderer">
+		<property name="userService" ref="userService" />
+		<property name="configurationService" ref="configurationService" />
+		<property name="baseSiteService" ref="baseSiteService"/>
+	</bean>
+	
+	<bean id="gigyaRaasComponentRendererMapping" parent="addonCmsComponentRendererMapping">
+        <property name="typeCode" value="GigyaRaasComponent"/>
+        <property name="renderer" ref="gigyaRaasComponentRenderer"/>
+    </bean>
+    
+    <aop:aspectj-autoproxy />
+ 	
+ 	<alias name="defaultGigyaSwitchUIComponentAspect" alias="gigyaSwitchUIComponentAspect"/>
+	<bean id="defaultGigyaSwitchUIComponentAspect" class="de.hybris.platform.gigya.gigyaloginaddon.aspect.GigyaSwitchUIComponentAspect" >
+		<property name="baseSiteService" ref="baseSiteService" />
+	</bean>
+    
+    
+    <alias alias="gigyaLoginFilter" name="defaultGigyaLoginFilter"/>
+	<bean id="defaultGigyaLoginFilter" class="de.hybris.platform.gigya.gigyaloginaddon.filters.GigyaLoginFilter" >
+		<property name="baseSiteService" ref="baseSiteService"/>
+		<property name="userService" ref="userService"/>
+		<property name="redirectStrategy" ref="redirectStrategy"/>
+		<property name="gigyaAutoLoginStrategy" ref="gigyaAutoLoginStrategy"/>
+		<property name="cookieGenerator" ref="gigyaSessionCookieGenerator"/>
+	</bean>
+	
+	<bean id="gigyaLoginFilterListMergeDirective" depends-on="storefrontTenantDefaultFilterChainList" parent="listMergeDirective">
+        <property name="add" ref="gigyaLoginFilter"/>
+    </bean>
+    
+    <alias name="defaultGigyaLogoutSuccessHandler" alias="logoutSuccessHandler" />
+    <bean id="defaultGigyaLogoutSuccessHandler" class="de.hybris.platform.gigya.gigyaloginaddon.security.DefaultGigyaLogoutSuccessHandler" parent="defaultLogoutSuccessHandler" >
+    		<property name="configurationService" ref="configurationService"/>
+    		<property name="cookieGenerator" ref="gigyaSessionCookieGenerator"/>
+    </bean>
+    
+    
+    <alias name="defaultGigyaSessionCookieGenerator" alias="gigyaSessionCookieGenerator"/>
+	<bean id="defaultGigyaSessionCookieGenerator" class="org.springframework.web.util.CookieGenerator" >
+		<property name="cookieSecure" value="true"/>
+		<property name="cookieHttpOnly" value="false"/>
+	</bean>
+	
+</beans>

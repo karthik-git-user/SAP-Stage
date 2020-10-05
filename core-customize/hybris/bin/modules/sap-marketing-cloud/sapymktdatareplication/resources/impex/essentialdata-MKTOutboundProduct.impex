@@ -1,0 +1,28 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]
+; MktOutboundProduct
+
+;
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; MktOutboundProduct	; Media         	; Media         	; 	;
+; MktOutboundProduct	; Catalog       	; Catalog       	; 	;
+; MktOutboundProduct	; Category      	; Category      	; 	;
+; MktOutboundProduct	; CatalogVersion	; CatalogVersion	; 	;
+; MktOutboundProduct	; Product       	; Product       	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; MktOutboundProduct:Media         	; code           	; Media:code             	;                                  	; true	;
+; MktOutboundProduct:Media         	; URL            	; Media:URL              	;                                  	; 	;
+; MktOutboundProduct:Media         	; catalogVersion 	; Media:catalogVersion   	; MktOutboundProduct:CatalogVersion	; true	;
+; MktOutboundProduct:Catalog       	; id             	; Catalog:id             	;                                  	; true	;
+; MktOutboundProduct:Category      	; catalogVersion 	; Category:catalogVersion	; MktOutboundProduct:CatalogVersion	; true	;
+; MktOutboundProduct:Category      	; code           	; Category:code          	;                                  	; true	;
+; MktOutboundProduct:CatalogVersion	; catalog        	; CatalogVersion:catalog 	; MktOutboundProduct:Catalog       	; true	;
+; MktOutboundProduct:CatalogVersion	; version        	; CatalogVersion:version 	;                                  	; true	;
+; MktOutboundProduct:Product       	; offlineDate    	; Product:offlineDate    	;                                  	; 	;
+; MktOutboundProduct:Product       	; supercategories	; Product:supercategories	; MktOutboundProduct:Category      	; 	;
+; MktOutboundProduct:Product       	; catalogVersion 	; Product:catalogVersion 	; MktOutboundProduct:CatalogVersion	; true	;
+; MktOutboundProduct:Product       	; code           	; Product:code           	;                                  	; true	;
+; MktOutboundProduct:Product       	; picture        	; Product:picture        	; MktOutboundProduct:Media         	; 	;
+; MktOutboundProduct:Product       	; name           	; Product:name           	;                                  	; 	;
+; MktOutboundProduct:Product       	; description    	; Product:description    	;                                  	; 	;

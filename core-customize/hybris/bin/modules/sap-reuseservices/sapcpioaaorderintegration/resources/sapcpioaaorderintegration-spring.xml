@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+
+
+	<!-- OAA specific order contributor -->
+	<alias name="sapCpiOaaOrderContributor"
+		alias="sapOaaOrderContributor" />
+	<bean id="sapCpiOaaOrderContributor"
+		class="com.sap.hybris.sapcpioaaorderintegration.outbound.impl.SapCpiOaaOrderContributor" />
+
+	<!-- OAA specific partner contributor -->
+	<alias name="sapCpiOaaPartnerContributor"
+		alias="sapCpiOaaPartnerContributor" />
+	<bean id="sapCpiOaaPartnerContributor"
+		class="com.sap.hybris.sapcpioaaorderintegration.outbound.impl.SapCpiOaaPartnerContributor"
+		parent="defaultSapPartnerContributor" />
+
+
+	<!-- OAA specific order entry contributor -->
+	<alias name="sapCpiOaaOrderEntryContributor"
+		alias="sapOaaOrderEntryContributor" />
+	<bean id="sapCpiOaaOrderEntryContributor"
+		class="com.sap.hybris.sapcpioaaorderintegration.outbound.impl.SapCpiOaaOrderEntryContributor">
+		<property name="datePattern"
+			value="${sapcpioaaorderintegration.outbound.date.pattern}" />
+		<property name="sapCoreConfigurationService"
+			ref="sapCoreConfigurationService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+	</bean>
+
+	
+	<!-- Sourcing Service -->
+	
+	<alias alias="sourcingService" name="defaultOaaOrderSourcingService" />
+	<bean id="defaultOaaOrderSourcingService"
+		class="com.sap.hybris.sapcpioaaorderintegration.sourcing.impl.SapOaaSourcingService">
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="warehouseService" ref="warehouseService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="oaaSourcingService" ref="commerceSourcingService" />
+		<property name="modelService" ref="modelService" />
+
+	</bean>
+
+
+	<!-- Order and Order Cancellation Conversion Service -->
+	<alias name="sapOaaCpiOmsOrderConversionService"
+		alias="sapCpiOrderConversionService" />
+	<bean id="sapOaaCpiOmsOrderConversionService"
+		parent="sapCpiOmsOrderConversionService"
+		class="com.sap.hybris.sapcpioaaorderintegration.service.impl.SapOaaCpiOrderConversionService">
+		<property name="sapOrderContributor"
+			ref="sapOaaOrderContributor" />
+		<property name="sapOrderEntryContributor"
+			ref="sapOaaOrderEntryContributor" />
+		<property name="sapPaymentContributor"
+			ref="sapPaymentContributor" />
+		<property name="sapPartnerContributor"
+			ref="sapCpiOaaPartnerContributor" />
+		<property name="sapSalesConditionsContributor"
+			ref="sapSalesConditionsContributor" />
+		<property name="sapOrderCancelRequestContributor"
+			ref="sapOrderCancelRequestContributor" />
+	</bean>
+
+	<!-- OMM Order and Order Cancellation Conversion Service -->
+	<alias name="sapOaaCpiOmmOrderOutboundConversionService"
+		alias="sapCpiOrderOutboundConversionService" />
+	<bean id="sapOaaCpiOmmOrderOutboundConversionService"
+		class="com.sap.hybris.sapcpioaaorderintegration.service.impl.SapOaaCpiOrderOutboundConversionService">
+		<property name="sapCpiOrderMappers" ref="sapCpiOrderMappers" />
+		<property name="sapCpiOrderCancellationMappers"
+			ref="sapCpiOrderCancellationMappers" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="sourcingService"
+			ref="commerceSourcingService" />
+	</bean>
+
+	<!-- OMM Order Mapper -->
+	<alias name="sapOaaCpiOrderMapperService"
+		alias="sapCpiOrderMapperService" />
+	<bean id="sapOaaCpiOrderMapperService"
+		class="com.sap.hybris.sapcpioaaorderintegration.service.impl.SapOaaCpiOrderMapperService">
+		<property name="sapCpiOrderConversionService"
+			ref="sapCpiOrderConversionService" />
+		<property name="serviceUtils" ref="oaaServiceUtils" />
+	</bean>
+
+	<!-- SAP CPI Outbound Service -->
+	<alias name="sapCpiOaaOutboundServiceImpl"
+		alias="sapCpiOutboundService" />
+	<bean id="sapCpiOaaOutboundServiceImpl"
+		class="com.sap.hybris.sapcpioaaorderintegration.service.impl.SapCpiOaaOutboundServiceImpl">
+		<property name="outboundServiceFacade"
+			ref="outboundServiceFacade" />
+	</bean>
+
+	<!-- Inbound Order Confirmation Helper -->
+	<bean id="sapCpiOaaOmsInboundOrderHelper"
+		class="com.sap.hybris.sapcpioaaorderintegration.inbound.helper.SapCpiOaaOmsInboundOrderHelper">
+		<property name="orderCancelService" ref="orderCancelService" />
+		<property name="modelService" ref="modelService" />
+		<property name="flexibleSearchService"
+			ref="flexibleSearchService" />
+		<property name="businessProcessService"
+			ref="businessProcessService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="sourcingService"
+			ref="commerceSourcingService" />
+	</bean>
+
+	<!-- Order Confirmation Persistence Hook -->
+	<bean id="sapCpiOmsOrderConfirmationPersistenceHook"
+		class="com.sap.hybris.sapcpioaaorderintegration.inbound.events.SapOaaCpiOmsOrderConfirmationPersistenceHook">
+		<property name="sapDataHubInboundOrderHelper"
+			ref="sapCpiOaaOmsInboundOrderHelper" />
+	</bean>
+
+</beans>

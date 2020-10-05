@@ -1,0 +1,10 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundSkill; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundSkill	; SapServiceSkill	; SapServiceSkill	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundSkill:SapServiceSkill	; code       	; SapServiceSkill:code       	;              	; true	;  
+; InboundSkill:SapServiceSkill	; description	; SapServiceSkill:description	;              	; 		;  
+; InboundSkill:SapServiceSkill	; name       	; SapServiceSkill:name       	;              	; 		;  

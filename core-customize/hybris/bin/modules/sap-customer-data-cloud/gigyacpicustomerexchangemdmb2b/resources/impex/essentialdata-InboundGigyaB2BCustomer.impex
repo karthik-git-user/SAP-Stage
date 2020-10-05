@@ -1,0 +1,8 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundB2BCustomer; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundB2BCustomer	; B2BCustomer	; B2BCustomer	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundB2BCustomer:B2BCustomer	; customerID          	; B2BCustomer:customerID          	;                             	; 		;  

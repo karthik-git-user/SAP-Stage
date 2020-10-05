@@ -1,0 +1,12 @@
+#*****************************************
+#******* B2C Customer Inbound *******
+#*****************************************
+
+INSERT_UPDATE IntegrationObjectItem ; integrationObject(code)[unique=true] ; code[unique = true]   ; type(code)           
+                                    ; InboundB2CMDMCustomerConfirmation    ; Customer              ; Customer             
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute ; integrationObjectItem(integrationObject(code), code)[unique = true] ; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier) ; returnIntegrationObjectItem(integrationObject(code), code) ; unique[default = false] ; autoCreate[default = false]
+                                             ; InboundB2CMDMCustomerConfirmation:Customer                          ; sapConsumerID                ; Customer:sapConsumerID                              ;                                                            ;                         ;                            
+
+                                             

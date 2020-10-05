@@ -1,0 +1,87 @@
+/****************************************************
+				login modal
+****************************************************/
+.se-modal--loginDialog{
+	min-height: 440px;
+    overflow-y: visible;
+
+    .se-modal__body {
+        overflow-y: initial;
+    }
+}
+
+.se-login-modal{
+    padding-top: 120px;
+    background-color: fd-color('background',1);
+    .modal-dialog.modal-lg {
+        width: 500px;
+        min-height: 440px;
+        margin: 0 auto;
+    }
+    .modal-content {
+        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+    }
+}
+
+.se-login {
+	display: flex;
+	align-items: center;
+    height: 100%;
+    
+    &--wrapper {
+        padding: 40px 100px;
+        width: 100%;
+    }
+
+    &--form-group {
+        margin-bottom: 20px;
+    }
+
+    &--logo-wrapper {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        &.se-login--logo-wrapper_full {
+            padding-bottom: 45px;
+        }
+    }
+
+    &--logo {
+        height:44px;
+    }
+
+    &--logo-text{
+        font-family: $font-sap;
+        @include fd-type("4");
+        padding-left: 16px;
+        color: fd-color('text',1);
+        @include fd-weight("bold");
+    }
+
+    &--logo__best-run {
+        position: absolute;
+        top: 80vh;
+        right: 53vw;
+    }
+    
+    &--btn {
+        text-transform: capitalize;
+        @include fd-type();
+        width: 100%;
+    }
+
+    &--auth-message {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        @include fd-type();
+    }
+    
+    &--alert-error {
+        margin-bottom: 0;
+        box-shadow: none;
+    }
+
+    &--form[name = "loginDialogFormSSO"] &--btn {
+        margin-top: 20px;
+    }
+}

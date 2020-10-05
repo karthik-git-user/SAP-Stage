@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Outbound Customer Conversion Service -->
+    <alias name="sapCpiMDMCustomerDefaultConversionService" alias="sapCpiCustomerConversionService"/>
+    <bean id="sapCpiMDMCustomerDefaultConversionService" class="de.hybris.platform.sap.sapcpicustomerexchangemdm.service.impl.SapCpiMDMCustomerDefaultConversionService" parent="sapCpiCustomerDefaultConversionService">
+    </bean>
+
+    <!-- B2C Customer Persistence Hook -->
+    <bean id="sapCpiMDMCustomerPersistenceHook" class="de.hybris.platform.sap.sapcpicustomerexchangemdm.inbound.events.SapCpiMDMCustomerPersistenceHook">
+        <property name="sapMDMCustomerImportService" ref="sapMDMCustomerImportService"/>
+    </bean>
+
+    <!-- Customer Import -->
+    <alias alias="sapMDMCustomerImportService" name="defaultSapMDMCustomerImportService"/>
+    <bean id="defaultSapMDMCustomerImportService" class="de.hybris.platform.sap.sapcpicustomerexchangemdm.inbound.impl.DefaultSapMDMCustomerImportService">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="eventService" ref="eventService"/>
+
+    </bean>
+
+    <alias alias="mdmAddressPrepareInterceptor" name="defaultMDMAddressPrepareInterceptor"/>
+    <bean id="defaultMDMAddressPrepareInterceptor" class="de.hybris.platform.sap.sapcpicustomerexchangemdm.interceptors.DefaultMDMAddressPrepareInterceptor"/>
+
+    <bean class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+        <property name="interceptor" ref="mdmAddressPrepareInterceptor"/>
+        <property name="typeCode" value="Address"/>
+    </bean>
+    
+    <!-- Redefine the defaultAddressInterceptor interceptor to trigger the export to MDM after changing the address -->
+    <alias alias="defaultAddressInterceptor" name="defaultMDMAddressInterceptor"/>
+    <bean id="defaultMDMAddressInterceptor" class="de.hybris.platform.sap.sapcpicustomerexchangemdm.interceptors.DefaultMDMAddressInterceptor" autowire="byName">
+        <property name="storeSessionFacade" ref="storeSessionFacade"/>
+        <property name="customerExportService" ref="customerExportService"/>
+        <property name="baseStoreService" ref="baseStoreService"/>
+    </bean>
+
+</beans>

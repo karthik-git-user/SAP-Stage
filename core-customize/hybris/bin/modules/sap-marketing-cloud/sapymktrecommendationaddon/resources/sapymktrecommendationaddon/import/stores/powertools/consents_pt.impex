@@ -1,0 +1,12 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# Language
+$lang=pt
+
+#Site
+$siteUid=powertools
+
+INSERT_UPDATE ConsentTemplate;id[unique=true];name[lang=$lang];description[lang=$lang];version[unique=true];baseSite(uid)[unique=true,default=$siteUid]
+;SAPYMKT_EMAIL;"Receber e-mails de campanhas de marketing";"Concordo em receber e-mails com notícias, melhores preços e ofertas.";0;;
+;SAPYMKT_PERS;"Personalizar o conteúdo e as ofertas";"Concordo em receber conteúdo e ofertas personalizados para uma melhor experiência de compras on-line";0;;

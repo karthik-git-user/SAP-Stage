@@ -1,0 +1,16 @@
+#Add your basic Credentials
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiBasicCredentials;<password>;<userName>
+
+INSERT_UPDATE DestinationTarget;destinationChannel(code,itemtype(code));id[unique=true]
+;KYMA:DestinationChannel;scpiConsentTemplateDestination
+
+#Add your endpoint
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCpiConsentTemplateReplication;SAPCpiConsentTemplateReplication;;"<URL For SCPI>/BaseSites";1
+
+#Add your ConsumedDestination
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];credential(id);destinationTarget(id);endpoint(id);id[unique=true];url;additionalProperties(key, value)[map-delimiter=|]
+;true;scpiBasicCredentials;scpiConsentTemplateDestination;SAPCpiConsentTemplateReplication;cdc-fetchconsenttemplatedestination;"<URL For SCPI>/BaseSites";"csrfURL-><URL For SCPI>"
+

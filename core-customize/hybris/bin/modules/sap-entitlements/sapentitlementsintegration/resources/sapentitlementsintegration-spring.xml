@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <alias name="defaultSapEntitlementService" alias="sapEntitlementService"/>
+    <bean id="defaultSapEntitlementService" class="com.sap.hybris.sapentitlementsintegration.service.impl.DefaultSapEntitlementService">
+    	<property name="userService" ref="userService"/>
+    	<property name="sapEntitlementOutboundService" ref="sapEntitlementOutboundService"/>
+    </bean> 
+    
+    <alias name="defaultSapEntitlementOutboundService" alias="sapEntitlementOutboundService"/>
+    <bean id="defaultSapEntitlementOutboundService" class="com.sap.hybris.sapentitlementsintegration.service.impl.DefaultSapEntitlementOutboundService">
+   		<property name="destinationService" ref="destinationService"/>
+    	<property name="sapEntitlementRestTemplateFactory" ref="sapEntitlementRestTemplateFactory"/> 	
+    </bean> 
+
+  	<alias name="defaultSapEntitlementRestTemplateFactory" alias="sapEntitlementRestTemplateFactory"/>
+    <bean id="defaultSapEntitlementRestTemplateFactory" class="com.sap.hybris.sapentitlementsintegration.factory.impl.DefaultSapEntitlementRestTemplateFactory">
+   	  	<property name="clientHttpRequestFactory" ref="outboundClientHttpRequestFactory"/> 	
+    </bean> 
+			
+</beans>

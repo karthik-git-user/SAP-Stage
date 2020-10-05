@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="defaultGigyaLoginFacade" alias="gigyaLoginFacade"/>
+    <bean id="defaultGigyaLoginFacade" class="de.hybris.platform.gigya.gigyafacades.login.impl.DefaultGigyaLoginFacade">
+    		<property name="gigyaLoginService" ref="gigyaLoginService" />
+    		<property name="userService" ref="userService" />
+    		<property name="modelService" ref="modelService" />
+    		<property name="commonI18NService" ref="commonI18NService"/>
+    		<property name="gigyaService" ref="gigyaService"/>
+    		<property name="taskService" ref="taskService"/>
+    		<property name="gigyaToHybrisTaskRunnerBean" value="gigyaToHybrisUserUpdateTaskRunner"/>
+    		<property name="sessionService" ref="sessionService"/>
+    		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+    		<property name="gigyaConsentFacade" ref="gigyaConsentFacade"/>
+    		<property name="customerAccountService" ref="customerAccountService"/>    		
+    </bean>
+    
+    <alias name="defaultGigyaToHybrisUserUpdateTaskRunner" alias="gigyaToHybrisUserUpdateTaskRunner"/>
+    <bean id="defaultGigyaToHybrisUserUpdateTaskRunner" class="de.hybris.platform.gigya.gigyafacades.task.runner.GigyaToHybrisUserUpdateTaskRunner">
+    		<property name="gigyaService" ref="gigyaService"/>
+    		<property name="modelService" ref="modelService"/>
+    		<property name="gigyaFieldMappingGenericDao" ref="gigyaFieldMappingGenericDao"/>
+    		<property name="gigyaUserReverseConverter" ref="gigyaUserReverseConverter"/>
+    </bean>
+    
+    <alias name="defaultGigyaConsentFacade" alias="gigyaConsentFacade"/>
+    <bean id="defaultGigyaConsentFacade" class="de.hybris.platform.gigya.gigyafacades.consent.impl.DefaultGigyaConsentFacade" >
+    		<property name="baseSiteService" ref="baseSiteService"/>
+    		<property name="gigyaConsentService" ref="gigyaConsentService"/>
+    </bean>
+    
+    <alias name="gigyaCustomTokenGranter" alias="customTokenGranter"/>
+	<bean id="gigyaCustomTokenGranter" class="de.hybris.platform.gigya.gigyafacades.token.GigyaCustomTokenGranter"  >
+		<constructor-arg name="tokenServices" ref="oauthTokenServices" />
+		<constructor-arg name="clientDetailsService" ref="oauthClientDetails" />
+		<constructor-arg name="requestFactory" ref="oAuth2RequestFactory" />
+		<constructor-arg name="gigyaLoginService" ref="gigyaLoginService" />
+		<constructor-arg name="gigyaLoginFacade" ref="gigyaLoginFacade" />
+		<constructor-arg name="baseSiteService" ref="baseSiteService" />
+		<constructor-arg name="userDetailsService" ref="wsUserDetailsService" />
+	</bean>
+	
+	<aop:aspectj-autoproxy />
+	
+	<alias name="defaultGigyaCustomerFacadeAspect" alias="gigyaCustomerFacadeAspect"/>
+	<bean id="defaultGigyaCustomerFacadeAspect" class="de.hybris.platform.gigya.gigyafacades.aspects.GigyaCustomerFacadeAspect" >
+		<property name="gigyaLoginFacade" ref="gigyaLoginFacade" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="userService" ref="userService" />
+	</bean>
+	
+
+</beans>

@@ -1,0 +1,41 @@
+# Import config properties into impex macros for modulegen
+$contentCatalog = electronicsContentCatalog
+$contentCV = catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]), CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$wideContent = CMSImageComponent, BannerComponent
+$emailResource = jar:com.sap.platform.sapcustomermasterlookupaddon.constants.SapcustomerlookupaddonConstants&/sapcustomerlookupaddon/import/contentCatalogs/electronicsContentCatalog/emails
+# Language
+$lang = en
+INSERT_UPDATE EmailPageTemplate; $contentCV[unique = true]; uid[unique = true]                      ; name                                                           ; active; frontendTemplateName                    ; subject(code)                              ; htmlTemplate(code)                      ; restrictedPageTypes(code)
+                               ;                          ; VerifyCustomerRegistrationEmailTemplate ; Customer Registration Email Template for double opt in feature ; true  ; VerifyCustomerRegistrationEmailTemplate ; Verify_Email_Customer_Registration_Subject ; Verify_Email_Customer_Registration_Body ; EmailPage
+
+INSERT_UPDATE RendererTemplate; code[unique = true]                        ; description[lang = $lang]             ; templateScript[lang = $lang, translator = de.hybris.platform.commerceservices.impex.impl.FileLoaderValueTranslator]; rendererType(code)[default = 'velocity']
+                              ; Verify_Email_Customer_Registration_Body    ; "Customer Registration Email Body"    ; $emailResource/email-verifyCustomerRegistrationBody.vm
+                              ; Verify_Email_Customer_Registration_Subject ; "Customer Registration Email Subject" ; $emailResource/email-verifyCustomerRegistrationSubject.vm
+
+
+INSERT_UPDATE ContentSlotName; name[unique = true]; template(uid, $contentCV)[unique = true][default = 'VerifyCustomerRegistrationEmailTemplate']; validComponentTypes(code)
+                             ; SiteLogo           ;                                                                                              ;              ; logo
+                             ; TopContent         ;                                                                                              ; $wideContent ;
+                             ; BottomContent      ;                                                                                              ; $wideContent ;
+
+# Create Content Slots
+INSERT_UPDATE ContentSlot; $contentCV[unique = true]; uid[unique = true]; name                      ; active
+                         ;                          ; EmailTopSlot      ; Default Email Top Slot    ; true
+                         ;                          ; EmailBottomSlot   ; Default Email Bottom Slot ; true
+                         ;                          ; EmailSiteLogoSlot ; Default Email Site Slot   ; true
+
+# Bind Content Slots to Email Page Templates
+INSERT_UPDATE ContentSlotForTemplate; $contentCV[unique = true]; uid[unique = true]                            ; position[unique = true]; pageTemplate(uid, $contentCV)[unique = true][default = 'VerifyCustomerRegistrationEmailTemplate']; contentSlot(uid, $contentCV)[unique = true]; allowOverwrite
+                                    ;                          ; SiteLogo-VerifyCustomerRegistrationEmail      ; SiteLogo               ;                                                                                                  ; EmailSiteLogoSlot                          ; true
+                                    ;                          ; TopContent-VerifyCustomerRegistrationEmail    ; TopContent             ;                                                                                                  ; EmailTopSlot                               ; true
+                                    ;                          ; BottomContent-VerifyCustomerRegistrationEmail ; BottomContent          ;                                                                                                  ; EmailBottomSlot                            ; true
+
+# Email Pages
+INSERT_UPDATE EmailPage; $contentCV[unique = true]; uid[unique = true]              ; name                            ; masterTemplate(uid, $contentCV)         ; defaultPage; approvalStatus(code)[default = 'approved']; fromEmail[lang = en]        ; fromName[lang = en]
+                       ;                          ; VerifyCustomerRegistrationEmail ; CMS Customer Registration Email ; VerifyCustomerRegistrationEmailTemplate ; true       ;                                           ; customerservices@hybris.com ; Customer Services Team
+
+
+# Email velocity templates
+INSERT_UPDATE RendererTemplate; code[unique = true]                        ; contextClass; rendererType(code)[default = 'velocity']
+                              ; Verify_Email_Customer_Registration_Subject ; com.sap.platform.sapcustomerlookupservice.process.email.context.CustomerVerifyEmailContext
+                              ; Verify_Email_Customer_Registration_Body    ; com.sap.platform.sapcustomerlookupservice.process.email.context.CustomerVerifyEmailContext

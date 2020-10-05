@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.payment.dto.CardInfo" extends="de.hybris.platform.payment.dto.BasicCardInfo" template="resources/copyable-template.vm">
+		<description>Informations about payment card</description>
+		<property name="cardToken" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.cissapdigitalpayment.data.DigitalPaymentsPollData">
+		<property name="transaction" type="de.hybris.platform.cissapdigitalpayment.data.DigitalPaymentsTransactionData" />
+		<property name="cardToken" type="String" />
+		<property name="cardType" type="String"/>
+		<property name="expirationMonth" type="Integer"/>
+		<property name="expirationYear" type="Integer"/>
+		<property name="maskedCardNumber" type="String"/>
+		<property name="cardHolderName" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.cissapdigitalpayment.data.DigitalPaymentsRegistrationData">
+		<property name="url" type="String" />
+		<property name="secureSessionId" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.cissapdigitalpayment.data.DigitalPaymentsTransactionData">
+		<property name="sessionId" type="String" />
+		<property name="dateTime" type="java.util.Date"/>
+		<property name="resultCode" type="String"/>
+		<property name="resultDescription" type="String"/>
+	</bean>
+
+	<bean class="de.hybris.platform.cissapdigitalpayment.client.model.DigitalPaymentsRegistrationRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="consumedRedirectUrl" type="String" >
+			<annotations>@JsonProperty("ConsumerRedirectUrl")</annotations>
+		</property>
+		<property name="routingParameters" type="de.hybris.platform.cissapdigitalpayment.client.model.DigitalPaymentsRoutingParameters">
+			<annotations>@JsonProperty("RoutingParameters")</annotations>
+		</property>
+		<property name="commerceType" type="String">
+			<annotations>@JsonProperty("DigitalPaymentCommerceType")</annotations>
+		</property>
+		<property name="sessionType" type="String">
+			<annotations>@JsonProperty("DigitalPaymentSessionType")</annotations>
+		</property>
+	</bean>
+
+	<bean class="de.hybris.platform.cissapdigitalpayment.client.model.DigitalPaymentsRoutingParameters">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="customParameterValue" type="String" >
+			<annotations>@JsonProperty("CustomParameterValue")</annotations>
+		</property>
+		<property name="companyCode" type="String">
+			<annotations>@JsonProperty("CompanyCode")</annotations>
+		</property>
+		<property name="customerCountry" type="String">
+			<annotations>@JsonProperty("CustomerCountry")</annotations>
+		</property>
+		<property name="paymentMethod" type="String">
+			<annotations>@JsonProperty("PaymentMethod")</annotations>
+		</property>
+		<property name="currency" type="String">
+			<annotations>@JsonProperty("Currency")</annotations>
+		</property>
+		<property name="paymentType" type="String">
+			<annotations>@JsonProperty("PaymentType")</annotations>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <itemtypes>
+
+        <itemtype code="BaseStore" autocreate="false" generate="false">
+            <description>Extending BaseStore type with additional attributes for CMS lookup service.</description>
+            <attributes>
+                <attribute type="boolean" qualifier="cmsLookupEnabled">
+                    <persistence type="property"/>
+                    <defaultvalue>java.lang.Boolean.TRUE</defaultvalue>
+                    <modifiers optional="false"/>
+                    <description>Determines If Customer Master lookup (CMS) feature is enabled or not
+                    </description>
+                </attribute>
+                <attribute type="boolean" qualifier="cmsEmailVerificationEnabled">
+                    <persistence type="property"/>
+                    <defaultvalue>java.lang.Boolean.TRUE</defaultvalue>
+                    <modifiers optional="false"/>
+                    <description>Double opt in feature for CMS lookup service
+                    </description>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+        <itemtype code="Customer" autocreate="false" generate="false">
+            <attributes>
+                <attribute qualifier="cmsEmailVerificationTimestamp" type="java.util.Date">
+                    <persistence type="property"/>
+                    <description>Determine whether email verification happened or not</description>
+                </attribute>
+                <attribute qualifier="cmsLookupSecureToken" type="java.lang.String">
+                    <persistence type="property"/>
+                    <description>Secure One time token for CMS lookup Service</description>
+                </attribute>
+            </attributes>
+        </itemtype>
+
+    </itemtypes>
+</items>

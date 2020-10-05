@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:annotation-config />
+
+	<!-- Import listener for core data -->
+	<bean id="saparticleb2caddonCoreDataImportedEventListener" parent="abstractCoreDataImportedEventListener">
+		<property name="supportedChannels">
+			<list value-type="de.hybris.platform.commerceservices.enums.SiteChannel">
+				<value>B2C</value>
+				<!-- <value>B2B</value> -->
+			</list>
+		</property>
+		<property name="addonExtensionMetadata">
+			<bean class="de.hybris.platform.addonsupport.data.AddonExtensionMetadata">
+				<property name="suffixChannel" value="false" />
+				<property name="baseExtensionName" value="saparticleb2caddon" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Import listener for sample data -->
+	<bean id="saparticleb2caddonSampleDataEventListener" parent="abstractGenericAddOnSampleDataEventListener">
+		<property name="extensionName" value="saparticleb2caddon" />
+	</bean>
+
+	<!-- Populator definition for article component data -->
+	<alias name="defaultArticleComponentPopulator" alias="sapArticleComponentPopulator" />
+	<bean id="defaultArticleComponentPopulator" parent="baseProductPopulator"
+		class="com.sap.retail.commercesuite.saparticleb2caddon.populator.ArticleComponentPopulator">
+		<property name="articleComponentService" ref="sapArticleComponentService" />
+		<property name="productConverter"  ref="defaultProductConverter" />
+	</bean>
+
+	<alias name="sapRetailProductBasicPopulatorList" alias="productBasicPopulatorList" />
+	<bean id="sapRetailProductBasicPopulatorList" parent="abstractPopulatorList">
+		<property name="populators">
+			<list>
+				<ref bean="productBasicPopulator" />
+				<ref bean="sapArticleComponentPopulator" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Enable merchandise catalog for variant selector -->
+	<alias alias="commerceProductService" name="sapadmCommerceProductService"/>
+	<bean id="sapadmCommerceProductService" class="com.sap.retail.commercesuite.saparticleb2caddon.commerceservices.SapAdmCommerceProductService"
+		parent="defaultCommerceProductService" >
+		<property name="merchandiseCatalogId" value="${saparticleb2caddon.merchandise.classification.catalog}" />
+	</bean>
+	<alias alias="commerceCategoryService" name="sapadmCommerceCategoryService"/>
+	<bean id="sapadmCommerceCategoryService" class="com.sap.retail.commercesuite.saparticleb2caddon.commerceservices.SapAdmCommerceCategoryService"
+		parent="defaultCommerceCategoryService" >
+	</bean>
+	
+</beans>

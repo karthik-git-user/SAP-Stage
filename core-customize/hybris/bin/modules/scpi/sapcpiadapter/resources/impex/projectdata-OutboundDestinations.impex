@@ -1,0 +1,76 @@
+#***************************************************************************#
+#*** Please change only the sample data and do NOT change anything else! ***#                                                                                       #
+#***************************************************************************#
+
+#*********************************#
+#*** Sample Data To Be Changed ***#
+#*********************************#
+
+#**************************#
+#***  OAuth CredentialS ***#
+#**************************#
+$oAuthUrl = https://test.sap.hana.ondemand.com/oauth2/api/v1/token
+$clientId = sampleClientId
+$password = samplePassword
+
+#********************#
+#*** Customer URL ***#
+#********************#
+$customerUrl = https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-B2C-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-ERP
+$customerVersion = v=1
+
+#************************#
+#*** B2B Customer URL ***#
+#************************#
+$b2bCustomerUrl = https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-B2B-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-ERP
+$b2bCustomerVersion = v=1
+
+#******************#
+#***  Order URL ***#
+#******************#
+$orderUrl = https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-ORDERS-FROM-SAP-COMMERCE-CLOUD-TO-SAP-ERP
+$orderVersion = v=1
+
+#*************************#
+#***  Cancel Order URL ***#
+#*************************#
+$cancelOrderUrl = https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-ORDER-CANCELLATIONS-FROM-SAP-COMMERCE-CLOUD-TO-SAP-ERP
+$cancelOrderVersion = v=1
+
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+
+#**************************#
+#***  OAuth Credentials ***#
+#**************************#
+INSERT_UPDATE OAuthClientDetails; clientId[unique = true]; oAuthUrl; scope
+                                ; $clientId              ; $oAuthUrl
+
+INSERT_UPDATE ExposedOAuthCredential; id[unique = true]   ; oAuthClientDetails(clientId); password
+                                    ; scpiOauthCredential ; $clientId                   ; $password
+
+#******************#
+#***  Endpoints ***#
+#******************#
+INSERT_UPDATE Endpoint; id[unique = true]             ; version[unique = true]; specUrl                                ; name
+                      ; scpiCustomerEndpoint          ; unknown               ; "$customerUrl;$customerVersion/"       ; scpiCustomerEndpoint
+                      ; scpiB2BCustomerEndpoint       ; unknown               ; "$b2bCustomerUrl;$b2bCustomerVersion/" ; scpiB2BCustomerEndpoint
+                      ; scpiOrderEndpoint             ; unknown               ; "$orderUrl;$orderVersion/"             ; scpiOrderEndpoint
+                      ; scpiOrderCancellationEndpoint ; unknown               ; "$cancelOrderUrl;$cancelOrderVersion/" ; scpiOrderCancellationEndpoint
+
+#****************************#
+#***  Destination Target  ***#
+#****************************#
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; scpiDestinationTarget
+
+#*******************************#
+#***  Consumed Destinations  ***#
+#*******************************#
+INSERT_UPDATE ConsumedDestination; id[unique = true]                ; url                                                                    ; endpoint(id, version)                 ; credential(id)      ; additionalProperties(key, value)[map-delimiter = |]; destinationTarget(id)[default = scpiDestinationTarget]
+                                 ; scpiCustomerDestination          ; "$customerUrl;$customerVersion/SAPCpiOutboundCustomers"                ; scpiCustomerEndpoint:unknown          ; scpiOauthCredential ; "csrfURL->$customerUrl;$customerVersion/"          ;
+                                 ; scpiB2BCustomerDestination       ; "$b2bCustomerUrl;$b2bCustomerVersion/SAPCpiOutboundB2BCustomers"       ; scpiB2BCustomerEndpoint:unknown       ; scpiOauthCredential ; "csrfURL->$b2bCustomerUrl;$b2bCustomerVersion/"    ;
+                                 ; scpiOrderDestination             ; "$orderUrl;$orderVersion/SAPCpiOutboundOrders"                         ; scpiOrderEndpoint:unknown             ; scpiOauthCredential ; "csrfURL->$orderUrl;$orderVersion/"                ;
+                                 ; scpiOrderCancellationDestination ; "$cancelOrderUrl;$cancelOrderVersion/SAPCpiOutboundOrderCancellations" ; scpiOrderCancellationEndpoint:unknown ; scpiOauthCredential ; "csrfURL->$cancelOrderUrl;$cancelOrderVersion/"    ;
+

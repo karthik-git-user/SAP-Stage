@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	
+    <bean id="sapcpqsbquotefacadesSystemSetup" class="com.sap.hybris.sapcpqsbquotefacades.setup.SapcpqsbquotefacadesSystemSetup">
+        <!-- constructor arg injection example -->
+        <constructor-arg ref="sapcpqsbquotefacadesService"/>
+    </bean>
+
+    <bean id="sapcpqsbquotefacadesService" class="com.sap.hybris.sapcpqsbquotefacades.service.impl.DefaultSapcpqsbquotefacadesService">
+        <!-- setter injection example -->
+        <property name="modelService" ref="modelService"/>
+        <property name="mediaService" ref="mediaService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+  
+
+
+    <alias alias="sapSubscriptionBillingEffectivePriceService" name="defaultSapSubscriptionBillingEffectivePriceService"/>
+    <bean id="defaultSapSubscriptionBillingEffectivePriceService"
+          class="com.sap.hybris.sapcpqsbquotefacades.service.impl.DefaultSapSubscriptionBillingEffectivePriceService"
+          parent="subscriptionCommercePriceService">
+        <property name="sapSubscriptionBillingExtendedPriceFactory" ref="sapSubscriptionBillingExtendedPriceFactory"/>
+    </bean>
+
+    <alias alias="sapSubscriptionBillingExtendedPriceFactory" name="defaultSapSubscriptionBillingExtendedPriceFactory"/>
+    <bean id="defaultSapSubscriptionBillingExtendedPriceFactory"
+          class="com.sap.hybris.sapcpqsbquotefacades.factory.impl.DefaultSapSubscriptionBillingExtendedPriceFactory"
+    parent="europe1.manager">
+    </bean>
+
+    <alias name="defaultSapCpqSubscriptionPricePlanPopulator" alias="sapCpqSubscriptionPricePlanPopulator"/>
+    <bean id="defaultSapCpqSubscriptionPricePlanPopulator"
+          class="com.sap.hybris.sapcpqsbquotefacades.populator.DefaultSapCpqSubscriptionPricePlanPopulator">
+        <property name="oneTimeChargeEntryConverter" ref="oneTimeChargeEntryConverter"/>
+        <property name="recurringChargeEntryConverter" ref="recurringChargeEntryConverter"/>
+        <property name="perUnitUsageChargeConverter" ref="perUnitUsageChargeConverter"/>
+        <property name="volumeUsageChargeConverter" ref="volumeUsageChargeConverter"/>
+        <property name="cpqPricingPrameterConverter" ref="cpqPricingPrameterConverter"/>
+        <property name="sapSubscriptionBillingEffectivePriceService" ref="sapSubscriptionBillingEffectivePriceService"/>
+        <property name="sapCpqSbFetchQuoteDiscounts" ref="sapCpqSbFetchQuoteDiscounts"/>
+    </bean>
+    
+    
+    
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="orderEntryConverter"/>
+        <property name="add" ref="sapCpqSubscriptionPricePlanPopulator"/>
+    </bean>
+    
+    
+    <bean id="tierUsageChargeEntryData" class="de.hybris.platform.subscriptionfacades.data.TierUsageChargeEntryData"
+          scope="prototype"/>
+    <bean id="overageUsageChargeEntryData"
+          class="de.hybris.platform.subscriptionfacades.data.OverageUsageChargeEntryData" scope="prototype"/>
+    <bean id="usageChargeTypeData" class="de.hybris.platform.subscriptionfacades.data.UsageChargeTypeData"
+          scope="prototype"/>
+    <bean id="perUnitUsageChargeData" class="de.hybris.platform.subscriptionfacades.data.PerUnitUsageChargeData"
+          scope="prototype"/>
+    <bean id="volumeUsageChargeData" class="de.hybris.platform.subscriptionfacades.data.VolumeUsageChargeData"
+          scope="prototype"/>
+    <bean id="recurringChargeEntryData" class="de.hybris.platform.subscriptionfacades.data.RecurringChargeEntryData"
+          scope="prototype"/>
+    <bean id="oneTimeChargeEntryData" class="de.hybris.platform.subscriptionfacades.data.OneTimeChargeEntryData"
+          scope="prototype"/>
+    <bean id="cpqPricingParameterData" class="de.hybris.platform.sapcpqsbintegration.data.CpqPricingParameterData"
+          scope="prototype"/>
+  
+    <alias name="defaultCpqPricingPrameterConverter" alias="cpqPricingPrameterConverter"/>
+    <bean id="defaultCpqPricingPrameterConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="cpqPricingParameterData"/>
+        <property name="populators">
+            <list>
+                <ref bean="cpqPricingParameterPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+
+    
+    <alias name="cpqPricingParameterPopulator" alias="cpqPricingParameterPopulator"/>
+    <bean id="cpqPricingParameterPopulator"
+          class="com.sap.hybris.sapcpqsbquotefacades.populator.CpqPricingParameterPopulator">
+    </bean>
+   
+    
+    <alias name="defaultTierUsageChargeEntryConverter" alias="tierUsageChargeEntryConverter"/>
+    <bean id="defaultTierUsageChargeEntryConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="tierUsageChargeEntryData"/>
+        <property name="populators">
+            <list>
+                <ref bean="tierUsageChargeEntryPopulator"/>
+            </list>
+        </property>
+    </bean>
+  
+    <alias name="defaultSubscriptionPricePlanUsageChargeConverter" alias="subscriptionPricePlanUsageChargeConverter"/>
+    <bean id="defaultSubscriptionPricePlanUsageChargeConverter" parent="abstractPopulatingConverter">
+        <lookup-method name="createTarget" bean="subscriptionPricePlanData"/>
+        <property name="populators">
+            <list>
+                <ref bean="subscriptionPricePlanUsageChargePopulator"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
+

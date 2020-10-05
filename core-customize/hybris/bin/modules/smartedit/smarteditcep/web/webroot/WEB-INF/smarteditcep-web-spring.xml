@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<!-- 
+  WARNING: This is the Spring WEB configuration file. If you want to replace
+  items or managers you have to do this from the extensions core configuration 
+  file (smarteditcep/resources/smarteditcep-spring.xml)
+  -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config/>
+	<mvc:annotation-driven />
+
+	<context:component-scan base-package="de.hybris.smarteditcep"/>
+
+	<mvc:resources mapping="/smarteditcep/**" location="/smarteditcep/" />
+
+	<!-- spring security file -->
+	<import resource="config/security-spring.xml"/>
+
+	<!-- Spring managed FilterChain for hybris Filter stack -->
+	<bean id="smarteditcepPlatformFilterChain" class="de.hybris.platform.servicelayer.web.PlatformFilterChain">
+		<constructor-arg>
+			<list>
+				<ref bean="log4jFilter"/>
+				<ref bean="tenantActivationFilter"/>
+				<ref bean="restSessionFilter"/>
+				<ref bean="springSecurityFilterChain" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+	<bean id="tenantActivationFilter" class="de.hybris.platform.servicelayer.web.TenantActivationFilter" >
+		<constructor-arg  value="${tenantId}"/>
+	</bean>
+
+	<bean id="restSessionFilter" class="de.hybris.platform.webservicescommons.filter.RestSessionFilter">
+		<property name="sessionService" ref="sessionService"/>
+	</bean>
+
+</beans>
+

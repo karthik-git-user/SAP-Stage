@@ -1,0 +1,19 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; NoRootTestImpex002; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; NoRootTestImpex002	; Product       	; Product       	;   ;
+; NoRootTestImpex002	; Category      	; Category      	; 	;
+; NoRootTestImpex002	; Catalog       	; Catalog       	; 	;
+; NoRootTestImpex002	; CatalogVersion	; CatalogVersion	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; NoRootTestImpex002:Product       	; code          	; Product:code          	;                                        	; 	;
+; NoRootTestImpex002:Product       	; catalogVersion	; Product:catalogVersion	; NoRootTestImpex002:CatalogVersion	; 	;
+; NoRootTestImpex002:Category      	; code          	; Category:code         	;                                        	; true	;
+; NoRootTestImpex002:Category      	; name          	; Category:name         	;                                        	; 	;
+; NoRootTestImpex002:Category      	; products      	; Category:products     	; NoRootTestImpex002:Product       	; 	;
+; NoRootTestImpex002:Catalog       	; id            	; Catalog:id            	;                                        	; 	;
+; NoRootTestImpex002:CatalogVersion	; catalog       	; CatalogVersion:catalog	; NoRootTestImpex002:Catalog       	; 	;
+; NoRootTestImpex002:CatalogVersion	; version       	; CatalogVersion:version	;                                        	; 	;
+; NoRootTestImpex002:CatalogVersion	; active        	; CatalogVersion:active 	;                                        	; 	;

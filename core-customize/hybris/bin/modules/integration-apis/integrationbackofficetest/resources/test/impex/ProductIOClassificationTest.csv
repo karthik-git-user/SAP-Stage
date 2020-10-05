@@ -1,0 +1,59 @@
+# The following ImpEx provides a full example of
+# 1) Creating classifications
+# 2) Creating Integration Object with classification attributes
+# ***************************************************************************************
+#     Set up the classifications
+# ***************************************************************************************
+$SYSTEM=Electronics
+$VERSION=Staged
+$SYSTEM_VERSION=$SYSTEM:$VERSION
+$catalogVersionHeader=catalogVersion(catalog(id), version)
+$systemVersionHeader=systemVersion(catalog(id), version)
+INSERT_UPDATE ClassificationSystem; id[unique = true]
+                                  ; $SYSTEM
+INSERT_UPDATE ClassificationSystemVersion; catalog(id)[unique = true]; version[unique = true]
+                                         ; $SYSTEM                   ; $VERSION
+INSERT_UPDATE ClassificationClass; code[unique = true]; $catalogVersionHeader[unique = true]
+                                 ; dimensions         ; $SYSTEM_VERSION
+INSERT_UPDATE ClassificationAttributeUnit; $systemVersionHeader[unique = true]; code[unique = true]; symbol; unitType
+                                         ; $SYSTEM_VERSION                    ; centimeters        ; cm    ; measurement
+INSERT_UPDATE ClassificationAttribute; code[unique = true]; $systemVersionHeader[unique = true]
+                                     ; height             ; $SYSTEM_VERSION
+                                     ; width              ; $SYSTEM_VERSION
+                                     ; depth              ; $SYSTEM_VERSION
+$class=classificationClass($catalogVersionHeader, code)
+$attribute=classificationAttribute($systemVersionHeader, code)
+INSERT_UPDATE ClassAttributeAssignment; $class[unique = true]     ; $attribute[unique = true]; unit($systemVersionHeader, code); attributeType(code)
+                                      ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:height   ; $SYSTEM_VERSION:centimeters     ; number
+                                      ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:width    ; $SYSTEM_VERSION:centimeters     ; number
+                                      ; $SYSTEM_VERSION:dimensions; $SYSTEM_VERSION:depth    ; $SYSTEM_VERSION:centimeters     ; number
+# ***************************************************************************************
+#     Set up integration objects with regular attributes and classification attributes
+# ***************************************************************************************
+$IO=ProductIOClassificationTest
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; $IO                ; INBOUND
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; $IO                                   ; Product            ; Product   ; true
+                                   ; $IO                                   ; Catalog            ; Catalog
+                                   ; $IO                                   ; CatalogVersion     ; CatalogVersion
+$item=integrationObjectItem(integrationObject(code), code)
+$descriptor=attributeDescriptor(enclosingType(code), qualifier)
+$attributeType=returnIntegrationObjectItem(integrationObject(code), code)
+INSERT_UPDATE IntegrationObjectItemAttribute; $item[unique = true]; attributeName[unique = true]; $descriptor           ; $attributeType;
+                                            ; $IO:Product         ; code                        ; Product:code
+                                            ; $IO:Product         ; catalogVersion              ; Product:catalogVersion; $IO:CatalogVersion
+                                            ; $IO:CatalogVersion  ; version                     ; CatalogVersion:version
+                                            ; $IO:CatalogVersion  ; catalog                     ; CatalogVersion:catalog; $IO:Catalog
+                                            ; $IO:Catalog         ; id                          ; Catalog:id
+$IO=ProductIOClassificationTest
+$SYSTEM_VERSION=Electronics:Staged
+$item=integrationObjectItem(integrationObject(code), code)
+$systemVersionHeader=systemVersion(catalog(id), version)
+$classificationClassHeader=classificationClass(catalogVersion(catalog(id), version), code)
+$classificationAttributeHeader=classificationAttribute($systemVersionHeader, code)
+$classificationAssignment=classAttributeAssignment($classificationClassHeader, $classificationAttributeHeader)
+INSERT_UPDATE IntegrationObjectItemClassificationAttribute; $item[unique = true]; attributeName[unique = true]; $classificationAssignment
+                                                          ; $IO:Product         ; height                      ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:height
+                                                          ; $IO:Product         ; depth                       ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:depth
+                                                          ; $IO:Product         ; width                       ; $SYSTEM_VERSION:dimensions:$SYSTEM_VERSION:width

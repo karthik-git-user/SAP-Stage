@@ -1,0 +1,32 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2018 SAP SE or an SAP affiliate company.  All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+INSERT_UPDATE DynamicProcessDefinition; code[unique = true]           ; active; content
+                                      ; customerLookupService-process ; true  ; "<?xml version='1.0' encoding='utf-8'?> <process xmlns='http://www.hybris.de/xsd/processdefinition' start='customerMasterLookupCheckEmailVerificationAction'
+         name='customerLookupService-process'
+         processClass='de.hybris.platform.commerceservices.model.process.StoreFrontCustomerProcessModel' onError='error'>
+
+    <action id='customerMasterLookupCheckEmailVerificationAction' bean='customerMasterLookupCheckEmailVerificationAction'>
+        <transition name='OK' to='customerMasterLookupCheckConsentAction'/>
+        <transition name='NOK' to='emailVerificationFailed'/>
+    </action>
+    <action id='customerMasterLookupCheckConsentAction' bean='customerMasterLookupCheckConsentAction'>
+        <transition name='OK' to='customerMasterLookupServiceAction'/>
+        <transition name='NOK' to='consentVerificationFailed'/>
+    </action>
+    <action id='customerMasterLookupServiceAction' bean='customerMasterLookupServiceAction'>
+        <transition name='OK' to='success' />
+        <transition name='NOK' to='error' />
+    </action>
+    <end id='consentVerificationFailed' state='FAILED'>FAILED: Customer Lookup didn't happen due to lack of consent.</end>
+    <end id='emailVerificationFailed' state='FAILED'>FAILED: Customer Lookup didn't happen due to lack of email verification</end>
+    <end id='error' state='ERROR'>ERROR: Customer Lookup Failed.</end>
+    <end id='success' state='SUCCEEDED'>Customer Lookup Completed.</end>
+</process>"

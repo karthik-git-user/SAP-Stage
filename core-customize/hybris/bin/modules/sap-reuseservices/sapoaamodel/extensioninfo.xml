@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Sapoaamodel" managername="SapoaamodelManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapoaamodel" usemaven="false">
+              
+	  
+        <requires-extension name="basecommerce"/>
+          
+	  
+        <requires-extension name="sapcoreconfiguration"/>
+            
+	  
+        <requires-extension name="sapmodel"/>
+            
+
+      
+        <coremodule generated="true" manager="com.sap.retail.oaa.model.jalo.SapoaamodelManager" packageroot="com.sap.retail.oaa.model"/>
+           
+    </extension>
+          
+
+</extensioninfo>

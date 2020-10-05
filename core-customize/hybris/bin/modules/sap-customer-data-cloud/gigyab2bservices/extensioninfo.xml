@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Gigyab2bservices" jaloLogicFree="true" managername="Gigyab2bservicesManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="gigyab2bservices" usemaven="false">
+          
+      
+        <!-- for more information on maven managed libraries please consult https://wiki.hybris.com/x/Nq8sDQ -->
+        	  
+        <requires-extension name="gigyaservices"/>
+        	  
+        <requires-extension name="b2bcommerce"/>
+        	  
+        <requires-extension name="b2bacceleratorservices"/>
+              
+        <coremodule generated="true" manager="de.hybris.platform.gigya.gigyab2bservices.jalo.Gigyab2bservicesManager" packageroot="de.hybris.platform.gigya.gigyab2bservices"/>
+              
+
+   
+    </extension>
+          
+
+</extensioninfo>

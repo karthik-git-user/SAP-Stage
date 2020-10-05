@@ -1,0 +1,21 @@
+$quoteReplicationUrl=https://tester.hana.ondemand.com/gw/odata/SAP/COMMERCEQUOTEOUTBOUND
+$quoteReplicationVersion=v=1
+$salesOrderNotificationUrl=https://tester.hana.ondemand.com/gw/odata/SAP/COMMERCEORDERNOTIFICATIONOUTBOUND
+$salesOrderNotificationVersion=v=1
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;password;username
+
+INSERT_UPDATE DestinationTarget;id[unique=true]
+;scpiSalesQuoteReplication
+;scpiSalesOrderNotification
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;scpiSalesOutboundQuotes;scpiSalesOutboundQuotes;;"$quoteReplicationUrl;$quoteReplicationVersion";unknown
+;scpiSalesOrderNotifications;scpiSalesOrderNotifications;;"$salesOrderNotificationUrl;$salesOrderNotificationVersion";unknown
+
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];additionalProperties(key, value)[map-delimiter = |];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true];url
+;true;"csrfURL->$quoteReplicationUrl;$quoteReplicationVersion";scpiCredentials;scpiSalesQuoteReplication;scpiSalesOutboundQuotes:unknown;scpiSalesQuoteReplication;"$quoteReplicationUrl;$quoteReplicationVersion/SAPC4CCpiOutboundQuotes"
+;true;"csrfURL->$salesOrderNotificationUrl;$salesOrderNotificationVersion" ;scpiCredentials;scpiSalesOrderNotification;scpiSalesOrderNotifications:unknown;scpiSalesOrderNotification;"$salesOrderNotificationUrl;
+$salesOrderNotificationVersion/C4CSalesOrderNotifications"

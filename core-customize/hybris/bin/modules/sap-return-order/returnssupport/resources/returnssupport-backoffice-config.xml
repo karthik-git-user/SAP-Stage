@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config">
+	
+	<context component="cseditorareaactions" type="ReturnRequest" merge-by="module" parent="auto">
+        <y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+            <y:group qualifier="common">
+                <y:label>actiongroup.common</y:label>
+                <y:action action-id="de.hybris.ordermanagementbackoffice.actions.returns.approvereturnaction"
+                          property="currentObject"/>
+                <y:action action-id="de.hybris.ordermanagementbackoffice.actions.returns.cancelreturnaction"
+                          property="currentObject"/>
+              
+            </y:group>
+        </y:actions>
+    </context>
+	
+	  <context merge-by="type" parent="GenericItem" type="SAPReturnOrderReason" component="base">
+		<y:base xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+			<y:labels>
+				<y:label>refundReason.name+ ' - ' +sapReturnReasonCode</y:label>
+			</y:labels>
+		</y:base>
+	</context>
+
+	<context merge-by="type" type="SAPReturnOrderReason" component="referenceListViewReturnReasons">
+		<list-view:list-view xmlns:list-view="http://www.hybris.com/cockpitng/component/listView">
+			<list-view:column qualifier="refundReason" />
+			<list-view:column qualifier="sapReturnReasonCode" />
+		</list-view:list-view>
+	</context>
+	
+	<context merge-by="module" parent="auto" type="SAPConfiguration" component="editor-area">
+		<editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+			<editorArea:tab xmlns="http://www.hybris.com/cockpitng/component/editorArea" name="hmc.tab.saporder.asynchronous" position="1">
+				<editorArea:section name="backoffice.section.asynchronous.returns">
+					<editorArea:attribute qualifier="returnOrderProcesstype" />
+					</editorArea:section>
+			
+				<section name="backoffice.section.asynchronous.returns.mappings">
+					<editorArea:attribute editor="com.hybris.cockpitng.editor.extendedmultireferenceeditor" qualifier="sapReturnReasons">
+						<editorArea:editor-parameter>
+							<editorArea:name>listConfigContext</editorArea:name>
+							<editorArea:value>referenceListViewReturnReasons</editorArea:value>
+						</editorArea:editor-parameter>
+					</editorArea:attribute>
+				</section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+
+</config>

@@ -1,0 +1,11 @@
+INSERT_UPDATE IntegrationObject ; code[unique = true] ;  
+                                ; ExtBillingInvoice   
+
+INSERT_UPDATE IntegrationObjectItem ; integrationObject(code)[unique=true] ; code[unique = true]  ; type(code)          
+                                    ; ExtBillingInvoice                    ; SAPCpiOutboundConfig ; SAPCpiOutboundConfig
+
+INSERT_UPDATE IntegrationObjectItemAttribute ; integrationObjectItem(integrationObject(code), code)[unique = true] ; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier) ; returnIntegrationObjectItem(integrationObject(code), code) ; unique[default = false] ; autoCreate[default = false]
+                                             ; ExtBillingInvoice:SAPCpiOutboundConfig                              ; url                          ; SAPCpiOutboundConfig:url                            ;                                                            ;                         ;                            
+                                             ; ExtBillingInvoice:SAPCpiOutboundConfig                              ; username                     ; SAPCpiOutboundConfig:username                       ;                                                            ; true                    ;                            
+                                             ; ExtBillingInvoice:SAPCpiOutboundConfig                              ; extBillingResponseStatusCode ; SAPCpiOutboundConfig:extBillingResponseStatusCode   ;                                                            ;                         ;                            
+                                             ; ExtBillingInvoice:SAPCpiOutboundConfig                              ; extBillingResponseValue      ; SAPCpiOutboundConfig:extBillingResponseValue        ;                                                            ;                         ;                            

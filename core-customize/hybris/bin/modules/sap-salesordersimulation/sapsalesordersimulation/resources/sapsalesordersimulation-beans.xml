@@ -1,0 +1,604 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- [y] hybris Platform Copyright (c) 2018 SAP SE or an SAP affiliate company. 
+	All rights reserved. This software is the confidential and proprietary information 
+	of SAP ("Confidential Information"). You shall not disclose such Confidential 
+	Information and shall use it only in accordance with the terms of the license 
+	agreement you entered into with SAP. -->
+
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="beans.xsd">
+	
+	
+	<bean class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulationData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="result" type="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulationResponseData">
+			<annotations>@JsonProperty("d") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	
+	
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulationRequestData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderType" type="String">
+			<annotations>@JsonProperty("SalesOrderType")</annotations>
+		</property>
+		<property name="salesOrganization" type="String">
+			<annotations>@JsonProperty("SalesOrganization")</annotations>
+		</property>
+		<property name="distributionChannel" type="String">
+			<annotations>@JsonProperty("DistributionChannel")</annotations>
+		</property>
+		<property name="division" type="String">
+			<annotations>@JsonProperty("OrganizationDivision")</annotations>
+		</property>
+		<property name="soldToParty" type="String">
+			<annotations>@JsonProperty("SoldToParty")  @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="currency" type="String">
+			<annotations>@JsonProperty("TransactionCurrency")  @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		<property name="purchaseOrderByCustomer" type="String">
+			<annotations>@JsonProperty("PurchaseOrderByCustomer")</annotations>
+		</property>
+		<property name="creditDetails" type="de.hybris.platform.sapsalesordersimulation.dto.CreditData">
+			<annotations>@JsonProperty("to_Credit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricingElements" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PricingElementData>">
+			<annotations>@JsonProperty("to_PricingElement") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="items" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulateItemRequestData>">
+			<annotations>@JsonProperty("to_Item") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="partner" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PartnerData>">
+			<annotations>@JsonProperty("to_Partner") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricing" type="de.hybris.platform.sapsalesordersimulation.dto.PricingData">
+			<annotations>@JsonProperty("to_Pricing") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+	</bean>
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulateItemRequestData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItem" type="String">
+			
+			<annotations>@JsonProperty("SalesOrderItem") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="higherLevelItem" type="String">
+			<annotations>@JsonProperty("HigherLevelItem") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItemCategory" type="String">
+			<annotations>@JsonProperty("SalesOrderItemCategory") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItemText" type="String">
+			<annotations>@JsonProperty("SalesOrderItemText") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="purchaseOrderByCustomer" type="String">
+			<annotations>@JsonProperty("PurchaseOrderByCustomer") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="material" type="String">
+			<annotations>@JsonProperty("Material") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="materialByCustomer" type="String">
+			<annotations>@JsonProperty("MaterialByCustomer") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricingDate" type="String">
+			<annotations>@JsonProperty("PricingDate") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="requestedQuantity" type="String">
+			<annotations>@JsonProperty("RequestedQuantity") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="requestedQuantityUnit" type="String">
+			<annotations>@JsonProperty("RequestedQuantityUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="transactionCurrency" type="String">
+			<annotations>@JsonProperty("TransactionCurrency") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="netAmount" type="String">
+			<annotations>@JsonProperty("NetAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="taxAmount" type="String">
+			<annotations>@JsonProperty("TaxAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="costAmount" type="String">
+			<annotations>@JsonProperty("CostAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal1Amount" type="String">
+			<annotations>@JsonProperty("Subtotal1Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal2Amount" type="String">
+			<annotations>@JsonProperty("Subtotal2Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal3Amount" type="String">
+			<annotations>@JsonProperty("Subtotal3Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal4Amount" type="String">
+			<annotations>@JsonProperty("Subtotal4Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal5Amount" type="String">
+			<annotations>@JsonProperty("Subtotal5Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="Subtotal6Amount" type="String">
+			<annotations>@JsonProperty("subtotal6Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="materialGroup" type="String">
+			<annotations>@JsonProperty("MaterialGroup") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="batch" type="String">
+			<annotations>@JsonProperty("Batch") @JsonInclude(Include.NON_NULL)</annotations>
+		</property><property name="plant" type="String">
+			<annotations>@JsonProperty("Plant") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="storageLocation" type="String">
+			<annotations>@JsonProperty("StorageLocation") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="deliveryGroup" type="String">
+			<annotations>@JsonProperty("DeliveryGroup") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="shippingPoint" type="String">
+			<annotations>@JsonProperty("ShippingPoint") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="shippingType" type="String">
+			<annotations>@JsonProperty("ShippingType") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="deliveryPriority" type="String">
+			<annotations>@JsonProperty("DeliveryPriority") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsClassification" type="String">
+			<annotations>@JsonProperty("IncotermsClassification") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsTransferLocation" type="String">
+			<annotations>@JsonProperty("IncotermsTransferLocation") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsLocation1" type="String">
+			<annotations>@JsonProperty("IncotermsLocation1") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsLocation2" type="String">
+			 
+			<annotations>@JsonProperty("IncotermsLocation2") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="customerPaymentTerms" type="String">
+			<annotations>@JsonProperty("CustomerPaymentTerms") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesDocumentRjcnReason" type="String">
+			<annotations>@JsonProperty("SalesDocumentRjcnReason") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		<property name="pricingElements" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PricingElementData>">
+			<annotations>@JsonProperty("to_PricingElement") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		<property name="partner" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PartnerData>">
+			<annotations>@JsonProperty("to_Partner") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		<property name="scheduleLines" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.ScheduleLineData>">
+			<annotations>@JsonProperty("to_ScheduleLine") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulationResponseData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderType" type="String">
+			<annotations>@JsonProperty("SalesOrderType")</annotations>
+		</property>
+		<property name="salesOrganization" type="String">
+			<annotations>@JsonProperty("SalesOrganization")</annotations>
+		</property>
+		<property name="distributionChannel" type="String">
+			<annotations>@JsonProperty("DistributionChannel")</annotations>
+		</property>
+		<property name="division" type="String">
+			<annotations>@JsonProperty("OrganizationDivision")</annotations>
+		</property>
+		<property name="soldToParty" type="String">
+			<annotations>@JsonProperty("SoldToParty")  @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="purchaseOrderByCustomer" type="String">
+			<annotations>@JsonProperty("PurchaseOrderByCustomer")</annotations>
+		</property>
+		<property name="creditDetails" type="de.hybris.platform.sapsalesordersimulation.dto.CreditData">
+			<annotations>@JsonInclude(Include.NON_NULL)</annotations>
+			<annotations>@JsonProperty("to_Credit")</annotations>
+		</property>
+		<property name="pricingElements" type="de.hybris.platform.sapsalesordersimulation.dto.PricingElementsData">
+			<annotations>@JsonProperty("to_PricingElement") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="items" type="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulatesItemsData">
+			<annotations>@JsonProperty("to_Item") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="partner" type="de.hybris.platform.sapsalesordersimulation.dto.PartnersData">
+			<annotations>@JsonProperty("to_Partner") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricing" type="de.hybris.platform.sapsalesordersimulation.dto.PricingData">
+			<annotations>@JsonProperty("to_Pricing") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+	</bean>
+	
+	<bean class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulatesItemsData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderItems" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulateItemData>">
+			<annotations>@JsonProperty("results") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	<bean class="de.hybris.platform.sapsalesordersimulation.dto.PricingElementsData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderPricingElements" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PricingElementData>">
+			<annotations>@JsonProperty("results") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	<bean class="de.hybris.platform.sapsalesordersimulation.dto.PartnersData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderPartners" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.PartnerData>">
+			<annotations>@JsonProperty("results") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	
+	<bean class="de.hybris.platform.sapsalesordersimulation.dto.ScheduleLinesData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		<property name="salesOrderScheduleLines" type="java.util.List&lt;de.hybris.platform.sapsalesordersimulation.dto.ScheduleLineData>">
+			<annotations>@JsonProperty("results") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	
+
+
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.SalesOrderSimulateItemData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItem" type="String">
+			
+			<annotations>@JsonProperty("SalesOrderItem") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="higherLevelItem" type="String">
+			<annotations>@JsonProperty("HigherLevelItem") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItemCategory" type="String">
+			<annotations>@JsonProperty("SalesOrderItemCategory") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItemText" type="String">
+			<annotations>@JsonProperty("SalesOrderItemText") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="purchaseOrderByCustomer" type="String">
+			<annotations>@JsonProperty("PurchaseOrderByCustomer") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="material" type="String">
+			<annotations>@JsonProperty("Material") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="materialByCustomer" type="String">
+			<annotations>@JsonProperty("MaterialByCustomer") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricingDate" type="String">
+			<annotations>@JsonProperty("PricingDate") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="requestedQuantity" type="String">
+			<annotations>@JsonProperty("RequestedQuantity") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="requestedQuantityUnit" type="String">
+			<annotations>@JsonProperty("RequestedQuantityUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="transactionCurrency" type="String">
+			<annotations>@JsonProperty("TransactionCurrency") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="netAmount" type="String">
+			<annotations>@JsonProperty("NetAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="taxAmount" type="String">
+			<annotations>@JsonProperty("TaxAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="costAmount" type="String">
+			<annotations>@JsonProperty("CostAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal1Amount" type="String">
+			<annotations>@JsonProperty("Subtotal1Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal2Amount" type="String">
+			<annotations>@JsonProperty("Subtotal2Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal3Amount" type="String">
+			<annotations>@JsonProperty("Subtotal3Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal4Amount" type="String">
+			<annotations>@JsonProperty("Subtotal4Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="subtotal5Amount" type="String">
+			<annotations>@JsonProperty("Subtotal5Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="Subtotal6Amount" type="String">
+			<annotations>@JsonProperty("subtotal6Amount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="materialGroup" type="String">
+			<annotations>@JsonProperty("MaterialGroup") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="batch" type="String">
+			<annotations>@JsonProperty("Batch") @JsonInclude(Include.NON_NULL)</annotations>
+		</property><property name="plant" type="String">
+			<annotations>@JsonProperty("Plant") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="storageLocation" type="String">
+			<annotations>@JsonProperty("StorageLocation") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="deliveryGroup" type="String">
+			<annotations>@JsonProperty("DeliveryGroup") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="shippingPoint" type="String">
+			<annotations>@JsonProperty("ShippingPoint") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="shippingType" type="String">
+			<annotations>@JsonProperty("ShippingType") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="deliveryPriority" type="String">
+			<annotations>@JsonProperty("DeliveryPriority") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsClassification" type="String">
+			<annotations>@JsonProperty("IncotermsClassification") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsTransferLocation" type="String">
+			<annotations>@JsonProperty("IncotermsTransferLocation") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsLocation1" type="String">
+			<annotations>@JsonProperty("IncotermsLocation1") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="incotermsLocation2" type="String">
+			 
+			<annotations>@JsonProperty("IncotermsLocation2") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="customerPaymentTerms" type="String">
+			<annotations>@JsonProperty("CustomerPaymentTerms") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesDocumentRjcnReason" type="String">
+			<annotations>@JsonProperty("SalesDocumentRjcnReason") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		<property name="pricingElements" type="de.hybris.platform.sapsalesordersimulation.dto.PricingElementsData">
+			<annotations>@JsonProperty("to_PricingElement") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		<property name="partner" type="de.hybris.platform.sapsalesordersimulation.dto.PartnersData">
+			<annotations>@JsonProperty("to_Partner") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		<property name="scheduleLines" type="de.hybris.platform.sapsalesordersimulation.dto.ScheduleLinesData">
+			<annotations>@JsonProperty("to_ScheduleLine") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+	
+
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.CreditData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="creditCheckStatus" type="String">
+			<annotations>@JsonProperty("TotalCreditCheckStatus") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.PricingElementData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricingProcedureStep" type="String">
+			<annotations>@JsonProperty("PricingProcedureStep") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="pricingProcedureCounter" type="String">
+			<annotations>@JsonProperty("PricingProcedureCounter") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionType" type="String">
+			<annotations>@JsonProperty("ConditionType") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionCalculationType" type="String">
+			<annotations>@JsonProperty("ConditionCalculationType") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionRateValue" type="String">
+			<annotations>@JsonProperty("ConditionRateValue") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionCurrency" type="String">
+			<annotations>@JsonProperty("ConditionCurrency") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionQuantity" type="String">
+			<annotations>@JsonProperty("ConditionQuantity") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionQuantityUnit" type="String">
+			<annotations>@JsonProperty("ConditionQuantityUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionIsForStatistics" type="java.lang.Boolean">
+			<annotations>@JsonProperty("ConditionIsForStatistics") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionAmount" type="String">
+			<annotations>@JsonProperty("ConditionAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="transactionCurrency" type="String">
+			<annotations>@JsonProperty("TransactionCurrency") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionInactiveReason" type="String">
+			<annotations>@JsonProperty("ConditionInactiveReason") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="conditionIsManuallyChanged" type="java.lang.Boolean">
+			<annotations>@JsonProperty("ConditionIsManuallyChanged") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>	
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.PricingData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="netAmmount" type="String">
+			<annotations>@JsonProperty("TotalNetAmount") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="transactionCurrency" type="String">
+			<annotations>@JsonProperty("TransactionCurrency") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+	</bean>
+		<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.PartnerData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="partnerFunction" type="String">
+			<annotations>@JsonProperty("PartnerFunction") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="customer" type="String">
+			<annotations>@JsonProperty("Customer") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		<property name="supplier" type="String">
+			<annotations>@JsonProperty("Supplier") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="personnel" type="String">
+			<annotations>@JsonProperty("Personnel") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="contactPerson" type="String">
+			<annotations>@JsonProperty("ContactPerson") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+		
+	</bean>
+	
+	<bean
+		class="de.hybris.platform.sapsalesordersimulation.dto.ScheduleLineData">
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonProperty" />
+		<import
+			type="com.fasterxml.jackson.annotation.JsonInclude.Include" />
+		
+		<property name="salesOrder" type="String">
+			<annotations>@JsonProperty("SalesOrder") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="salesOrderItem" type="String">
+			<annotations>@JsonProperty("SalesOrderItem") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="scheduleLine" type="String">
+			<annotations>@JsonProperty("ScheduleLine") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="requestedDeliveryDate" type="String">
+			<annotations>@JsonProperty("RequestedDeliveryDate") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="confirmedDeliveryDate" type="String">
+			<annotations>@JsonProperty("ConfirmedDeliveryDate") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="orderQuantityUnit" type="String">
+			<annotations>@JsonProperty("OrderQuantityUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="scheduleLineOrderQuantity" type="String">
+			<annotations>@JsonProperty("ScheduleLineOrderQuantity") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="confdOrderQtyByMatlAvailCheck" type="String">
+			<annotations>@JsonProperty("ConfdOrderQtyByMatlAvailCheck") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="openConfdDelivQtyInOrdQtyUnit" type="String">
+			<annotations>@JsonProperty("OpenConfdDelivQtyInOrdQtyUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		<property name="correctedQtyInOrderQtyUnit" type="String">
+			<annotations>@JsonProperty("CorrectedQtyInOrderQtyUnit") @JsonInclude(Include.NON_NULL)</annotations>
+		</property>
+		
+		
+	</bean>
+	
+	
+	
+</beans>

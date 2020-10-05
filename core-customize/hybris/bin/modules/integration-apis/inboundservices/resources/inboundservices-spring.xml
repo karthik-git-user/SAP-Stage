@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ [y] hybris Platform
+  ~
+  ~ Copyright (c) 2018 SAP SE or an SAP affiliate company.
+  ~ All rights reserved.
+  ~
+  ~ This software is the confidential and proprietary information of SAP
+  ~ ("Confidential Information"). You shall not disclose such Confidential
+  ~ Information and shall use it only in accordance with the terms of the
+  ~ license agreement you entered into with SAP.
+  -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<alias name="defaultInboundServicesConfiguration" alias="inboundServicesConfiguration" />
+	<bean id="defaultInboundServicesConfiguration" class="de.hybris.platform.inboundservices.config.DefaultInboundServicesConfiguration">
+		<property name="configurationService" ref="configurationService" />
+	</bean>
+
+	<alias name="defaultAbstractAttributePopulator" alias="inboundServicesAbstractAttributePopulator" />
+	<bean abstract="true" id="defaultAbstractAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.AbstractAttributePopulator">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+	<alias name="defaultAbstractAttributePopulator" alias="inboundServicesAbstractAttributeCollectionPopulator" />
+	<bean abstract="true" id="defaultAbstractCollectionAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.AbstractCollectionAttributePopulator"
+		  parent="inboundServicesAbstractAttributePopulator" />
+
+	<alias name="defaultPrimitiveAttributePopulator" alias="inboundServicesPrimitiveAttributePopulator" />
+	<bean id="defaultPrimitiveAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.PrimitiveAttributePopulator"
+		  parent="inboundServicesAbstractAttributePopulator" >
+        <property name="primitiveValueHandler" ref="inboundServicesPrimitiveValueHandler" />
+    </bean>
+
+    <alias name="defaultPrimitiveValueHandler" alias="inboundServicesPrimitiveValueHandler" />
+    <bean id="defaultPrimitiveValueHandler" class="de.hybris.platform.inboundservices.persistence.populator.DefaultPrimitiveValueHandler">
+        <property name="localizationService" ref="integrationLocalizationService" />
+    </bean>
+
+    <alias name="defaultMapAttributePopulator" alias="inboundServicesMapAttributePopulator" />
+    <bean id="defaultMapAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.MapAttributePopulator"
+          parent="inboundServicesAbstractAttributePopulator" >
+    </bean>
+
+	<alias name="defaultPrimitiveCollectionAttributePopulator" alias="inboundServicesPrimitiveCollectionAttributePopulator" />
+	<bean id="defaultPrimitiveCollectionAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.PrimitiveCollectionAttributePopulator"
+		  parent="inboundServicesAbstractAttributeCollectionPopulator">
+        <property name="primitiveValueHandler" ref="inboundServicesPrimitiveValueHandler" />
+    </bean>
+
+	<alias name="defaultReplacePrimitiveCollectionAttributePopulator" alias="inboundServicesReplacePrimitiveCollectionAttributePopulator" />
+	<bean id="defaultReplacePrimitiveCollectionAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.ReplacePrimitiveCollectionAttributePopulator"
+		  parent="inboundServicesAbstractAttributePopulator">
+        <property name="primitiveValueHandler" ref="inboundServicesPrimitiveValueHandler" />
+    </bean>
+
+    <alias name="defaultReplaceMapAttributePopulator" alias="inboundServicesReplaceMapAttributePopulator" />
+    <bean id="defaultReplaceMapAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.ReplaceMapAttributePopulator"
+          parent="inboundServicesAbstractAttributePopulator" />
+
+	<alias name="defaultInboundServicesPartOfAttributePopulator" alias="inboundServicesPartOfAttributePopulator" />
+	<bean name="defaultInboundServicesPartOfAttributePopulator" class="de.hybris.platform.inboundservices.persistence.populator.PartOfAttributePopulator" parent="inboundServicesAbstractAttributeCollectionPopulator" />
+
+	<alias name="defaultInboundServicesItemFactory" alias="inboundServicesItemFactory" />
+	<bean name="defaultInboundServicesItemFactory" class="de.hybris.platform.inboundservices.persistence.impl.DefaultItemModelFactory">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+</beans>

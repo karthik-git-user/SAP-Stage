@@ -1,0 +1,12 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; CompileSubtypeSetTestImpex007; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; CompileSubtypeSetTestImpex007	; Order   	; Order   	; true	;
+; CompileSubtypeSetTestImpex007	; Customer	; Customer	; 	;
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; CompileSubtypeSetTestImpex007:Order   	; user      	; Order:user         	; CompileSubtypeSetTestImpex007:Customer	; 	;
+; CompileSubtypeSetTestImpex007:Order   	; code      	; Order:code         	;                              	; true	;
+; CompileSubtypeSetTestImpex007:Customer	; name      	; Customer:name      	;                              	; 	;
+; CompileSubtypeSetTestImpex007:Customer	; customerID	; Customer:customerID	;                              	; true	;

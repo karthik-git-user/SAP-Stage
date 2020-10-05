@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+
+
+
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="items.xsd">
+
+    <enumtypes></enumtypes>
+
+    <relations>
+        <relation code="SAPCpiOutboundCustomer2SAPCpiOutboundAddress" localized="false">
+            <sourceElement type="SAPCpiOutboundCustomer" qualifier="sapCpiOutboundCustomer" cardinality="one"/>
+            <targetElement type="SAPCpiOutboundAddress" qualifier="sapCpiOutboundAddress" cardinality="many">
+                <modifiers partof="true"/>
+            </targetElement>
+        </relation>
+        
+    </relations>
+
+    <itemtypes>
+        <itemtype code="SAPCpiOutboundAddress" generate="false" autocreate="false">
+            <attributes>
+                <attribute qualifier="cellphone" type="java.lang.String">
+                    <description>Commerce cellphone</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="gender" type="java.lang.String">
+                    <description>Commerce gender</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="phone2" type="java.lang.String">
+                    <description>Commerce phone2</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="streetName" type="java.lang.String">
+                    <description>Commerce streetname</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="streetNumber" type="java.lang.String">
+                    <description>Commerce streetname</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="dateOfBirth" type="java.lang.String">
+                    <description>Commerce dateOfBirth</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="sapAddressUsage" type="java.lang.String">
+                    <description>Commerce sapAddressUsage</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="sapAddressUUID" type="java.lang.String">
+                    <description>Commerce sapAddressUUID</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="defaultAddress" type="java.lang.String">
+                    <description>Commerce defaultAddress</description>
+                    <persistence type="property" />
+                </attribute>
+                <attribute qualifier="createDate" type="java.lang.String">
+                    <description>Commerce createDate</description>
+                    <persistence type="property" />
+                </attribute>
+                
+            </attributes>
+        </itemtype>
+        
+        
+        <itemtype code="SAPCpiOutboundCustomer" generate="false" autocreate="false">
+            <attributes>
+                <attribute qualifier="sapConsumerID" type="java.lang.String">
+                    <description>Commerce Customer sapConsumerID</description>
+                    <persistence type="property" />
+                </attribute>
+            </attributes>
+        </itemtype>
+        
+
+    </itemtypes>
+</items>

@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+    <bean class="de.hybris.platform.commercefacades.product.data.ProductData">
+        <property name="subscriptionCode" type="java.lang.String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.SubscriptionData">
+        <property name="version" type="String"/>
+        <property name="documentNumber" type="String"/>
+        <property name="ratePlanId" type="String"/>
+        <property name="extendedPeriod" type="String"/>
+        <property name="pricePlan" type="de.hybris.platform.subscriptionfacades.data.SubscriptionPricePlanData"/>
+        <property name="status" type="de.hybris.platform.subscriptionservices.enums.SubscriptionStatus"/>
+        <property name="validTillDate" type="String"/>
+        <property name="unlimited" type="Boolean"/>
+        <property name="currentUsages"
+                  type="java.util.List&lt;de.hybris.platform.subscriptionfacades.data.UsageChargeData>"/>
+        <property name="renewalTerm" type="de.hybris.platform.subscriptionfacades.data.RenewalTermData"/>
+        <property name="payment" type="de.hybris.platform.subscriptionfacades.data.PaymentData"/>
+        <property name="withdrawalPeriodEndDate" type="java.util.Date"/>
+        <property name="withdrawnAt" type="java.util.Date"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.RenewalTermData">
+        <property name="period" type="Integer"/>
+        <property name="endDate" type="java.util.Date"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.PaymentData">
+        <property name="paymentMethod" type="String"/>
+        <property name="paymentCardToken" type="String"/>
+    </bean>
+
+    <!-- Revenue CLoud Subscription Order -->
+
+    <!-- SapCpiOrder -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.SubscriptionOrder">
+        <property name="owner" type="String"/>
+        <property name="market" type="de.hybris.platform.sap.saprevenuecloudorder.data.Market"/>
+        <property name="paymentData" type="de.hybris.platform.sap.saprevenuecloudorder.data.PaymentData"/>
+        <property name="description" type="String"/>
+        <property name="customer" type="de.hybris.platform.sap.saprevenuecloudorder.data.Customer"/>
+        <property name="orderItems"
+                  type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.data.OrderItem>"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.Market">
+        <property name="marketId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.PaymentData">
+        <property name="paymentMethod" type="String"/>
+        <property name="paymentCardToken" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.Customer">
+        <property name="id" type="String"/>
+        <property name="customerNumber" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.OrderItem">
+        <property name="itemType" type="String"/>
+        <property name="product" type="de.hybris.platform.sap.saprevenuecloudorder.data.Product"/>
+        <property name="quantity" type="de.hybris.platform.sap.saprevenuecloudorder.data.Quantity"/>
+        <property name="price" type="de.hybris.platform.sap.saprevenuecloudorder.data.Price"/>
+        <property name="aspectsData" type="de.hybris.platform.sap.saprevenuecloudorder.data.AspectsData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.Product">
+        <property name="id" type="String"/>
+        <property name="code" type="String"/>
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.Quantity">
+        <property name="value" type="String"/>
+        <property name="unit" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.Price">
+        <property name="aspectData" type="de.hybris.platform.sap.saprevenuecloudorder.data.AspectData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.AspectData">
+        <property name="subscriptionItemPrice"
+                  type="de.hybris.platform.sap.saprevenuecloudorder.data.SubscriptionItemPrice"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.AspectsData">
+        <property name="subscriptionItem" type="de.hybris.platform.sap.saprevenuecloudorder.data.SubscriptionItem"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.SubscriptionItemPrice">
+        <property name="priceObjectId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.SubscriptionItem">
+        <property name="validFrom" type="String"/>
+        <property name="validTo" type="String"/>
+        <property name="numberOfWaiverPeriods" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.data.CancelSubscription">
+        <property name="metaData" type="de.hybris.platform.sap.saprevenuecloudorder.data.MetaData"/>
+        <property name="requestedCancellationDate" type="String"/>
+        <property name="cancellationReason" type="String"/>
+    </bean>
+    <bean
+            class="de.hybris.platform.sap.saprevenuecloudorder.data.WithdrawSubscription">
+        <property name="metaData"
+                  type="de.hybris.platform.sap.saprevenuecloudorder.data.MetaData"/>
+    </bean>
+    <bean
+            class="de.hybris.platform.sap.saprevenuecloudorder.data.MetaData">
+        <property name="version" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.PerUnitUsageChargeData" extends="UsageChargeData">
+        <property name="blockSize" type="Integer"/>
+        <property name="includedQty" type="Integer"/>
+        <property name="minBlocks" type="Integer"/>
+        <property name="ratio" type="String"/>
+        <property name="subscriptionBillingId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.VolumeUsageChargeData" extends="UsageChargeData">
+        <property name="minBlocks" type="Integer"/>
+        <property name="subscriptionBillingId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.OneTimeChargeEntryData">
+        <property name="subscriptionBillingId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.RecurringChargeEntryData">
+        <property name="subscriptionBillingId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.UsageChargeEntryData" extends="ChargeEntryData">
+        <property name="fixedPrice" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+    </bean>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.PerUnitUsageChargeEntryData"
+          extends="UsageChargeEntryData"/>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.VolumeUsageChargeEntryData"
+          extends="UsageChargeEntryData"/>
+
+    <bean class="de.hybris.platform.subscriptionfacades.data.SubscriptionBillingData">
+        <property name="subscriptionBillDate" type="java.util.Date"/>
+        <property name="subscriptionId" type="String"/>
+        <property name="items" type="String"/>
+        <property name="price" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+        <property name="charges" type="java.util.List&lt;de.hybris.platform.subscriptionfacades.data.UsageChargeData>"/>
+        <property name="credits" type="java.util.List&lt;de.hybris.platform.subscriptionfacades.data.UsageChargeData>"/>
+        <property name="billingCycle" type="de.hybris.platform.subscriptionfacades.data.BillingCycleTypeData"/>
+        <property name="productCode" type="String"/>
+        <property name="productUrl" type="String"/>
+    </bean>
+
+    <!-- Usage Charge Data -->
+    <bean class="de.hybris.platform.subscriptionfacades.data.UsageChargeData">
+        <property name="fromDate" type="java.util.Date"/>
+        <property name="toDate" type="java.util.Date"/>
+        <property name="netAmount" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+        <property name="GrossAmount" type="de.hybris.platform.commercefacades.product.data.PriceData"/>
+        <property name="usage" type="Float"/>
+    </bean>
+
+    <bean class="de.hybris.platform.saprevenuecloudorder.data.MetadataData">
+        <property name="version" type="Integer"/>
+    </bean>
+
+    <bean class="de.hybris.platform.saprevenuecloudorder.data.SubscriptionExtensionFormData">
+        <property name="metadata" type="de.hybris.platform.saprevenuecloudorder.data.MetadataData"/>
+        <property name="extensionDate" type="java.util.Date"/>
+        <property name="numberOfBillingPeriods" type="Integer"/>
+        <property name="unlimited" type="Boolean"/>
+        <property name="changedAt" type="java.util.Date"/>
+        <property name="changedBy" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.saprevenuecloudorder.data.SubscriptionExtensionData">
+        <property name="validUntil" type="java.util.Date"/>
+        <property name="validUntilIsUnlimited" type="Boolean"/>
+    </bean>
+
+    <!--Bills v2 Pojo-->
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.BillsList">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="transferStatus" type="java.lang.String">
+            <annotations>@JsonProperty("transferStatus")</annotations>
+        </property>
+        <property name="netAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.NetAmount">
+            <annotations>@JsonProperty("netAmount")</annotations>
+        </property>
+        <property name="documentNumber" type="int">
+            <annotations>@JsonProperty("documentNumber")</annotations>
+        </property>
+        <property name="grossAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.GrossAmount">
+            <annotations>@JsonProperty("grossAmount")</annotations>
+        </property>
+        <property name="createInvoice" type="boolean">
+            <annotations>@JsonProperty("createInvoice")</annotations>
+        </property>
+        <property name="billItems" type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Bill>">
+            <annotations>@JsonProperty("billItems")</annotations>
+        </property>
+        <property name="splitElement" type="java.lang.String">
+            <annotations>@JsonProperty("splitElement")</annotations>
+        </property>
+        <property name="customReferences"
+                  type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.CustomReferencesItem>">
+            <annotations>@JsonProperty("customReferences")</annotations>
+        </property>
+        <property name="market" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Market">
+            <annotations>@JsonProperty("market")</annotations>
+        </property>
+        <property name="metaData" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.MetaData">
+            <annotations>@JsonProperty("metaData")</annotations>
+        </property>
+        <property name="billingDate" type="java.lang.String">
+            <annotations>@JsonProperty("billingDate")</annotations>
+        </property>
+        <property name="billStatus" type="java.lang.String">
+            <annotations>@JsonProperty("billStatus")</annotations>
+        </property>
+        <property name="payment" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Payment">
+            <annotations>@JsonProperty("payment")</annotations>
+        </property>
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+        <property name="taxAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.TaxAmount">
+            <annotations>@JsonProperty("taxAmount")</annotations>
+        </property>
+        <property name="customer" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Customer">
+            <annotations>@JsonProperty("customer")</annotations>
+        </property>
+
+    </bean>
+
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Bill">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="ratePlan" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.RatePlan">
+            <annotations>@JsonProperty("ratePlan")</annotations>
+        </property>
+        <property name="product" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Product">
+            <annotations>@JsonProperty("product")</annotations>
+        </property>
+        <property name="charges" type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Charge>">
+            <annotations>@JsonProperty("charges")</annotations>
+        </property>
+        <property name="taxDetails"
+                  type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.TaxDetail>">
+            <annotations>@JsonProperty("taxDetails")</annotations>
+        </property>
+        <property name="netAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.NetAmount">
+            <annotations>@JsonProperty("netAmount")</annotations>
+        </property>
+        <property name="subscription" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Subscription">
+            <annotations>@JsonProperty("subscription")</annotations>
+        </property>
+        <property name="grossAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.GrossAmount">
+            <annotations>@JsonProperty("grossAmount")</annotations>
+        </property>
+        <property name="taxAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.TaxAmount">
+            <annotations>@JsonProperty("taxAmount")</annotations>
+        </property>
+        <property name="groupingElement" type="java.lang.String">
+            <annotations>@JsonProperty("groupingElement")</annotations>
+        </property>
+        <property name="customReferences"
+                  type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.CustomReferencesItem>">
+            <annotations>@JsonProperty("customReferences")</annotations>
+        </property>
+
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Charge">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="reversal" type="boolean">
+            <annotations>@JsonProperty("reversal")</annotations>
+        </property>
+        <property name="metricId" type="java.lang.String">
+            <annotations>@JsonProperty("metricId")</annotations>
+        </property>
+        <property name="netAmount" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.NetAmount">
+            <annotations>@JsonProperty("netAmount")</annotations>
+        </property>
+        <property name="ratingPeriod" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.RatingPeriod">
+            <annotations>@JsonProperty("ratingPeriod")</annotations>
+        </property>
+        <property name="customAmounts"
+                  type="java.util.List&lt;de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.CustomAmount>">
+            <annotations>@JsonProperty("customAmounts")</annotations>
+        </property>
+        <property name="consumedQuantity" type="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.ConsumedQuantity">
+            <annotations>@JsonProperty("consumedQuantity")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.ConsumedQuantity">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="unit" type="java.lang.String">
+            <annotations>@JsonProperty("unit")</annotations>
+        </property>
+        <property name="value" type="int">
+            <annotations>@JsonProperty("value")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.CustomAmount">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="code" type="java.lang.String">
+            <annotations>@JsonProperty("code")</annotations>
+        </property>
+        <property name="monetaryAmount" type="MonetaryAmount">
+            <annotations>@JsonProperty("monetaryAmount")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Customer">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+        <property name="type" type="java.lang.String">
+            <annotations>@JsonProperty("type")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.CustomReferencesItem">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+        <property name="typeCode" type="java.lang.String">
+            <annotations>@JsonProperty("typeCode")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.GrossAmount">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="amount" type="int">
+            <annotations>@JsonProperty("amount")</annotations>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <annotations>@JsonProperty("currency")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Market">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="priceType" type="java.lang.String">
+            <annotations>@JsonProperty("priceType")</annotations>
+        </property>
+        <property name="timeZone" type="java.lang.String">
+            <annotations>@JsonProperty("timeZone")</annotations>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <annotations>@JsonProperty("currency")</annotations>
+        </property>
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.MetaData">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="createdAt" type="java.lang.String">
+            <annotations>@JsonProperty("createdAt")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.MonetaryAmount">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="amount" type="int">
+            <annotations>@JsonProperty("amount")</annotations>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <annotations>@JsonProperty("currency")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.NetAmount">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="amount" type="double">
+            <annotations>@JsonProperty("amount")</annotations>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <annotations>@JsonProperty("currency")</annotations>
+        </property>
+        <property name="net" type="double">
+            <annotations>@JsonProperty("net")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Payment">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="method" type="java.lang.String">
+            <annotations>@JsonProperty("method")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Product">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="code" type="java.lang.String">
+            <annotations>@JsonProperty("code")</annotations>
+        </property>
+        <property name="name" type="java.lang.String">
+            <annotations>@JsonProperty("name")</annotations>
+        </property>
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.RatePlan">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.RatingPeriod">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="start" type="java.lang.String">
+            <annotations>@JsonProperty("start")</annotations>
+        </property>
+        <property name="end" type="java.lang.String">
+            <annotations>@JsonProperty("end")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.Subscription">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="itemId" type="java.lang.String">
+            <annotations>@JsonProperty("itemId")</annotations>
+        </property>
+        <property name="documentNumber" type="int">
+            <annotations>@JsonProperty("documentNumber")</annotations>
+        </property>
+        <property name="id" type="java.lang.String">
+            <annotations>@JsonProperty("id")</annotations>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.TaxAmount">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="amount" type="double">
+            <annotations>@JsonProperty("amount")</annotations>
+        </property>
+        <property name="currency" type="java.lang.String">
+            <annotations>@JsonProperty("currency")</annotations>
+        </property>
+
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.v2.TaxDetail">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="amount" type="double">
+            <annotations>@JsonProperty("amount")</annotations>
+        </property>
+        <property name="code" type="java.lang.String">
+            <annotations>@JsonProperty("code")</annotations>
+        </property>
+        <property name="rate" type="int">
+            <annotations>@JsonProperty("rate")</annotations>
+        </property>
+        <property name="name" type="java.lang.String">
+            <annotations>@JsonProperty("name")</annotations>
+        </property>
+    </bean>
+
+	<!-- region Service Layer Beans -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.PaginationResult&lt;T&gt;">
+        <property name="pageIndex" type="Integer" />
+        <property name="pageSize" type="Integer" />
+        <property name="count" type="Integer" />
+        <property name="pageCount" type="Integer" />
+        <property name="result" type="T" />
+    </bean>
+
+	<!-- region de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1 -->
+	<!-- Subscription -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Subscription">
+		
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+		<property name="subscriptionId" type="String" />
+		<property name="documentNumber" type="Integer" />
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="validFrom" type="java.util.Date" />
+		<property name="billingCycleReferenceDate" type="java.util.Date" />
+		<property name="validUntil" type="java.util.Date" />
+		<property name="customer" type="BusinessPartner" />
+		<property name="market" type="Market" />
+		<property name="cancellationReason" type="String" />
+		<property name="requestedCancellationDate" type="java.util.Date" />
+        <property name="cancelledWithOverruledTerms" type="Boolean" >
+            <annotations>@JsonProperty("canceledWithOverruledTerms")</annotations>
+        </property>
+		<property name="payment" type="Payment" />
+		<property name="billSplitElement" type="String" />
+		<property name="customReferences" type="List&lt;CustomReference&gt;" />
+		<property name="status" type="String" >
+			<description>Valid values are [ Active, Canceled, Expired, Not Started, Withdrawn ]</description>
+		</property>
+		<property name="contractTerm" type="ContractTerm" />
+		<property name="cancellationPolicy" type="CancellationPolicy" />
+		<property name="renewalTerm" type="RenewalTerm" />
+		<property name="withdrawnAt" type="java.util.Date" />
+		<property name="billingCycle" type="String" >
+			<description>Valid values are [ calendar-monthly, calendar-quarterly, calendar-half-yearly, calendar-yearly, anniversary-monthly, anniversary-quarterly, anniversary-half-yearly, anniversary-yearly ]</description>
+		</property>
+        <property name="cancelledAt" type="java.util.Date" >
+            <annotations>@JsonProperty("canceledAt")</annotations>
+        </property>
+        <property name="numberOfCyclesBilledTogether" type="Integer">
+            <description>Number of billing cycles that are billed together in one bill. This only applies for recurring
+                charges. Usage charges are billed per single billing cycle. minimum: 1, maximum: 99</description>
+        </property>
+        <property name="snapshots" type="java.util.List&lt;Snapshot&gt;" />
+		<property name="createdAt" type="java.util.Date" />
+		<property name="createdBy" type="String" />
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+        <property name="nextScheduledBillingDate" type="java.util.Date" />
+        <property name="billingCutOverDate" type="java.util.Date" >
+            <annotations>@JsonProperty("billingCutoverDate")</annotations>
+        </property>
+        <property name="externalObjectReferences" type="java.util.List&lt;ExternalObjectReference&gt;"/>
+	</bean>
+
+	<!-- Cancellation Request-->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CancellationRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="requestedCancellationDate" type="String">
+			<description>The requested cancellation date of a subscription, format YYYY-MM-DD.</description>
+		</property>
+		<property name="cancellationReason" type="String"/>
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+		<property name="overruleTerms" type="Boolean" />
+	</bean>
+
+    <!-- Cancellation Response-->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CancellationResponse">
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="metadata" type="Metadata" >
+            <annotations>@JsonProperty("metaData")</annotations>
+        </property>
+        <property name="requestedCancellationDate" type="String">
+            <description>The requested cancellation date of a subscription, format YYYY-MM-DD.</description>
+        </property>
+        <property name="cancellationReason" type="String"/>
+        <property name="changedAt" type="java.util.Date" />
+        <property name="changedBy" type="String" />
+        <property name="overruleTerms" type="Boolean" />
+    </bean>
+
+	<!-- Error -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Error">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="status" type="Integer"/>
+		<property name="type" type="String">
+			<description>classification of the error type, lower case with underscore eg validation_failure</description>
+		</property>
+		<property name="message" type="String" />
+		<property name="moreInfo" type="String" />
+		<property name="details" type="java.util.List&lt;ErrorDetail&gt;" />
+	</bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ErrorDetail">
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="field" type="String" />
+        <property name="type" type="String" />
+        <property name="message" type="String" />
+        <property name="moreInfo" type="String" />
+    </bean>
+
+	<!-- Cancellation Reversal Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CancellationReversalRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+	</bean>
+
+	<!-- Cancellation Reversal Response -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CancellationReversalResponse">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="validUntil" type="java.util.Date" />
+		<property name="validUntilIsUnlimited" type="Boolean"/>
+	</bean>
+
+	<!-- Extension Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ExtensionRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="extensionDate" type="java.util.Date" />
+		<property name="numberOfBillingPeriods" type="Integer" />
+		<property name="unlimited" type="Boolean" />
+        <property name="changedAt" type="java.util.Date"/>
+        <property name="changedBy" type="String"/>
+	</bean>
+
+	<!-- Extension Response -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ExtensionResponse">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="validUntil" type="java.util.Date" />
+		<property name="validUntilIsUnlimited" type="Boolean" />
+	</bean>
+
+	<!-- Contract Term Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ContractTermRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="period" type="Integer" />
+		<property name="endDate" type="java.util.Date" />
+	</bean>
+
+	<!-- Effective Expiration Date -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.EffectiveExpirationDate">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="effectiveExpirationDate" type="java.util.Date" />
+	</bean>
+
+	<!-- Payment Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.PaymentRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="payment" type="Payment" />
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+	</bean>
+
+    <!-- Payment Response -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.PaymentResponse">
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="metadata" type="Metadata" >
+            <annotations>@JsonProperty("metaData")</annotations>
+        </property>
+        <property name="payment" type="Payment" />
+        <property name="changedAt" type="java.util.Date" />
+        <property name="changedBy" type="String" />
+    </bean>
+
+	<!-- Withdrawal Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.WithdrawalRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+	</bean>
+
+    <!-- Withdrawal Response -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.WithdrawalResponse">
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="metadata" type="Metadata" >
+            <annotations>@JsonProperty("metaData")</annotations>
+        </property>
+        <property name="changedAt" type="java.util.Date" />
+        <property name="changedBy" type="String" />
+    </bean>
+
+	<!-- Business Partner -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.BusinessPartner">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="structureElement" type="String" />
+	</bean>
+
+	<!-- Technical Resource -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.TechnicalResource">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="type" type="String" />
+	</bean>
+
+	<!-- Subscription Parameter -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.SubscriptionParameter">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="code" type="String" />
+		<property name="value" type="String" />
+	</bean>
+
+	<!-- Metadata -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Metadata">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+		<property name="version" type="Integer" />
+	</bean>
+
+	<!-- Custom Reference -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CustomReference">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="typeCode" type="String" />
+		<property name="id" type="String" />
+	</bean>
+
+	<!-- Payment -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Payment">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="paymentMethod" type="String" >
+			<description>Possible values are [ Payment Card, Invoice, External Card ]</description>
+		</property>
+		<property name="paymentCardToken" type="String" />
+	</bean>
+
+	<!-- Product -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Product">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+		
+		<property name="id" type="String" />
+		<property name="code" type="String" />
+		<property name="name" type="String" />
+	</bean>
+	
+	<!-- Item -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Item">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="itemId" type="String" />
+		<property name="parentItemId" type="String" />
+		<property name="lineNumber" type="String" />
+		<property name="product" type="Product" />
+		<property name="ratePlan" type="RatePlan" />
+		<property name="pricing" type="Pricing" />
+		<property name="technicalResources" type="java.util.List&lt;TechnicalResource&gt;" />
+		<property name="subscriptionParameters" type="java.util.List&lt;SubscriptionParameter&gt;" />
+		<property name="subscriptionType" type="String" >
+			<description>Valid Values are [ Test, Trial/Beta, Internal Billing, Commercial ]</description>
+		</property>
+		<property name="createRating" type="Boolean" />
+		<property name="createBill" type="Boolean" />
+		<property name="createInvoice" type="Boolean" />
+		<property name="billItemGroupingElement" type="String" />
+		<property name="numberOfWaiverPeriods" type="Integer" />
+		<property name="customReferences" type="java.util.List&lt;CustomReference&gt;" />
+	</bean>
+
+	<!-- Pricing -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Pricing">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="pricingDate" type="java.util.Date" />
+        <property name="pricingParameters" type="java.util.List&lt;pricingParameter&gt;"/>
+	</bean>
+
+    <!-- Pricing Parameter -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.pricingParameter">
+         <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+        <property name="code" type="String"/>
+        <property name="value" type="String"/>
+    </bean>
+
+	<!-- Renewal Term Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.RenewalTermRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="period" type="Integer" />
+	</bean>
+
+	<!-- Bill Split Element Request -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.BillSplitElementRequest">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="metadata" type="Metadata" >
+			<annotations>@JsonProperty("metaData")</annotations>
+		</property>
+		<property name="billSplitElement" type="String" />
+		<property name="changedAt" type="java.util.Date" />
+		<property name="changedBy" type="String" />
+	</bean>
+
+	<!-- Market -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Market">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="timeZone" type="String" />
+		<property name="currency" type="String" />
+	</bean>
+
+	<!-- Renewal Term -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.RenewalTerm">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="period" type="Integer" />
+		<property name="endDate" type="java.util.Date" />
+	</bean>
+
+	<!-- Rate Plan -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.RatePlan">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="source" type="String" />
+	</bean>
+
+	<!-- Preceding Document -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.PrecedingDocument">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="itemId" type="String" />
+		<property name="documentNumber" type="Integer" />
+		<property name="source" type="String" />
+	</bean>
+
+	<!-- Contract Term -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ContractTerm">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="startDate" type="java.util.Date" />
+		<property name="period" type="Integer" />
+		<property name="endDate" type="java.util.Date" />
+	</bean>
+
+	<!-- Cancellation Policy -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.CancellationPolicy">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="allowMidBillCycleExpiration" type="Boolean" />
+		<property name="termOfNotice" type="Integer" />
+		<property name="withdrawalPeriod" type="Integer" />
+		<property name="withdrawalPeriodEndDate" type="java.util.Date" />
+	</bean>
+
+	<!-- Snapshot -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Snapshot">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="effectiveDate" type="java.util.Date" />
+		<property name="precedingDocument" type="PrecedingDocument" />
+		<property name="items" type="java.util.List&lt;Item&gt;" />
+		<property name="createdAt" type="java.util.Date" />
+		<property name="createdBy" type="String" />
+	</bean>
+
+	<!-- Customer -->
+	<bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.Customer">
+		<import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+		<annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+		<property name="id" type="String" />
+		<property name="structureElement" type="String" />
+		<property name="addressId" type="String" />
+	</bean>
+
+    <!-- External Object Reference-->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.subscription.v1.ExternalObjectReference">
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+        <property name="externalIdTypeCode" type="String"/>
+        <property name="externalId" type="String"/>
+        <property name="externalSystemId" type="String"/>
+    </bean>
+	<!-- endregion -->
+
+	<!-- region de.hybris.platform.sap.saprevenuecloudorder.pojo.bills.v2 -->
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Bill">
+
+        <import type="com.fasterxml.jackson.annotation.JsonIgnoreProperties"/>
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+
+        <annotations>@JsonIgnoreProperties(ignoreUnknown = true)</annotations>
+
+        <property name="id" type="String"/>
+        <property name="documentNumber" type="Integer"/>
+        <property name="metaData" type="Metadata"/>
+        <property name="billingType" type="String"/>
+        <property name="market" type="Market"/>
+        <property name="billingDate" type="java.util.Date"/>
+        <property name="billStatus" type="String"/>
+        <property name="closing" type="Closing"/>
+        <property name="transferStatus" type="String"/>
+        <property name="splitElement" type="String"/>
+        <property name="createInvoice" type="Boolean"/>
+        <property name="customer" type="Customer"/>
+        <property name="payment" type="Payment"/>
+        <property name="netAmount" type="MonetaryAmount"/>
+        <property name="grossAmount" type="MonetaryAmount"/>
+        <property name="netCreditAmount" type="MonetaryAmount"/>
+        <property name="grossCreditAmount" type="MonetaryAmount"/>
+        <property name="taxAmount" type="MonetaryAmount"/>
+        <property name="customReferences"
+                  type="java.util.List&lt;CustomReference&gt;"/>
+        <property name="billItems"
+                  type="java.util.List&lt;BillItem&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Closing">
+        <property name="method" type="String">
+            <description>`AUTO` if the bill will be closed on the predetermined billing date.`MANUAL` if the bill will
+                stay open until closed manually.")
+            </description>
+        </property>
+        <property name="metaData" type="Metadata"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Metadata">
+        <property name="createdBy" type="String"/>
+        <property name="createdAt" type="java.util.Date"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.CreditCard">
+        <property name="token" type="String"/>
+        <property name="type" type="String">
+            <description>The type text of the card. Sample values are [ DPAM, DPDS, DPVI, DPMC, DPDI, DPJC ]")
+            </description>
+        </property>
+        <property name="typeText" type="String">
+            <description>The type text of the card. Sample values are [ AMERICAN EXPRESS, DISCOVER, VISA, MasterCard,
+                Diners Club, JCB ]")
+            </description>
+        </property>
+        <property name="expirationMonth" type="String"/>
+        <property name="expirationYear" type="String"/>
+        <property name="maskedCardNumber" type="String"/>
+        <property name="cardHolderName" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.CustomReference">
+        <property name="typeCode" type="String"/>
+        <property name="id" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.CreditCardSettlements">
+        <property name="charges" type="java.util.List&lt;CreditCardSettlementTransactionDetail&gt;"/>
+        <property name="refunds" type="java.util.List&lt;CreditCardSettlementTransactionDetail&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Error">
+        <property name="status" type="Integer">
+            <description>original HTTP error code, should be consistent with the response HTTP code")
+            </description>
+        </property>
+        <property name="type" type="String"/>
+        <property name="message" type="String"/>
+        <property name="details" type="java.util.List&lt;ErrorDetail&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.ErrorDetail">
+        <property name="field" type="String"/>
+        <property name="type" type="String"/>
+        <property name="message" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Success">
+        <property name="status" type="Integer">
+            <description>original HTTP error code, should be consistent with the response HTTP code")
+            </description>
+        </property>
+        <property name="message" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.RatePlan">
+        <property name="id" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Subscription">
+        <property name="id" type="String"/>
+        <property name="documentNumber" type="Integer"/>
+        <property name="itemId" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.SubCharge">
+        <property name="tier" type="Tier"/>
+        <property name="consumedQuantity" type="Quantity"/>
+        <property name="netAmount" type="MonetaryAmount"/>
+        <property name="grossAmount" type="MonetaryAmount"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.TaxDetail">
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+        <property name="rate" type="java.math.BigDecimal"/>
+        <property name="amount" type="Float"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Tier">
+        <property name="from" type="Integer"/>
+        <property name="to" type="Integer"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Payment">
+        <property name="method" type="String">
+            <description>The payment method. Valid values are [ Invoice, Payment Card, External Card ]</description>
+        </property>
+        <property name="token" type="String"/>
+        <property name="paymentStatus" type="String">
+            <description>The payment method. Valid values are [ UNKNOWN, NOT_SETTLED, SUCCESS, FAILED, ERROR ]
+            </description>
+        </property>
+        <property name="creditCardSettlements"
+                  type="CreditCardSettlements"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Charge">
+        <property name="metricId" type="String"/>
+        <property name="ratingPeriod" type="RatingPeriod"/>
+        <property name="consumedQuantity" type="Quantity"/>
+        <property name="chargedQuantity" type="Quantity"/>
+        <property name="includedQuantity" type="Quantity"/>
+        <property name="netAmount" type="MonetaryAmount"/>
+        <property name="grossAmount" type="MonetaryAmount"/>
+        <property name="netCreditAmount" type="MonetaryAmount"/>
+        <property name="reversal" type="Boolean">
+            <description>Indicator that determines whether this credit reverses a previous credit</description>
+        </property>
+        <property name="customAmounts" type="java.util.List&lt;CustomAmount&gt;"/>
+        <property name="subCharges" type="java.util.List&lt;SubCharge&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Credit">
+        <property name="metricId" type="String"/>
+        <property name="ratingPeriod" type="RatingPeriod"/>
+        <property name="consumedQuantity" type="Quantity"/>
+        <property name="creditedQuantity" type="Quantity"/>
+        <property name="includedQuantity" type="Quantity"/>
+        <property name="netAmount" type="MonetaryAmount"/>
+        <property name="grossAmount" type="MonetaryAmount"/>
+        <property name="reversal" type="Boolean">
+            <description>Indicator that determines whether this credit reverses a previous credit</description>
+        </property>
+        <property name="customAmounts" type="java.util.List&lt;CustomAmount&gt;"/>
+        <property name="subCharges" type="java.util.List&lt;SubCharge&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Product">
+        <property name="id" type="String"/>
+        <property name="code" type="String"/>
+        <property name="name" type="String"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Quantity">
+        <property name="value" type="Float"/>
+        <property name="unit" type="String">
+            <description>The unit of measurement given using the UN/CEFACT Common Code (2-3 characters); if no unit is
+                given, it is assumed to be the code 'C62', which stands for 'pieces' ('1' in math/physics terms, or also
+                'each')
+            </description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.CustomAmount">
+        <property name="code" type="String"/>
+        <property name="amount" type="MonetaryAmount"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Market">
+        <property name="id" type="String"/>
+        <property name="timeZone" type="String"/>
+        <property name="currency" type="String">
+            <description>ISO 4217 currency code, for example USD, EUR, CHF</description>
+        </property>
+        <property name="priceType" type="String">
+            <description>Valid values are [Net, Gross]</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.RatingPeriod">
+        <property name="start" type="java.util.Date"/>
+        <property name="end" type="java.util.Date"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.BillItem">
+        <import type="com.fasterxml.jackson.annotation.JsonProperty"/>
+
+        <property name="subscription" type="Subscription"/>
+        <property name="product" type="Product"/>
+        <property name="ratePlan" type="RatePlan"/>
+        <property name="groupingElement" type="String">
+            <annotations>@JsonProperty("groupingEelement")</annotations>
+        </property>
+        <property name="netAmount" type="MonetaryAmount"/>
+        <property name="grossAmount" type="MonetaryAmount"/>
+        <property name="netCreditAmount" type="MonetaryAmount"/>
+        <property name="grossCreditAmount" type="MonetaryAmount"/>
+        <property name="taxAmount" type="MonetaryAmount"/>
+        <property name="taxDetails" type="java.util.List&lt;TaxDetail&gt;"/>
+        <property name="customReferences" type="java.util.List&lt;CustomReference&gt;"/>
+        <property name="charges" type="java.util.List&lt;Charge&gt;"/>
+        <property name="credits" type="java.util.List&lt;Credit&gt;"/>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.Customer">
+        <property name="id" type="String"/>
+        <property name="type" type="String">
+            <description>Valid values are [ INDIVIDUAL, CORPORATE ]</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.MonetaryAmount">
+        <property name="amount" type="Float"/>
+        <property name="currency" type="String">
+            <description>ISO 4217 currency code, for example USD, EUR, CHF</description>
+        </property>
+    </bean>
+
+    <bean class="de.hybris.platform.sap.saprevenuecloudorder.pojo.bill.v2.CreditCardSettlementTransactionDetail">
+        <property name="status" type="String">
+            <description>Valid values are [ SUCCESS, FAILED ]</description>
+        </property>
+        <property name="transactionId" type="String"/>
+        <property name="providerId" type="String"/>
+        <property name="merchant" type="String"/>
+        <property name="paymentDateTime" type="String"/>
+        <property name="amount" type="MonetaryAmount"/>
+    </bean>
+	<!-- endregion -->
+
+	<!-- endregion -->
+</beans>

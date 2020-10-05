@@ -1,0 +1,8 @@
+#****************************
+#*** SAP Integration User ***
+#****************************
+
+INSERT_UPDATE Employee; UID[unique = true]           ; name                            ; groups(uid)[mode = append]                          ; loginDisabled
+                      ; sapInboundClassificationUser ; SAP Inbound Classification User ; sapInboundClassificationGroup,integrationadmingroup ; TRUE
+                      ; sapInboundProductUser        ; SAP Inbound Product User        ; sapInboundProductGroup,integrationadmingroup        ; TRUE
+                      ; sapInboundPriceUser          ; SAP Inbound Price User          ; sapInboundPriceGroup,integrationadmingroup          ; TRUE

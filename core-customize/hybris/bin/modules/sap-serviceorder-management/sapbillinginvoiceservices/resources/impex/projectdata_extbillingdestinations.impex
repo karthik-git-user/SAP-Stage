@@ -1,0 +1,29 @@
+$extBillingUrl=https://tester.hana.ondemand.com/gw/odata/SAP/CONNECT-TO-SAP-S4HANA-SERVICE-FROM-SAP-COMMERCE-CLOUD
+$extBillingVersion=v=1
+
+#**********************************************#
+#*************  Basic Credentials  ************#
+#**********************************************#
+
+INSERT_UPDATE BasicCredential ; id[unique = true]             ; username ; password
+                              ; extBillingCPIBasicCredentails ; username ; password
+
+#**********************************#
+#************  Endpoints  *********#
+#**********************************#
+
+INSERT_UPDATE Endpoint ; id[unique = true]     ; version[unique = true] ; name                  ; specUrl         
+                       ; extBillingCPIEndpoint ; unknown                ; extBillingCPIEndpoint ; "$extBillingUrl;$extBillingVersion/SAPCpiOutboundConfigs"
+
+
+ 
+INSERT_UPDATE DestinationTarget ; id[unique = true]             
+                                ; extBillingCPIDestinationTarget
+
+#**********************************************#
+#************  Consumed Destinations  *********#
+#**********************************************#
+
+INSERT_UPDATE ConsumedDestination ; id[unique = true]        ; url             											 ; endpoint(id, version)                     ; credential(id)                ; destinationTarget(id)[forceWrite=true]           ; active[allownull=true]         ; additionalProperties(key, value)[map-delimiter = |]
+                                  ; extBillingCPIDestination ; "$extBillingUrl;$extBillingVersion/SAPCpiOutboundConfigs" ; extBillingCPIEndpoint:unknown 			 ; extBillingCPIBasicCredentails ; extBillingCPIDestinationTarget  					; true                           ; "csrfURL->$extBillingUrl;$extBillingVersion/"  
+

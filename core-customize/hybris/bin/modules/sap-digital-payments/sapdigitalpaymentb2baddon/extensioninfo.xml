@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    	
+    <extension abstractclassprefix="Generated" classprefix="Sapdigitalpaymentb2baddon" description="sapdigitalpaymentb2baddon extension" managername="Sapdigitalpaymentb2baddonManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapdigitalpaymentb2baddon">
+        		
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+                 
+		
+        <requires-extension name="addonsupport"/>
+        		
+        <requires-extension name="b2bacceleratoraddon"/>
+        		
+        <requires-extension name="sapdigitalpaymentaddon"/>
+        		
+        <coremodule generated="true" manager="de.hybris.platform.sapdigitalpaymentb2baddon.jalo.Sapdigitalpaymentb2baddonManager" packageroot="de.hybris.platform.sapdigitalpaymentb2baddon"/>
+        		
+		
+        <meta key="classpathgen" value="false"/>
+        	
+    </extension>
+    
+</extensioninfo>

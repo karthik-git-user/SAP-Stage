@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <!--3rd prty libs-->
+    <script src="../../../../../smartedit-build/webroot/static-resources/dist/smarteditcontainer/js/thirdparties.js"></script>    
+    <script src="../../../../../smartedit-build/webroot/static-resources/dist/smarteditcommons/js/vendor_chunk.js"></script>
+    <script src="../../../../../smartedit-build/webroot/static-resources/thirdparties/ckeditor/ckeditor.js"></script>
+
+    <script src="generated_outerFetchMocks.js"></script>
+ 
+</head>
+
+<body>
+    <div data-ng-controller="DefaultCtrl as ctrl"
+        style="position:absolute; z-index: 99999; top: 0; left: 0;">    
+        <button id="navigateButtonOuter"
+            type="button"
+            data-ng-click="ctrl.navigate()">Navigate</button>
+    </div>
+       
+    <!--libs-->
+    <script src="../../../../../smartedit-build/webroot/static-resources/dist/smarteditcommons/js/smarteditcommons.js"></script>
+    <script src="../../../../../smartedit-build/webroot/static-resources/dist/smarteditcontainer/js/smarteditcontainer.js"></script>    
+
+    <!--Mocks-->
+    <script src="../utils/commonMockedModules/PermissionMock.js"></script>
+    <script src="../utils/commonMockedModules/whoAmIMock.js"></script>
+    <script src="../utils/commonMockedModules/LanguagesMock.js"></script>
+
+    <script type="text/javascript">
+    angular.module('smarteditcontainer').controller("DefaultCtrl", function defaultCtrl(urlService) {
+        this.navigate = function() {
+            urlService.path('/customView');
+        };
+    });
+    </script>
+
+    <script src="constantMocks.js"></script> 
+    <script src="mocksforAuthentication.js"></script>
+
+    <script src="../../e2e/e2eOnLoadingSetup.js"></script>
+</body>
+
+</html>

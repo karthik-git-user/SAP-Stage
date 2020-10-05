@@ -1,0 +1,32 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code);
+; OutboundEntitlementGenerationRequest; INBOUND ;
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] ;
+; OutboundEntitlementGenerationRequest	; Order         	; Order         	; true	;  
+; OutboundEntitlementGenerationRequest	; Catalog       	; Catalog       	; 	;  
+; OutboundEntitlementGenerationRequest	; B2BUnit       	; B2BUnit       	; 	;  
+; OutboundEntitlementGenerationRequest	; Unit          	; Unit          	; 	;  
+; OutboundEntitlementGenerationRequest	; CatalogVersion	; CatalogVersion	; 	;  
+; OutboundEntitlementGenerationRequest	; Customer         	; Customer         	; 	;  
+; OutboundEntitlementGenerationRequest	; Product       	; Product       	; 	;  
+; OutboundEntitlementGenerationRequest	; OrderEntry    	; OrderEntry    	; 	;  
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] ;
+; OutboundEntitlementGenerationRequest:Order         	; code          	; Order:code            	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:Order         	; entries       	; Order:entries         	; OutboundEntitlementGenerationRequest:OrderEntry    	; 	;  
+; OutboundEntitlementGenerationRequest:Order         	; user      		; Order:user		       	; OutboundEntitlementGenerationRequest:Customer         	; 	;  
+; OutboundEntitlementGenerationRequest:Order         	; Unit          	; Order:Unit            	; OutboundEntitlementGenerationRequest:B2BUnit       	; 	;  
+; OutboundEntitlementGenerationRequest:Catalog       	; id            	; Catalog:id            	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:B2BUnit       	; uid           	; B2BUnit:uid           	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:Unit          	; code          	; Unit:code             	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:CatalogVersion	; catalog       	; CatalogVersion:catalog	; OutboundEntitlementGenerationRequest:Catalog       	; true	;  
+; OutboundEntitlementGenerationRequest:CatalogVersion	; version       	; CatalogVersion:version	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:Customer         ; customerID       	; Customer:customerID      	; 							; true	;  
+; OutboundEntitlementGenerationRequest:Customer         ; uid		       	; Customer:uid      		; 						 	; true	;  
+; OutboundEntitlementGenerationRequest:Product       	; catalogVersion	; Product:catalogVersion	; OutboundEntitlementGenerationRequest:CatalogVersion	; true	;  
+; OutboundEntitlementGenerationRequest:Product       	; code          	; Product:code          	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:OrderEntry    	; entryNumber   	; OrderEntry:entryNumber	;                                                    	; true	;  
+; OutboundEntitlementGenerationRequest:OrderEntry    	; unit          	; OrderEntry:unit       	; OutboundEntitlementGenerationRequest:Unit          	; 	;  
+; OutboundEntitlementGenerationRequest:OrderEntry    	; product       	; OrderEntry:product    	; OutboundEntitlementGenerationRequest:Product       	; 	;  
+; OutboundEntitlementGenerationRequest:OrderEntry    	; order         	; OrderEntry:order      	; OutboundEntitlementGenerationRequest:Order         	; true	;  
+; OutboundEntitlementGenerationRequest:OrderEntry    	; quantity      	; OrderEntry:quantity   

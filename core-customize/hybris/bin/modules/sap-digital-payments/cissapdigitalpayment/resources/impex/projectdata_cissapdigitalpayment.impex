@@ -1,0 +1,34 @@
+INSERT_UPDATE SAPDigitalPaymentConfiguration	;name[unique=true]	    					;sapDigitalpaymentClient(clientId)			;baseUrl				;companyCode		;customerCountry		;paymentMethod		;customParam								;maxRetry		;retryInterval		;timeOut	;pollCardDelay ;
+												;sap-dp-config-electronics-test				;sap-dp-client-test							;https://tokenUrl		;1010				;DE						;CC					;customtestparam-electronics				;3				;2000				;4000		;1000		   ;
+												;sap-dp-config-powertools-test				;sap-dp-client-test							;https://tokenUrl		;1010				;DE						;CC					;customtestparam-powertools					;3				;2000				;4000		;1000		   ;
+
+
+INSERT_UPDATE SAPDigitalPaymentClient;clientId[unique=true]			;clientSecret		;tokenUrl			;scope			;authorizedGrantTypes
+									 ;sap-dp-client-test			;test				;https://tokenUrl	;uaa.resource	;client_credentials
+									 
+# Base Store
+INSERT_UPDATE BaseStore;uid[unique=true];sapDigitalPaymentConfiguration(name)
+					   ;electronics		;sap-dp-config-electronics-test
+					   ;powertools		;sap-dp-config-powertools-test
+
+
+#**********************************#
+#        Destination Target        #
+#**********************************#
+INSERT_UPDATE DestinationTarget ; id[unique=true]
+								; TestDestination
+
+####################################################################################################
+#			Configurations for Synchronous calls - Digital Payments
+####################################################################################################
+
+## Don't change id here
+INSERT_UPDATE ConsumedOAuthCredential ; id[unique=true]                   ; clientId   ; clientSecret   ; oAuthUrl
+									  ; SapDigitalPaymentOAuthCredentials ; <clientId> ; <clientSecret> ; https://<outhUrl> ;
+
+INSERT_UPDATE Endpoint ; id[unique=true]              ; version[unique=true] ; specUrl ; name
+                       ; sapDigitalPayments ; v1                   ; "empty"  ; "SAP Digital Payments"
+
+#Don't change clientClassName attribute  in additional properties
+INSERT_UPDATE ConsumedDestination ; id[unique=true]                   ; url                           ; additionalProperties(key,value)[map-delimiter=|]                                                                           ; endpoint(id)                 ; destinationTarget(id) ; credential(id)
+								  ; SapDigitalPaymentClient ; https://digital_payments_url/core/v1 ; oauth.scope->uaa.resource|clientClassName->SapDigitalPaymentClient|baseSite->powertools ; sapDigitalPayments ; TestDestination       ; SapDigitalPaymentOAuthCredentials

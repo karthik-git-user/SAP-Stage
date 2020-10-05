@@ -1,0 +1,35 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; InboundQuote ; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; InboundQuote	; Quote         	; Quote 
+; InboundQuote	; User          	; User 
+; InboundQuote	; Currency      	; Currency 
+; InboundQuote	; Comment       	; Comment
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate 
+; InboundQuote:Quote         	; code                  	; Quote:code                  	;                            	;  ;  
+; InboundQuote:Quote         	; previousEstimatedTotal	; Quote:previousEstimatedTotal	;                            	;  ;
+; InboundQuote:Quote         	; user                  	; Quote:user                  	; InboundQuote:User          	;  ;
+; InboundQuote:User          	; uid                   	; User:uid                    	;                            	;  ;
+; InboundQuote:Quote         	; currency              	; Quote:currency              	; InboundQuote:Currency      	;  ;
+; InboundQuote:Currency      	; isocode               	; Currency:isocode            	;                            	;  ;
+; InboundQuote:Quote         	; assignee              	; Quote:assignee              	; InboundQuote:User          	;  ;
+; InboundQuote:Quote         	; quoteExpirationDate   	; Quote:quoteExpirationDate   	;                            	;  ;
+; InboundQuote:Quote         	; totalPrice            	; Quote:totalPrice            	;                            	;  ;
+; InboundQuote:Quote         	; externalQuoteDocument 	; Quote:externalQuoteDocument 	;                            	;  ;
+; InboundQuote:Quote         	; description           	; Quote:description           	;                            	;  ;
+; InboundQuote:Quote         	; version               	; Quote:version               	;                            	;  ;
+; InboundQuote:Quote         	; externalComments       	; Quote:externalComments       	;                            	;  ;
+; InboundQuote:Quote         	; externalQuoteId       	; Quote:externalQuoteId       	;                            	;  ;
+; InboundQuote:Quote         	; totalDiscounts        	; Quote:totalDiscounts        	;                            	;  ;
+; InboundQuote:Quote         	; headerDiscount        	; Quote:headerDiscount       	;                            	;  ;
+; InboundQuote:Quote    		; salesOrganization         ; Quote:salesOrganization      	;         						;  ;
+; InboundQuote:Quote    		; distributionChannel       ; Quote:distributionChannel     ;         						;  ; 
+; InboundQuote:Quote    		; division           		; Quote:division      			;         						;  ; 
+; InboundQuote:Quote    		; storeUid         			; Quote:storeUid      			;         						;  ;
+; InboundQuote:Quote         	; comments               	; Quote:comments               	; InboundQuote:Comment    		;  ; true
+; InboundQuote:Comment    		; code           			; Comment:code      			;                            	;  ; true
+; InboundQuote:Comment    		; text           			; Comment:text      			;                            	;  ; true
+; InboundQuote:Comment    		; commentAuthorEmail        ; Comment:commentAuthorEmail    ;         						;  ; true
+

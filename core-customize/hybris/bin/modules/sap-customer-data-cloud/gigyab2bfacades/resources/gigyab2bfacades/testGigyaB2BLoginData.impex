@@ -1,0 +1,4 @@
+INSERT_UPDATE UserGroup ; uid[unique=true] ; groups(uid) ;  
+                        ; b2bgroup         ;             ;
+INSERT_UPDATE B2BUnit  ; uid[unique=true];
+					   ; MyOrgBPID       ;

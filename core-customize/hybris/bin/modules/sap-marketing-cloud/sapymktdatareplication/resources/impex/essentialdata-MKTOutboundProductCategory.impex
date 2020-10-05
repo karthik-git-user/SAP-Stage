@@ -1,0 +1,19 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]
+; MktOutboundProductCategory
+ 
+;  
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; MktOutboundProductCategory	; Catalog       	; Catalog       	; 	;  
+; MktOutboundProductCategory	; CatalogVersion	; CatalogVersion	; 	;  
+; MktOutboundProductCategory	; Category      	; Category      	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; MktOutboundProductCategory:Catalog       	; id             	; Catalog:id              	;                                          	; true	;  
+; MktOutboundProductCategory:CatalogVersion	; catalog        	; CatalogVersion:catalog  	; MktOutboundProductCategory:Catalog       	; true	;  
+; MktOutboundProductCategory:CatalogVersion	; version        	; CatalogVersion:version  	;                                          	; true	;  
+; MktOutboundProductCategory:Category      	; catalogVersion 	; Category:catalogVersion 	; MktOutboundProductCategory:CatalogVersion	; true	;  
+; MktOutboundProductCategory:Category      	; description    	; Category:description    	;                                          	; 	;  
+; MktOutboundProductCategory:Category      	; name           	; Category:name           	;                                          	; 	;  
+; MktOutboundProductCategory:Category      	; code           	; Category:code           	;                                          	; true	;  
+; MktOutboundProductCategory:Category      	; supercategories	; Category:supercategories	; MktOutboundProductCategory:Category      	; 	;  

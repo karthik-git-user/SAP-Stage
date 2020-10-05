@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+
+	<alias name="defaultBillingInvoiceOrderFacadeImpl"
+		alias="sapBillingInvoiceOrderFacade" />
+	<bean name="defaultBillingInvoiceOrderFacadeImpl"
+		class="com.sap.hybris.sapbillinginvoicefacades.facade.impl.SapBillingInvoiceFacadeImpl">
+		<property name="sapBillingInvoiceService"
+			ref="sapBillingInvoiceService" />
+			
+		<property name="handlers"
+			ref="sapBillingStrategyHandlers" />
+
+		<property name="sapBillingInvoiceUtils"
+			ref="billingInvoiceUtils" />
+			
+	</bean>
+
+
+	<bean id="externalSystemBillingDocumentData"
+		class="com.sap.hybris.sapbillinginvoicefacades.document.data.ExternalSystemBillingDocumentData"
+		scope="prototype">
+
+	</bean>
+
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderConverter" />
+		<property name="add"
+			ref="externalSapBillingOrderPopulator" />
+	</bean>
+
+	<alias name="defaultExternalSystemBillingDocumentConverter"
+		alias="externalSystemBillingDocumentConverter" />
+	<bean id="defaultExternalSystemBillingDocumentConverter"
+		parent="abstractPopulatingConverter">
+		<lookup-method name="createTarget"
+			bean="externalSystemBillingDocumentData" />
+		<property name="populators">
+			<list>
+				<ref bean="externalBillingDocumentPopulator" />
+			</list>
+		</property>
+	</bean>
+
+
+	<alias name="defaultExternalSapBillingOrderPopulator"
+		alias="externalSapBillingOrderPopulator" />
+	<bean id="defaultExternalSapBillingOrderPopulator"
+		class="com.sap.hybris.sapbillinginvoicefacades.populator.ExternalSapBillingOrderPopulator">
+
+
+		<property name="handlers"
+			ref="sapBillingStrategyHandlers" />
+
+		<property name="sapBillingInvoiceUtils"
+			ref="billingInvoiceUtils" />
+			
+		<property name="configurationService"
+			ref="configurationService" />
+	</bean>
+
+
+	<alias name="defaultExternalBillingDocumentPopulator"
+		alias="externalBillingDocumentPopulator" />
+	<bean id="defaultExternalBillingDocumentPopulator"
+		class="com.sap.hybris.sapbillinginvoicefacades.populator.ExternalBillingDocumentPopulator">
+
+	</bean>
+
+
+	<alias name="sapBillingStrategyImplHandlers"
+		alias="sapBillingStrategyHandlers" />
+	<bean id="sapBillingStrategyImplHandlers"
+		class="org.springframework.beans.factory.config.MapFactoryBean">
+		<property name="sourceMap">
+			<map key-type="java.lang.String">
+				<entry
+					key="#{T(com.sap.hybris.sapbillinginvoicefacades.constants.SapbillinginvoicefacadesConstants).SERVICE_ORDER}"
+					value-ref="defaultBillingInvoiceServiceOrderStrategy"></entry>
+				<entry
+					key="#{T(com.sap.hybris.sapbillinginvoicefacades.constants.SapbillinginvoicefacadesConstants).SALES_ORDER}"
+					value-ref="defaultBillingInvoiceSalesOrderStrategy"></entry>
+			</map>
+		</property>
+	</bean>
+
+	<alias name="defaultBillingInvoiceServiceOrderStrategyImpl"
+		alias="defaultBillingInvoiceServiceOrderStrategy" />
+	<bean name="defaultBillingInvoiceServiceOrderStrategyImpl"
+		class="com.sap.hybris.sapbillinginvoicefacades.strategy.impl.SapBillingInvoiceServiceStrategyImpl">
+		<property name="sapBillingInvoiceService"
+			ref="sapBillingInvoiceService" />
+		<property name="sapPlantLogSysOrgService"
+			ref="sapPlantLogSysOrgService" />
+		<property name="externalSystemBillingDocumentConverter"
+			ref="externalSystemBillingDocumentConverter" />
+		<property name="sapBillingInvoiceUtils"
+			ref="billingInvoiceUtils" />
+	</bean>
+
+	<alias name="defaultBillingInvoiceSalesOrderStrategyImpl"
+		alias="defaultBillingInvoiceSalesOrderStrategy" />
+	<bean name="defaultBillingInvoiceSalesOrderStrategyImpl"
+		class="com.sap.hybris.sapbillinginvoicefacades.strategy.impl.SapBillingInvoiceSalesStrategyImpl">
+		<property name="sapBillingInvoiceService"
+			ref="sapBillingInvoiceService" />
+		<property name="sapPlantLogSysOrgService"
+			ref="sapPlantLogSysOrgService" />
+		<property name="externalSystemBillingDocumentConverter"
+			ref="externalSystemBillingDocumentConverter" />
+		<property name="sapBillingInvoiceUtils"
+			ref="billingInvoiceUtils" />
+	</bean>
+
+	<alias name="defaultBillingInvoiceUtils"
+		alias="billingInvoiceUtils" />
+	<bean name="defaultBillingInvoiceUtils"
+		class="com.sap.hybris.sapbillinginvoicefacades.utils.SapBillingInvoiceUtils">
+		<property name="sapPlantLogSysOrgService"
+			ref="sapPlantLogSysOrgService" />
+	</bean>
+
+
+
+</beans>

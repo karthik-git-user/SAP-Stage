@@ -1,0 +1,23 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; 
+; InboundOMMReturnRequest 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; InboundOMMReturnRequest	; ReturnRequest   	; ReturnRequest 
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]   
+; InboundOMMReturnRequest:ReturnRequest   	; code                  	; ReturnRequest:code                  	;                                         	; true 
+
+
+#**********************************
+#*** SAP Integration User Group ***
+#**********************************
+
+INSERT_UPDATE UserGroup; UID[unique = true]      ; locname[lang = en]          ; description                 ; groups(uid)[mode = append]
+                       ; sapInboundOMMReturnRequestGroup ; SAP Inbound OMM Return Request Group ; SAP Inbound OMM Return Request Group ; integrationusergroup
+
+#***************************************************
+#*** SAP Integration Flexible Search Restriction ***
+#***************************************************
+
+INSERT_UPDATE SearchRestriction; code[unique = true]                ; name[lang = en]                         ; query                                                                                                                                                                                                           ; principal(UID)       ; restrictedType(code); active; generate
+                               ; sapInboundOMMReturnRequestRestriction      ; SAP Inbound OMM Return Request Restriction       ; ({code}='InboundOMMReturnRequest' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundOMMReturnRequestGroup' }} )) OR ({code}!='InboundOMMReturnRequest')           ; integrationusergroup ; IntegrationObject   ; true  ; true

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util
+		   http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="defaultScpiC4CQuoteProcessDefinitionResource" alias="scpiC4CQuoteProcessDefinitionResource" />
+	<bean id="defaultScpiC4CQuoteProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/c4ccpiquote/process/sap-cpi-c4cquote-buyer-submit-process.xml" />
+	</bean>
+	
+	<alias name="defaultSalesQuoteApprovalProcessDefinitionResource" alias="scpiC4CQuoteApprovalProcessDefinitionResource" />
+	<bean id="defaultSalesQuoteApprovalProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/c4ccpiquote/process/sap-cpi-c4cquote-order-placed-process.xml" />
+	</bean>
+	
+	<alias name="defaultSalesQuoteCancelProcessDefinitionResource" alias="scpiC4CQuoteCancelProcessDefinitionResource" />
+	<bean id="defaultSalesQuoteCancelProcessDefinitionResource" class="de.hybris.platform.processengine.definition.ProcessDefinitionResource">
+		<property name="resource" value="classpath:/c4ccpiquote/process/sap-cpi-c4c-quote-post-cancellation-process.xml" />
+	</bean>
+	
+	<alias name="defaultSalesInboundQuoteHelper" alias="c4cInboundQuoteHelper" />
+	<bean id="defaultSalesInboundQuoteHelper" class="com.sap.hybris.c4ccpiquote.inbound.helper.impl.DefaultC4CCpiInboundQuoteHelper">
+		<property name="userService" ref="userService" />
+		<property name="commentService" ref="commentService" />
+		<property name="modelService" ref="modelService" />
+		<property name="quoteService" ref="quoteService"/>
+		<property name="sapSalesQuoteService" ref="sapC4CCpiQuoteService"/>
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="productService" ref="productService"/>
+		<property name="discountService" ref="discountService"/>
+	</bean>
+	
+	<alias alias="sapC4CCpiQuoteService" name="defaultSapC4CCpiQuoteService"/>
+	<bean id="defaultSapC4CCpiQuoteService" class="com.sap.hybris.c4ccpiquote.service.impl.DefaultC4CCpiQuoteService">
+	        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+	</bean>
+    
+    <!-- Inbound Sales Quote Helpers List-->
+    <alias alias="c4cInboundQuoteHelperAlias" name="c4cInboundQuoteHelpers"/>
+    <util:list id="c4cInboundQuoteHelpers" value-type="com.sap.hybris.c4ccpiquote.inbound.helper.C4CCpiInboundQuoteHelper">
+    	<ref bean="c4cInboundQuoteHelper"/>
+    </util:list>
+    
+    <alias alias="commerceQuoteService" name="defaultSapCpiSalesQuoteService"/>
+	<bean id="defaultSapCpiSalesQuoteService" class="com.sap.hybris.c4ccpiquote.outbound.service.impl.DefaultSapCpiC4CQuoteService" parent="defaultCommerceQuoteService" >
+	<property name="quoteCartValidationStrategy" ref="sapCpiQuoteCartValidationStrategy"/>
+	</bean>
+    
+    
+    <bean id="sapCpiInboundSalesQuotePersistenceHook"
+          class="com.sap.hybris.c4ccpiquote.inbound.hook.SapCpiSalesQuoteInboundPrePersistHook">
+          <property name="salesInboundQuoteHelpers" ref="c4cInboundQuoteHelperAlias"></property>
+    </bean>
+    
+    <bean id="sapCpiC4CQuoteConversionService" class="com.sap.hybris.c4ccpiquote.outbound.service.impl.DefaultSapCpiOutboundC4CQuoteConversionService">
+		<property name="b2bUnitService" ref="b2bUnitService" />
+	</bean>
+    
+    
+    <alias alias="sapCpiOutboundC4CQuoteService" name="defaultSapCpiOutboundC4CQuoteService" />
+	<bean id="defaultSapCpiOutboundC4CQuoteService" class="com.sap.hybris.c4ccpiquote.outbound.service.impl.DefaultSapCpiOutboundC4CQuoteService">
+		<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+	</bean>
+			
+	<alias alias="sapSendC4CQuoteAction" name="sapCpiSendC4CQuoteAction"/>
+   <bean id="sapCpiSendC4CQuoteAction" class="com.sap.hybris.c4ccpiquote.outbound.actions.SapCpiSendC4CQuoteAction" parent="abstractAction">
+   		<property name="quoteService" ref="quoteService"/>
+   		<property name="sapCpiOutboundSalesQuoteService" ref="sapCpiOutboundC4CQuoteService"/>
+   		<property name="modelService" ref="modelService"/>
+   		<property name="sapCpiC4CQuoteConversionService" ref = "sapCpiC4CQuoteConversionService"/>
+   </bean>
+   
+   <alias alias="C4CCpiQuoteBuyerSubmitEventListener" name="defaultScpiC4CquoteBuyerSubmitEventListener" />
+	<bean id="defaultScpiC4CquoteBuyerSubmitEventListener" class="com.sap.hybris.c4ccpiquote.events.SapC4CCpiQuoteBuyerSubmitEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	
+	<alias alias="C4CCpiQuoteBuyerOrderPlacedEventListener" name="defaultC4CCpiQuoteBuyerOrderPlacedEventListener" />
+	<bean id="defaultC4CCpiQuoteBuyerOrderPlacedEventListener" class="com.sap.hybris.c4ccpiquote.events.SapC4CCpiQuoteBuyerOrderPlacedEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+		<property name="commerceQuoteService" ref="commerceQuoteService"/>
+	</bean>
+	
+	<alias alias="C4CCpiQuoteCancelEventListener" name="defaultScpiC4CquoteCancelEventListener" />
+	<bean id="defaultScpiC4CquoteCancelEventListener" class="com.sap.hybris.c4ccpiquote.events.SapC4CCpiQuoteCancelEventListener"
+		  parent="abstractEventListener">
+		<property name="modelService" ref="modelService"/>
+		<property name="businessProcessService" ref="businessProcessService"/>
+	</bean>
+	
+	<alias name="defaultInboundC4CCpiQuoteOrderedHelper" alias="sapDataHubInboundOrderHelper" />
+	<bean id="defaultInboundC4CCpiQuoteOrderedHelper" class="com.sap.hybris.c4ccpiquote.inbound.helper.impl.DefaultC4CCpiInboundQuoteOrderedHelper"
+		parent="defaultSapDataHubInboundOrderHelper">
+	</bean>
+	
+	<alias name="defaultSendSalesQuoteApprovalToC4CAction" alias="sendSalesQuoteApprovalToC4CAction"/>
+	<bean id="defaultSendSalesQuoteApprovalToC4CAction" class="com.sap.hybris.c4ccpiquote.outbound.actions.SendSalesQuoteToC4CAction"
+		parent="abstractAction">
+		<property name="quoteService" ref="quoteService"/>
+   		<property name="sapCpiOutboundSalesQuoteService" ref="sapCpiOutboundC4CQuoteService"/>
+   		<property name="modelService" ref="modelService"/>
+   		<property name="sapCpiC4CQuoteConversionService" ref = "sapCpiC4CQuoteConversionService"/>
+	</bean>
+	
+	<alias name="defaultSendCancelSalesQuoteToC4CAction" alias="sendCancelSalesQuoteToC4CAction"/>
+	<bean id="defaultSendCancelSalesQuoteToC4CAction" class="com.sap.hybris.c4ccpiquote.outbound.actions.SendCancelSalesQuoteToC4CAction"
+		parent="abstractAction">
+		<property name="quoteService" ref="quoteService"/>
+   		<property name="sapCpiOutboundSalesQuoteService" ref="sapCpiOutboundC4CQuoteService"/>
+   		<property name="modelService" ref="modelService"/>
+   		<property name="sapCpiC4CQuoteConversionService" ref = "sapCpiC4CQuoteConversionService"/>
+	</bean>
+	
+	<alias name="defaultSapCpiQuoteCartValidationStrategy" alias="sapCpiQuoteCartValidationStrategy" />
+	<bean id="defaultSapCpiQuoteCartValidationStrategy"
+		  class="com.sap.hybris.c4ccpiquote.strategy.impl.DefaultSapCpiQuoteCartValidationStrategy" parent="defaultQuoteCartValidationStrategy">
+	</bean>	
+			
+	 <alias name="defaultC4CCpiPlaceQuoteOrderMethodHook" alias="commercePlaceQuoteOrderMethodHook"/>
+    <bean id="defaultC4CCpiPlaceQuoteOrderMethodHook" class="com.sap.hybris.c4ccpiquote.order.hook.impl.C4CCpiPlaceQuoteOrderMethodHook" parent="defaultCommercePlaceQuoteOrderMethodHook">
+	</bean>
+	
+	<alias alias="c4cCpiQuoteRequiresCalculationStrategy" name="defaultC4cCpiQuoteRequiresCalculationStrategy"/>	
+	<bean id="defaultC4cCpiQuoteRequiresCalculationStrategy" class="com.sap.hybris.c4ccpiquote.strategy.impl.DefaultC4CCpiQuoteRequiresCalculationStrategy">
+	</bean>
+	
+	<alias alias="calculationService" name="defaultC4cCalculationService" />
+	<bean id="defaultC4cCalculationService"	class="com.sap.hybris.c4ccpiquote.order.impl.DefaultC4CCpiCalculationService"
+		parent="defaultCalculationService">
+		<property name="orderRequireCalculationStrategy" ref="orderRequiresCalculationStrategy" />
+		<property name="quoteRequiresCalculationStrategy" ref="c4cCpiQuoteRequiresCalculationStrategy"/>
+		<property name="commonI18NServiceInC4C" ref="commonI18NService"/>
+	</bean>
+	
+</beans>

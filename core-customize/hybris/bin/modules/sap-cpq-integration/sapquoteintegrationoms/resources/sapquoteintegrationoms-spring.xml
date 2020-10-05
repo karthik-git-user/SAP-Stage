@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+           
+    <bean id="sapquoteintegrationomsSystemSetup" class="com.sap.hybris.sapquoteintegrationoms.setup.SapquoteintegrationomsSystemSetup">
+        <!-- constructor arg injection example -->
+        <constructor-arg ref="sapquoteintegrationomsService"/>
+    </bean>
+    
+    <bean id="sapquoteintegrationomsService" class="com.sap.hybris.sapquoteintegrationoms.service.impl.DefaultSapquoteintegrationomsService">
+        <!-- setter injection example -->
+        <property name="modelService" ref="modelService"/>
+        <property name="mediaService" ref="mediaService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+    
+    <alias name="defaultInboundQuoteOmsOrderHelper" alias="sapDataHubInboundOrderHelper" />
+	<bean id="defaultInboundQuoteOmsOrderHelper" class="com.sap.hybris.sapquoteintegrationoms.inbound.helper.impl.DefaultInboundQuoteOmsOrderHelper"
+		parent="sapOmsDataHubInboundOrderHelper">
+	</bean>
+
+	<alias name="sapOmsQuoteSalesConditionsContributor" alias="sapSalesConditionsContributor" />
+    <bean id="sapOmsQuoteSalesConditionsContributor"
+        class="com.sap.hybris.sapquoteintegrationoms.outbound.contributor.DefaultSapOmsQuoteSalesConditionsContributor"
+        parent="sapOmsSalesConditionsContributor" />
+			
+</beans>

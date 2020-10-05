@@ -1,0 +1,45 @@
+#***************************************************************************#
+#*** Please change only the sample data and do NOT change anything else! ***#                                                                                       #
+#***************************************************************************#
+
+
+#*********************************#
+#*** Sample Data To Be Changed ***#
+#*********************************#
+
+$emsOAuthUrl = https://ems-integration-service-exampleurl.cfapps.exampleregion.hana.ondemand.com/client-credentials-token?tenantId=exampletenant
+$emsApiUrl = https://ems-external-api-service-exampleurl.cfapps.exampleregion.hana.ondemand.com/sap/ems/api/inboundinterfaceentitlementquery
+$emsClientId = exampleclientid
+$emsClientSecret = examplepassword
+$cpiClientId = exampleclientid
+$cpiClientSecret = examplesecret
+$entitlementGenerationIflowUrl = https://example.hana.ondemand.com/gw/odata/SAP/TRIGGER-ENTITLEMENT-GENERATION-REQUEST-FROM-SAP-COMMERCE-CLOUD-TO-SAP-ENTITLEMENT-MANAGEMENT;v=1
+
+
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+
+INSERT_UPDATE Endpoint ; id[unique = true]             ; name                          ; version[unique = true] ; specUrl    ;                                                                                                                                                                  
+                       ; SapEntitlementsEndpoint ; SapEntitlementsEndpoint ; unknown                ;  $emsApiUrl;
+					   ; sapCpiEntitlementGenerationEndpoint; sapCpiEntitlementGenerationEndpoint; unknown;   $entitlementGenerationIflowUrl;  
+INSERT_UPDATE DestinationTarget ; id[unique=true] ;
+                                ; SapEntitlementsApi ;
+                                ; sapCpiEntitlementTarget
+   								
+
+INSERT_UPDATE ConsumedOAuthCredential; id[unique = true]  	    ; clientId[unique = true]; clientSecret; oAuthUrl;
+									 ; sapEntitlementsApiCredentials ; $emsClientId 	     ; $emsClientSecret; $emsOAuthUrl;
+                                     ; sapEntitlementsCpiCredentials ; $cpiClientId			 ; $cpiClientSecret; $cpiOAuthUrl
+                                
+
+INSERT_UPDATE ConsumedDestination ; id[unique=true]                   ; url      ; additionalProperties(key,value)[map-delimiter=|]      ; endpoint(id)                 ; destinationTarget(id) ; credential(id)      ;              
+                                  ; sapEntitlementsApi ; $emsApiUrl ;  ; SapEntitlementsEndpoint ; SapEntitlementsApi       ; sapEntitlementsApiCredentials;
+                                  ; sapCpiEntitlementGenerationDestination; $entitlementGenerationIflowUrl/Orders;csrfURL -> $entitlementGenerationIflowUrl ;sapCpiEntitlementGenerationEndpoint; sapCpiEntitlementTarget ; sapEntitlementsCpiCredentials
+
+INSERT_UPDATE OutboundChannelConfiguration; code[unique = true]; integrationObject(code); destination(id);
+                                          ; SapCpiEntitlementOutboundChannel    ; OutboundEntitlementGenerationRequest        ; sapCpiEntitlementGenerationDestination
+
+INSERT_UPDATE OutboundSyncStreamConfiguration; streamId[unique = true]; container(id)           ; itemTypeForStream(code); outboundChannelConfiguration(code); whereClause;
+                                 ; SapCpiEntitlementStream          ; outboundSyncDataStreams ; Order                ; SapCpiEntitlementOutboundChannel; {item.status} IN ({{SELECT {os.pk} FROM {OrderStatus as os} WHERE {os.code}='COMPLETED'}});
+

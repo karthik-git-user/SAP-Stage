@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="checkCustomerIsReplicated" name="sap-subscription-order-process"
+		 processClass="de.hybris.platform.orderprocessing.model.OrderProcessModel" onError="error">
+
+	<action id="checkCustomerIsReplicated" bean="checkCustomerIsReplicatedAction">
+		<transition name="OK"  to="sendSubscriptionOrderToSCPI" />
+		<transition name="NOK" to="error" />
+	</action>		
+	
+
+	<action id="sendSubscriptionOrderToSCPI" bean="sapSubscriptionOrderSendAction">
+		<transition name="OK"  to="setConfirmationStatus" />
+		<transition name="NOK" to="error" />
+	</action>		
+
+	<action id="setConfirmationStatus" bean="sapSubscriptionOrderConfirmationAction">
+		<transition name="OK"  to="success" />
+		<transition name="NOK" to="error" />
+	</action>
+
+	<end id="error" state="ERROR">Failed to create SAP Subscription Order</end>
+	<end id="success" state="SUCCEEDED">Successfully created SAPSubscription Order</end>
+
+
+</process>
+

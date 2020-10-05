@@ -1,0 +1,12 @@
+#*****************************************
+#******* B2C Customer Outbound *******
+#*****************************************
+
+INSERT_UPDATE IntegrationObjectItem ; integrationObject(code)[unique=true] ; code[unique = true]   ; type(code)           
+                                    ; OutboundB2CCustomer                  ; SAPCpiOutboundAddress ; SAPCpiOutboundAddress
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute ; integrationObjectItem(integrationObject(code), code)[unique = true] ; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier) ; returnIntegrationObjectItem(integrationObject(code), code) ; unique[default = false] ; autoCreate[default = false]
+                                             ; OutboundB2CCustomer:SAPCpiOutboundCustomer                          ; gigyaUID                     ; SAPCpiOutboundCustomer:gigyaUID                     ;                                                            ;                         ;                            
+
+                                             

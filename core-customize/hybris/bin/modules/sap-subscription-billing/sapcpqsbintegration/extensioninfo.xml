@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+    	
+    <extension abstractclassprefix="Generated" classprefix="Sapcpqsbintegration" jaloLogicFree="true" managername="SapcpqsbintegrationManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapcpqsbintegration" usemaven="false">
+        		
+        <requires-extension name="saprevenuecloudproduct"/>
+        		
+        <requires-extension name="subscriptionfacades"/>
+        		
+        <requires-extension name="commerceservices"/>
+        		
+        <requires-extension name="integrationservices"/>
+        		
+        <requires-extension name="outboundservices"/>
+        		
+        <requires-extension name="inboundservices"/>
+        		
+        <requires-extension name="sapcpiadapter"/>
+        		
+        <requires-extension name="saporderexchange"/>
+        		
+        <requires-extension name="b2bacceleratorservices"/>
+        		
+        <requires-extension name="sapmodel"/>
+        		
+        <requires-extension name="sapcpqquoteintegration"/>
+        		
+        <requires-extension name="saprevenuecloudorder"/>
+        		
+        <coremodule generated="true" manager="com.sap.hybris.sapcpqsbintegration.jalo.SapcpqsbintegrationManager" packageroot="com.sap.hybris.sapcpqsbintegration"/>
+        	
+    </extension>
+    
+</extensioninfo>

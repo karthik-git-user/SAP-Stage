@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<process xmlns="http://www.hybris.de/xsd/processdefinition" start="publishCustomerToRevenueCloud" name="revenuecloud-customer-process"
+	processClass="de.hybris.platform.commerceservices.model.process.StoreFrontCustomerProcessModel" onError="error">
+
+	<action id="publishCustomerToRevenueCloud" bean="sapRevenueCloudCustomerPublishAction">
+		<transition name="OK" to="success" />
+		<transition name="NOK" to="error" />
+	</action>
+	<end id="error" state="ERROR">ERROR: Customer was NOT replicated to Cloud Platform Integration.</end>
+	<end id="success" state="SUCCEEDED">Customer was replicated to Cloud Platform Integration.</end>
+</process>

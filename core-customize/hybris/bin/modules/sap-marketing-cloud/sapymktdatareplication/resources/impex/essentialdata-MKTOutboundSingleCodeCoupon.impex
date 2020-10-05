@@ -1,0 +1,12 @@
+INSERT_UPDATE IntegrationObject ; code[unique = true]         ;
+                                ; MktOutboundSingleCodeCoupon ;
+
+INSERT_UPDATE IntegrationObjectItem ; integrationObject(code)[unique = true] ; code[unique = true] ; type(code)       ; root[default = false]
+                                    ; MktOutboundSingleCodeCoupon            ; SingleCodeCoupon    ; SingleCodeCoupon ; true                  ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute ; integrationObjectItem(integrationObject(code), code)[unique = true] ; attributeName[unique = true] ; attributeDescriptor(enclosingType(code), qualifier) ; returnIntegrationObjectItem(integrationObject(code), code) ; unique[default = false] ; autoCreate[default = false]
+                                             ; MktOutboundSingleCodeCoupon:SingleCodeCoupon                        ; name                         ; SingleCodeCoupon:name                               ;                                                            ;                         ;
+                                             ; MktOutboundSingleCodeCoupon:SingleCodeCoupon                        ; couponId                     ; SingleCodeCoupon:couponId                           ;                                                            ; true                    ;
+                                             ; MktOutboundSingleCodeCoupon:SingleCodeCoupon                        ; maxRedemptionsPerCustomer    ; SingleCodeCoupon:maxRedemptionsPerCustomer          ;                                                            ;                         ;                             
+                                             ; MktOutboundSingleCodeCoupon:SingleCodeCoupon                        ; active                       ; SingleCodeCoupon:active                             ;                                                            ;                         ;
+                                             ; MktOutboundSingleCodeCoupon:SingleCodeCoupon                        ; maxTotalRedemptions          ; SingleCodeCoupon:maxTotalRedemptions                ;                                                            ;                         ;

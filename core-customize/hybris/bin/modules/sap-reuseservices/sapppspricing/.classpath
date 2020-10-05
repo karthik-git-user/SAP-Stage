@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="eclipsebin"/>
+
+	<classpathentry exported="true" kind="src" path="/springintegrationlibs" />
+	<classpathentry exported="true" kind="src" path="/sapcoreconfiguration" />
+	<classpathentry exported="true" kind="src" path="/commercefacades" />
+	<classpathentry exported="true" kind="src" path="/sapmodel" />
+	<classpathentry exported="true" kind="src" path="/outboundservices" />
+	<classpathentry exported="true" kind="src" path="/webservicescommons" />
+	<classpathentry exported="true" kind="src" path="/promotionengineservices" />
+	<classpathentry exported="true" kind="lib" path="lib/caffeine-2.6.2.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/javax.persistence-2.2.1.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/jperf-1.0.3.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.persistence.jpa-2.7.3.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/org.eclipse.persistence.jpa.jpql-2.7.3.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-api-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-api-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-api-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-calcengine-gk-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-calcengine-gk-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-calcengine-gk-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-impl-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-impl-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-impl-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-interface-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-interface-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-client-interface-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-core-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-core-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-core-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-common-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-common-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-common-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-interface-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-interface-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-interface-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-localdb-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-localdb-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-dataaccess-localdb-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-jackson-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-jackson-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/ppengine-jackson-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-api-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-api-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-api-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-common-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-common-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-common-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-core-services-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-core-services-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-core-services-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-dataaccess-sap-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-dataaccess-sap-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-dataaccess-sap-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-impl-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-impl-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-impl-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-default-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-default-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-model-default-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-psi-sap-4.0.6-javadoc.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-psi-sap-4.0.6-sources.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/pricing-engine-psi-sap-4.0.6.jar" />
+	<classpathentry exported="true" kind="lib" path="resources" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="src" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="testsrc" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="gensrc" />
+	<classpathentry exported="false" kind="src" path="/platform" />
+				
+</classpath>
+				

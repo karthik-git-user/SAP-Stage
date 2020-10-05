@@ -1,0 +1,50 @@
+
+#***************************************************************************#
+#*** Please change only the sample data and do NOT change anything else! ***#                                                                                       #
+#***************************************************************************#
+
+#*********************************#
+#*** Sample Data To Be Changed ***#
+#*********************************#
+#**************************#
+#***  Basic CredentialS ***#
+#**************************#
+$username = sampleUsername
+$password = samplePassword
+#******************#
+#***  Order URL ***#
+#******************#
+$orderUrl=https://test.hana.ondemand.com/gw/odata/SAP/REPLICATE-OAAORDER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-S4HANA
+$orderVersion=v=1
+
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+
+#**************************#
+#***  Basic Credentials ***#
+#**************************#
+
+INSERT_UPDATE BasicCredential ; id[unique=true] ; password  ; username 
+                              ; scpiCredentials ; $password ; $username
+
+
+#******************#          
+#***  Endpoints ***#          
+#******************#          
+INSERT_UPDATE Endpoint ; id[unique = true]      ; version[unique = true] ; specUrl    ; name            
+                       ; SAPCpiOutboundOaaOrder ; unknown                ; "$orderUrl;$orderVersion/" ; SAPCpiOutboundOaaOrder
+                       
+#****************************#
+#***  Destination Target  ***#
+#****************************#
+INSERT_UPDATE DestinationTarget ; id[unique = true]            
+                                ; scpiOaaOrderDestinationTarget
+
+#*******************************#
+#***  Consumed Destinations  ***#
+#*******************************#
+INSERT_UPDATE ConsumedDestination ; id[unique = true]       ; url        ; endpoint(id, version)               ; credential(id)                 ; additionalProperties(key, value)[map-delimiter = |] ; destinationTarget(id)[default = scpiOaaOrderDestinationTarget]
+                                  ; scpiOaaOrderDestination ; "$orderUrl;$orderVersion/SAPCpiOutboundOrders" ; SAPCpiOutboundOaaOrder:unknown ; scpiCredentials                                     ; "csrfURL->$orderUrl;$orderVersion/" ;  
+                                  
+                                     

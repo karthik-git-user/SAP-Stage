@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/acceleratorstorefrontcommons"/>
+	<classpathentry kind="src" path="/saprevenuecloudorder"/>
+	<classpathentry kind="src" path="gensrc"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="testsrc"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="/platform"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/addonsupport"/>
+	<classpathentry kind="src" path="acceleratoraddon/web/src"/>
+	<classpathentry kind="src" output="eclipsebin/classes" path="src"/>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>

@@ -1,0 +1,52 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+#
+# Import the CMS content for the Powertools site
+#
+
+$contentCatalog=powertoolsContentCatalog
+$contentCatalogName=Powertools Content Catalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$siteUid=powertools
+
+INSERT_UPDATE ConsentTemplate 		;id[unique = true] 	   		;version[unique = true]	;baseSite(uid)[unique = true, default = $siteUid]	;exposed	;
+									;QUALTRICS_ENABLE 			;1                     	;                                 					;true		;	     
+ 
+ 
+INSERT_UPDATE ContentPage			;$contentCV[unique=true]	;uid[unique=true]	;name						;masterTemplate(uid,$contentCV)		;label			;defaultPage[default='true']	;approvalStatus(code)[default='approved']	;homepage[default='false'];
+									;							;consents			;Consent Management Page	;AccountPageTemplate				;consents                         	
+                            	
+INSERT_UPDATE JspIncludeComponent	;$contentCV[unique=true]	;uid[unique=true]				;name							;page								;actions(uid,$contentCV)		;&componentRef
+									;							;ConsentManagementComponent		;Consent Management Component	;accountConsentManagementPage.jsp	;								;ConsentManagementComponent
+
+INSERT_UPDATE ContentSlot			;$contentCV[unique=true]	;uid[unique=true]				;name										;active		;cmsComponents(&componentRef)		
+									;							;SideContentSlot-consents		;Side Content Slot for Consent Management	;true		;
+									;							;BodyContentSlot-consents		;Body Content Slot for Consent Management	;true		;ConsentManagementComponent			
+
+INSERT_UPDATE ContentSlotForPage	;$contentCV[unique=true]	;uid[unique=true]		;position[unique=true]		;page(uid,$contentCV)[unique=true][default='consents']	;contentSlot(uid,$contentCV)[unique=true]	
+									;							;SideContent-consents	;SideContent				;														;SideContentSlot-consents	
+									;							;BodyContent-consents	;BodyContent				;														;BodyContentSlot-consents	
+
+UPDATE ContentSlot					;$contentCV[unique=true]	;uid[unique=true]			;cmsComponents(&componentRef);	
+									;							;SideContentSlot-consents;	;
+
+INSERT_UPDATE CMSLinkComponent		;$contentCV[unique=true]	;uid[unique=true]		;name					;url						;&linkRef;target(code)[default='sameWindow']
+									;							;ConsentManagementLink	;ConsentManagementLink	;/my-account/consents		;ConsentManagementLink;
+
+INSERT_UPDATE CMSNavigationNode		;uid[unique=true]			;$contentCV[unique=true]		;name				;parent(uid, $contentCV)		;links(&linkRef)			;&nodeRef
+									;ConsentManagementNavNode;	;Consent Management				;MyAccountNavNode	;								;ConsentManagementNavNode
+
+INSERT_UPDATE CMSNavigationEntry	;uid[unique=true]				;$contentCV[unique=true]	;name								;navigationNode(&nodeRef)		;item(&linkRef)
+									;ConsentManagementNavNodeEntry	;							;ConsentManagementNavNodeEntry		;ConsentManagementNavNode		;ConsentManagementLink	
+
+
+
+INSERT_UPDATE SAPQualtricsSiteComponent		;$contentCV[unique=true]	;uid[unique=true]					;name		
+											;							;sapQualtricsFeedbackComponent		;Qualtrics Feedback
+
+	
+INSERT_UPDATE ContentSlot			;$contentCV[unique=true]	;uid[unique=true]			;active			;cmsComponents(uid,$contentCV)[mode=append]
+									;							;PlaceholderContentSlot		;true			;sapQualtricsFeedbackComponent
+
+                            	            

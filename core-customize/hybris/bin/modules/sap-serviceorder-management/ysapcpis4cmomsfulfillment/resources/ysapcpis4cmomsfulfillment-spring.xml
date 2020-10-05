@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+    <!-- Warehouse Fulfillment Configuration -->
+    <bean depends-on="warehouseFulfillmentProcessConfigs" parent="listMergeDirective">
+        <property name="add" value="S4CMConfig"/>
+    </bean>
+
+    <!-- SAP CPI Pre-Send Strategy -->
+    <alias name="s4cmConsignmentPreFulfillmentStrategy" alias="s4cmConsignmentPreSendToSapCpiStrategy"/>
+    <bean id="s4cmConsignmentPreFulfillmentStrategy"
+          class="de.hybris.platform.ysapcpis4cmomsfulfillment.strategy.S4CMConsignmentPreFulfillmentStrategy">
+        <property name="sapGlobalConfigurationService" ref="sapCoreDefaultSAPGlobalConfigurationService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="sapProductReferenceService" ref="sapProductReferenceService"/>
+    </bean>
+
+    <!-- SAP CPI Pre-Send Strategy Registry -->
+    <alias name="s4cmPreFulfillmentStrategyRegistry" alias="s4cmPreSendToSapCpiStrategyRegistry"/>
+    <bean id="s4cmPreFulfillmentStrategyRegistry" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="s4cmConsignmentPreSendToSapCpiStrategy"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Pre-Send Strategy Registry -->
+    <bean depends-on="preFulfillmentStrategyRegistry" parent="mapMergeDirective">
+        <property name="key" value="S4CMConfigModel"/>
+        <property name="value" ref="s4cmPreSendToSapCpiStrategyRegistry"/>
+    </bean>
+
+    <!-- SAP CPI Send Strategy -->
+    <alias name="s4cmSendConsignmentToExternalFulfillmentSystemStrategy" alias="s4cmSendConsignmentToSapCpiStrategy"/>
+    <bean id="s4cmSendConsignmentToExternalFulfillmentSystemStrategy"
+          class="de.hybris.platform.ysapcpis4cmomsfulfillment.strategy.S4CMSendConsignmentToExternalFulfillmentSystemStrategy">
+        <property name="sapPlantLogSysOrgService" ref="sapPlantLogSysOrgService"/>
+        <property name="orderHistoryService" ref="orderHistoryService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="sapCpiServiceOrderOutboundService" ref="sapCpiServiceOrderOutboundService" />
+        <property name="sapCpiServiceOrderOutboundConversionService" ref="sapCpiServiceOrderOutboundConversionService" />
+        <property name="orderService" ref="orderService"/>
+        <property name="timeService" ref="timeService"/>
+    </bean>
+
+    <!-- Send Strategy Registry Map -->
+    <bean depends-on="sendConsignmentToExternalFulfillmentSystemStrategyMap" parent="mapMergeDirective">
+        <property name="key" value="S4CMConfigModel"/>
+        <property name="value" ref="s4cmSendConsignmentToSapCpiStrategy"/>
+    </bean>
+    
+    <alias name="sapCpiServiceOrderEnterCancellingStrategy" alias="enterCancellingStrategy"/>
+    <bean id="sapCpiServiceOrderEnterCancellingStrategy"
+          class="de.hybris.platform.ysapcpis4cmomsfulfillment.strategy.SapCpiServiceOrderEnterCancellingStrategy" parent="sapCpiOmsEnterCancellingStrategy">
+        <property name="sapCpiServiceOrderOutboundService" ref="sapCpiServiceOrderOutboundService"/>
+        <property name="serviceOrderCancelBuilderService" ref="sapCpiServiceOrderCancelOutboundBuilderService"/>
+    </bean>		
+			
+</beans>

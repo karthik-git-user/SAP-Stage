@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="defaultGigyaAuthService" alias="gigyaAuthService"/>
+	<bean id="defaultGigyaAuthService" class="de.hybris.platform.gigya.gigyab2bservices.auth.impl.DefaultGigyaAuthService" >
+		<property name="b2bCommerceUserService" ref="b2bCommerceUserService" />
+		<property name="gigyaAuthRequestConverter" ref="gigyaAuthRequestConverter" />
+		<property name="baseSiteService" ref="baseSiteService" />
+		<property name="gigyaTokenGenerator" ref="gigyaTokenGenerator" />
+		<property name="userService" ref="userService" />
+		<property name="restTemplate" ref="gigyaRestTemplate" />
+	</bean>
+	
+	
+	<alias name="defaultGigyaAuthRequestContextPopulator" alias="gigyaAuthRequestContextPopulator"/>
+    <bean id="defaultGigyaAuthRequestContextPopulator" class="de.hybris.platform.gigya.gigyab2bservices.populators.GigyaAuthRequestContextPopulator" />
+    
+    <alias name="defaultGigyaAuthRequestIdentityPopulator" alias="gigyaAuthRequestIdentityPopulator"/>
+    <bean id="defaultGigyaAuthRequestIdentityPopulator" class="de.hybris.platform.gigya.gigyab2bservices.populators.GigyaAuthRequestIdentityPopulator" />
+    
+    <bean id="gigyaAuthRequestIdentityConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.gigya.gigyab2bservices.data.GigyaIdentityData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="gigyaAuthRequestIdentityPopulator"/>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="gigyaAuthRequestContextConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.gigya.gigyab2bservices.data.GigyaContextData" />
+		<property name="populators">
+			<list merge="true">
+				<ref bean="gigyaAuthRequestContextPopulator"/>
+			</list>
+		</property>
+	</bean>
+    
+    
+    <alias name="defaultGigyaAuthRequestPopulator" alias="gigyaAuthRequestPopulator"/>
+    <bean id="defaultGigyaAuthRequestPopulator" class="de.hybris.platform.gigya.gigyab2bservices.populators.GigyaAuthRequestPopulator" >
+    	<property name="gigyaAuthRequestIdentityConverter" ref="gigyaAuthRequestIdentityConverter" />
+    	<property name="gigyaAuthRequestContextConverter" ref="gigyaAuthRequestContextConverter" />
+    	<property name="b2bUnitService" ref="b2bUnitService" />
+    </bean>
+    
+    
+    <bean id="gigyaAuthRequestConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.gigya.gigyab2bservices.data.GigyaAuthRequestData" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="gigyaAuthRequestPopulator"/>
+            </list>
+        </property>
+    </bean>
+    
+    <alias alias="gigyaRestTemplate" name="defaultGigyaRestTemplate" />
+    <bean id="defaultGigyaRestTemplate" class="org.springframework.web.client.RestTemplate" />
+    
+
+	<bean id="defaultGigyaB2BUnitModelValidateInterceptor" class="de.hybris.platform.gigya.gigyab2bservices.interceptor.DefaultGigyaB2BUnitModelValidateInterceptor">
+		<property name="b2bUnitService" ref="b2bUnitService"/>
+		<property name="userService" ref="userService"/>
+		<property name="modelService" ref="modelService"/>
+		<property name="l10NService" ref="l10nService"/>
+		<property name="baseSiteService" ref="baseSiteService"/>
+	</bean>
+	
+	
+	<bean id="defaultGigyaB2BUnitModelValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="defaultGigyaB2BUnitModelValidateInterceptor"/>
+		<property name="typeCode" value="B2BUnit" />
+		<property name="replacedInterceptors" ref="B2BUnitModelValidateInterceptor"/>
+	</bean>
+	
+	
+	<alias name="defaultGigyaTokenGenerator" alias="gigyaTokenGenerator"/>
+	<bean id="defaultGigyaTokenGenerator" class="de.hybris.platform.gigya.gigyab2bservices.token.impl.DefaultGigyaTokenGenerator" />
+	
+	<alias name="defaultGigyaB2BLoginService" alias="gigyaLoginService"/>
+	<bean id="defaultGigyaB2BLoginService" class="de.hybris.platform.gigya.gigyab2bservices.login.impl.DefaultGigyaB2BLoginService" parent="defaultGigyaLoginService" />
+    
+</beans>

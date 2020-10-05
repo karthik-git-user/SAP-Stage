@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="eclipsebin/notused"/>
+
+				
+				
+				
+				
+				
+
+	<classpathentry exported="true" kind="src" path="/commerceservices" />
+	<classpathentry exported="true" kind="src" path="/outboundservices" />
+	<classpathentry exported="true" kind="src" path="/odata2webservices" />
+	<classpathentry exported="true" kind="lib" path="lib/gigya-java-sdk-3.2.3.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/gigya-java-sdk-auth-1.0.0.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/jjwt-api-0.10.7.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/jjwt-impl-0.10.7.jar" />
+	<classpathentry exported="true" kind="lib" path="lib/jjwt-jackson-0.10.7.jar" />
+	<classpathentry exported="true" kind="lib" path="resources" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="src" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="testsrc" />
+	<classpathentry exported="true" output="eclipsebin/classes" kind="src" path="gensrc" />
+	<classpathentry exported="false" kind="src" path="/platform" />
+				
+</classpath>
+				

@@ -1,0 +1,21 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundOMSServiceCall; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundOMSServiceCall	; ConsignmentEntryStatus	; ConsignmentEntryStatus	; 	;  
+; InboundOMSServiceCall	; ConsignmentEntry      	; ConsignmentEntry      	; 	;  
+; InboundOMSServiceCall	; Consignment           	; Consignment           	; true	;  
+; InboundOMSServiceCall	; ConsignmentStatus     	; ConsignmentStatus     	; 	;  
+; InboundOMSServiceCall	; SAPOrder              	; SAPOrder              	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundOMSServiceCall:ConsignmentEntryStatus	; code                  	; ConsignmentEntryStatus:code            	;                                             	; true	;  
+; InboundOMSServiceCall:ConsignmentEntry      	; consignment           	; ConsignmentEntry:consignment           	; InboundOMSServiceCall:Consignment           	; true	;  
+; InboundOMSServiceCall:ConsignmentEntry      	; plannedStartDate      	; ConsignmentEntry:plannedStartDate     	;                                             	;	;  
+; InboundOMSServiceCall:ConsignmentEntry      	; sapOrderEntryRowNumber	; ConsignmentEntry:sapOrderEntryRowNumber	;                                             	; true	;  
+; InboundOMSServiceCall:ConsignmentEntry      	; status                	; ConsignmentEntry:status                	; InboundOMSServiceCall:ConsignmentEntryStatus	; 	;  
+; InboundOMSServiceCall:Consignment           	; status                	; Consignment:status                     	; InboundOMSServiceCall:ConsignmentStatus     	; 	;  
+; InboundOMSServiceCall:Consignment           	; consignmentEntries    	; Consignment:consignmentEntries         	; InboundOMSServiceCall:ConsignmentEntry      	; 	;  
+; InboundOMSServiceCall:Consignment           	; sapOrder              	; Consignment:sapOrder                   	; InboundOMSServiceCall:SAPOrder              	; true	;  
+; InboundOMSServiceCall:ConsignmentStatus     	; code                  	; ConsignmentStatus:code                 	;                                             	; true	;  
+; InboundOMSServiceCall:SAPOrder              	; serviceOrderId        	; SAPOrder:serviceOrderId                	;                                             	; true	;  

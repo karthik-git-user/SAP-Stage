@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+		xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+
+	<context merge-by="module" type="SAPConfiguration" component="editor-area" parent="auto">
+           <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+        	<editorArea:essentials xmlns="http://www.hybris.com/cockpitng/component/editorArea">
+                <essentialSection name="hmc.essential">
+                    <attribute qualifier="core_name"/>
+                </essentialSection>
+            </editorArea:essentials>
+            <editorArea:tab xmlns="http://www.hybris.com/cockpitng/component/editorArea" name="backoffice.tab.sapserviceorder" >
+                <editorArea:section name="backoffice.section.sapserviceorder">
+	                
+		                <editorArea:attribute qualifier="serviceOrderTransactionType"/>
+						<editorArea:attribute qualifier="serviceItemPriceConditionCode"/>
+						<editorArea:attribute qualifier="serviceProductWarehousesConfig"/>
+						<editorArea:attribute qualifier="leadDays"/>
+						<editorArea:attribute qualifier="serviceOrderModificationCutoffDays"/>
+					
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+    <context merge-by="module" type="S4CMConfig" component="editor-area" parent="auto">
+           <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+        	<editorArea:essentials xmlns="http://www.hybris.com/cockpitng/component/editorArea">
+                <essentialSection name="hmc.essential">
+                    <attribute qualifier="id"/>
+                    <attribute qualifier="warehouses"/>
+                </essentialSection>
+            </editorArea:essentials>
+        </editorArea:editorArea>
+    </context>
+    
+     <context type="SapServiceSkill" component="base" merge-by="type" parent="GenericItem">
+        <y:base>
+            <y:labels>
+                <y:label>(description?:'')+' ['+name+']'</y:label>
+                <y:iconPath>profilePicture?.downloadURL</y:iconPath>
+            </y:labels>
+        </y:base>
+    </context>
+
+</config>

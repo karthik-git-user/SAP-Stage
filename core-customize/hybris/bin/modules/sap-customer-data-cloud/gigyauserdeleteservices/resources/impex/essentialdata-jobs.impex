@@ -1,0 +1,3 @@
+#cronjob to close customer accounts 
+INSERT_UPDATE CronJob;code[unique=true];job(code);sessionLanguage(isoCode)[default=en]
+;closeCustomerAccountCronJob;defaultCloseCustomerAccountCronJobPerformable;; 

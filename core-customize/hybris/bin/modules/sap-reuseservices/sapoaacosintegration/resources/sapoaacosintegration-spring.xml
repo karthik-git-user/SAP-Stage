@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- ====== COS ATP Service ====== -->
+	<alias name="defaultCosOaaATPResultHandler"
+		alias="cosATPResultHandler" />
+	<bean id="defaultCosOaaATPResultHandler"
+		class="com.sap.sapoaacosintegration.services.atp.impl.DefaultCosATPResultHandler">
+		<property name="serviceUtils" ref="oaaServiceUtils" />
+	</bean>
+
+	<alias name="defaultCosOaaATPResourcePathBuilder"
+		alias="cosATPResourcePathBuilder" />
+	<bean id="defaultCosOaaATPResourcePathBuilder"
+		class="com.sap.sapoaacosintegration.services.atp.impl.DefaultCosATPResourcePathBuilder">
+		<property name="serviceUtils" ref="oaaServiceUtils" />
+		<property name="configurationService"
+			ref="defaultCosConfigurationService" />
+	</bean>
+	<alias name="cosOaaATPService" alias="commerceATPService" />
+	<bean id="cosOaaATPService"
+		class="com.sap.sapoaacosintegration.services.atp.impl.DefaultCosATPService">
+		<property name="cosAtpResultHandler"
+			ref="cosATPResultHandler" />
+		<property name="cosAtpResourcePathBuilder"
+			ref="cosATPResourcePathBuilder" />
+		<property name="integrationRestTemplateFactory"
+			ref="integrationRestTemplateFactory" />
+		<property name="cosServiceUtils"
+			ref="defaultSapCosServiceUtils" />
+		<property name="sessionService" ref="sessionService" />
+	</bean>
+
+	<!-- ====== Stock Service ====== -->
+	<alias name="defaultCosCommerceStockService"
+		alias="commerceStockService" />
+	<bean id="defaultCosCommerceStockService"
+		class="com.sap.sapoaacosintegration.services.stock.impl.DefaultSapCosOaaCommerceStockService">
+		<property name="atpService" ref="commerceATPService" />
+		<property name="pointOfServiceDao" ref="pointOfServiceDao" />
+		<property name="atpAggregationStrategy"
+			ref="oaaCommerceATPAggregationStrategy" />
+	</bean>
+
+
+
+	<!--- ====Configuration service===== -->
+
+	<bean id="defaultCosConfigurationService"
+		class="com.sap.sapoaacosintegration.services.config.impl.DefaultCosConfigurationService">
+		<property name="sapCoreConfigurationService"
+			ref="sapCoreConfigurationService" />
+	</bean>
+
+
+	<!-- Converters -->
+	<alias name="deliveryCosAddressGeocodeConverter"
+		alias="deliveryAddressGeocodeConverter" />
+	<bean id="deliveryCosAddressGeocodeConverter"
+		parent="abstractPopulatingConverter">
+		<property name="targetClass"
+			value="de.hybris.platform.storelocator.data.AddressData" />
+		<property name="populators">
+			<list merge="true">
+				<ref bean="deliveryCosAddressGeocodePopulator" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="deliveryCosAddressGeocodePopulator"
+		class="com.sap.sapoaacosintegration.converters.DefaultCosAddressPopulator" />
+
+	<!-- ====== Sourcing Service ====== -->
+	<alias name="defaultCosSourcingService"
+		alias="commerceSourcingService" />
+	<bean id="defaultCosSourcingService"
+		class="com.sap.sapoaacosintegration.services.sourcing.impl.DefaultCosSourcingService">
+		<property name="cosSourcingResultHandler"
+			ref="defaultCosSourcingResultHandler" />
+		<property name="integrationRestTemplateFactory"
+			ref="integrationRestTemplateFactory" />
+		<property name="cosSourcingRequestMapper"
+			ref="defaultCosSourcingRequestMapper" />
+		<property name="cosSourcingResponseMapper"
+			ref="defaultCosSourcingResponseMapper" />
+		<property name="configurationService"
+			ref="defaultCosConfigurationService" />
+		<property name="reservationService"
+			ref="defaultCosReservationService" />
+		<property name="cosServiceUtils"
+			ref="defaultSapCosServiceUtils" />
+		<property name="sessionService" ref="sessionService" />
+
+	</bean>
+
+
+	<bean id="defaultCosSourcingResultHandler"
+		class="com.sap.sapoaacosintegration.services.sourcing.impl.DefaultCosSourcingResultHandler">
+		<property name="modelService" ref="modelService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+		<property name="pointOfServiceGenericDao"
+			ref="pointOfServiceGenericDao" />
+		<property name="serviceUtils" ref="oaaServiceUtils" />
+	</bean>
+
+
+	<bean id="defaultCosSourcingRequestMapper"
+		class="com.sap.sapoaacosintegration.services.sourcing.impl.DefaultCosSourcingRequestMapper">
+		<property name="cosServiceUtils"
+			ref="defaultSapCosServiceUtils" />
+		<property name="configurationService"
+			ref="defaultCosConfigurationService" />
+		<property name="cosSourcingResultHandler"
+			ref="defaultCosSourcingResultHandler" />
+		<property name="addressConverter"
+			ref="deliveryAddressGeocodeConverter" />
+
+	</bean>
+
+	<bean id="defaultCosSourcingResponseMapper"
+		class="com.sap.sapoaacosintegration.services.sourcing.impl.DefaultCosSourcingResponseMapper">
+		<property name="configurationService"
+			ref="configurationService" />
+	</bean>
+
+	<bean id="defaultSapCosServiceUtils"
+		class="com.sap.sapoaacosintegration.services.common.util.impl.DefaultCosServiceUtils">
+		<property name="geoWebServiceWrapper" ref="geoServiceWrapper" />
+		<property name="flexibleSearchService"
+			ref="flexibleSearchService" />
+
+	</bean>
+
+
+	<!-- ==========Reservation Services ============ -->
+
+	<alias name="defaultCosReservationRequestMapper"
+		alias="cosReservationRequestMapper" />
+	<bean id="defaultCosReservationRequestMapper"
+		class="com.sap.sapoaacosintegration.services.reservation.impl.DefaultCosReservationRequestMapper">
+	</bean>
+
+	<alias name="defaultCosReservationResultHandler"
+		alias="cosReservationResultHandler" />
+	<bean id="defaultCosReservationResultHandler"
+		class="com.sap.sapoaacosintegration.services.reservation.impl.DefaultCosReservationResultHandler">
+		<property name="modelService" ref="modelService" />
+	</bean>
+
+
+	<alias name="defaultCosReservationService"
+		alias="cosCommerceReservationService" />
+	<bean id="defaultCosReservationService"
+		class="com.sap.sapoaacosintegration.services.reservation.impl.DefaultCosReservationService">
+		<property name="cosRequestMapper"
+			ref="cosReservationRequestMapper" />
+		<property name="serviceUtils" ref="oaaServiceUtils" />
+		<property name="reservationResultHandler"
+			ref="cosReservationResultHandler" />
+		<property name="integrationRestTemplateFactory"
+			ref="integrationRestTemplateFactory" />
+		<property name="cosServiceUtils"
+			ref="defaultSapCosServiceUtils" />
+		<property name="configurationService"
+			ref="configurationService" />
+	</bean>
+
+	<bean id="cosRoughStockIndicatorValueResolver"
+		class="com.sap.sapoaacosintegration.services.search.solrfacetsearch.provider.impl.RoughStockIndicatorValueResolver"
+		parent="abstractValueResolver">
+		<property name="stockService" ref="commerceStockService" />
+		<property name="baseStoreService" ref="baseStoreService" />
+	</bean>
+</beans>

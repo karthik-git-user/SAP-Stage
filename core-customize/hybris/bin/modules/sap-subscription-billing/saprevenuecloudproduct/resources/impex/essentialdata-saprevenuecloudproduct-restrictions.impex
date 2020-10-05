@@ -1,0 +1,23 @@
+#*******************************************
+#*** Create SAP Integration User Groups ****
+#*******************************************
+INSERT_UPDATE UserGroup; UID[unique = true]                         ; locname[lang = en]                                     ; description
+                       ; sapInboundRCConfigGroup                    ; SAP Inbound Revenue Cloud Business Configuration Group ; SAP Inbound Revenue Cloud Business Configuration Group
+                       ; sapInboundProductGroup                     ; SAP Inbound Product Group                              ; SAP Inbound Product Group
+                       ; sapInboundSubscriptionPriceGroup           ; SAP Inbound Subscription Price Group                  ; SAP Inbound Subscription PriceP Group
+
+#**************************************************************************
+#*** Assign SAP Integration User Groups to The Parent Integration Group ***
+#**************************************************************************
+INSERT_UPDATE UserGroup; UID[unique = true]        				    ; groups(uid)[mode = append]
+                       ; sapInboundRCConfigGroup 					; integrationadmingroup ;
+                       ; sapInboundProductGroup        				; integrationadmingroup ;
+                       ; sapInboundSubscriptionPriceGroup           ; integrationadmingroup ;
+
+#**********************************************************
+#*** Create SAP Integration Flexible Search Restriction ***
+#**********************************************************
+INSERT_UPDATE SearchRestriction; code[unique = true]                   				 ; name[lang = en]                             			; query                                                                                                                                                                                                                                               ; principal(UID)       ; restrictedType(code); active; generate                          
+                               ; sapInboundProductRestriction        			   	 ; SAP Inbound Product Restriction             			; ({code}='InboundProduct' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundProductGroup' }} )) OR ({code}!='InboundProduct')                                                  ; integrationadmingroup ; IntegrationObject   ; true  ; true                         
+                               ; sapInboundSubscriptionPricePlanRestriction          ; SAP Inbound Subscription Price Plan Restriction      ; ({code}='InboundSubscriptionPricePlan' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundSubscriptionPriceGroup' }} )) OR ({code}!='InboundSubscriptionPricePlan')            ; integrationadmingroup ; IntegrationObject   ; true  ; true
+                               ; sapInboundRevenueCloudConfigRestriction      		 ; SAP Inbound Revenue Cloud Config Restriction         ; ({code}='InboundSapRCConfig' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'sapInboundRCConfigGroup' }} )) OR ({code}!='InboundSapRCConfig')                                         ; integrationadmingroup ; IntegrationObject   ; true  ; true

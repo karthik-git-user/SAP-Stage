@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ [y] hybris Platform
+
+ Copyright (c) 2018 SAP SE or an SAP affiliate company. All rights reserved.
+
+ This software is the confidential and proprietary information of SAP
+ ("Confidential Information"). You shall not disclose such Confidential
+ Information and shall use it only in accordance with the terms of the
+ license agreement you entered into with SAP.
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+			
+<!--     <enumtypes> -->
+<!--     		<enumtype code="HTTPDestinationForObjectType" autocreate="false" generate="true" dynamic="true"> -->
+<!-- 			<value code="RETURN_REQUEST"/> -->
+<!-- 		</enumtype> -->
+<!--     </enumtypes> -->
+    
+    <relations>
+		<relation generate="true" localized="false"
+			code="HTTPDestination2ExtendedSAPHTTPDestination" autocreate="true">
+			<description>This relation connects point of service with store locator feature, so store locator features
+				are reusable.
+			</description>
+			<sourceElement type="SAPHTTPDestination" cardinality="one"
+				qualifier="httpDestination" />
+			<targetElement type="ExtendedSAPHTTPDestination" cardinality="many"
+				qualifier="objSpecificHTTPDestination" collectiontype="set" />
+		</relation>
+	</relations>
+
+	<itemtypes>
+
+	   <itemtype autocreate="true" code="ExtendedSAPHTTPDestination" generate="true" extends="GenericItem">
+	        <deployment table="ExtHTTPDestination" typecode="9364" />
+			<attributes>
+				<attribute qualifier="objectType" type="ComposedType">
+					<modifiers read = "true" write = "true" search = "true" optional = "true" unique = "true"/>
+					<description>HTTP Destination Object Type</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="httpDestinationName" type="java.lang.String">
+					<description>HTTP Destination name</description>
+					<persistence type="property"/>
+					<modifiers unique="true"/>
+				</attribute>
+				<attribute qualifier="targetURL" type="java.lang.String">
+					<description>URL of the target system</description>
+					<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="authenticationType" type="HTTPAuthenticationType">
+				     <modifiers optional="false"/>
+				     <description>Authentication type</description>
+					<persistence type="property"/>
+					<defaultvalue>em().getEnumerationValue("HTTPAuthenticationType","NO_AUTHENTICATION")</defaultvalue>
+				</attribute>
+				<attribute qualifier="userid" type="java.lang.String">
+					<description>User ID for the logon to the SAP system</description>
+					<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Sapserviceorder" jaloLogicFree="true" managername="SapserviceorderManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapserviceorder" usemaven="false">
+          
+      
+        <!-- for more information on maven managed libraries please consult https://wiki.hybris.com/x/Nq8sDQ -->
+                       
+      
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+                 
+      
+        <!-- <requires-extension name="cms"/> -->
+                 
+      
+        <requires-extension name="sapcpiorderexchangeomsb2b"/>
+              
+        <requires-extension name="b2bcommerce"/>
+              
+        <requires-extension name="sapcpicustomerexchangeb2b"/>
+              
+        <requires-extension name="ordermanagementfacades"/>
+              
+        <requires-extension name="sapserviceproduct"/>
+              
+      
+        <coremodule generated="true" manager="de.hybris.platform.sap.sapserviceorder.jalo.SapserviceorderManager" packageroot="de.hybris.platform.sap.sapserviceorder"/>
+             
+   
+    </extension>
+          
+
+</extensioninfo>

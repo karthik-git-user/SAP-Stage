@@ -1,0 +1,23 @@
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config">
+   
+	<!-- b2b customer replication -->
+	
+    
+	<context type="SAPConfiguration" component="editor-area" parent="auto" merge-by="module">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea" xmlns="http://www.hybris.com/cockpitng/component/editorArea">
+            <tab name="tab.b2bcustomerreplication">
+                <section name="section.b2bcustomerreplication">
+                       <attribute qualifier="replicateregisteredb2buser"/> 
+                </section>
+            </tab>
+        </editorArea:editorArea>
+    </context>
+    
+
+	</config>
+	
+	
+	

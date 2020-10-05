@@ -1,0 +1,14 @@
+#Tue, 13 Aug 2019 21:25:55 +0530
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+sapcustomerlookupaddon.key=value
+# Specifies the location of the spring context file added automatically to the global platform application context.
+sapcustomerlookupaddon.application-context=sapcustomerlookupaddon-spring.xml
+sapcustomerlookupaddon.javascript.paths.responsive=/responsive/common/js/sapcustomerlookupaddon.js
+sapcustomerlookupaddon.css.paths.responsive=/responsive/common/css/sapcustomerlookupaddon.css
+registration.consent.id.electronics=privacy.CMS_LOOKUP_ENABLE
+yacceleratorstorefront.additionalWebSpringConfigs.sapcustomerlookupaddon=classpath\:/sapcustomerlookupaddon/web/spring/sapcustomerlookupaddon-web-spring.xml
+yacceleratorstorefront.wro4jconfigscan.sapcustomerlookupaddon=true

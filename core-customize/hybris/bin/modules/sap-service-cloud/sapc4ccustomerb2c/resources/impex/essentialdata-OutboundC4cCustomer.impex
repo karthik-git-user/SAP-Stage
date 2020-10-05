@@ -1,0 +1,31 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; OutboundC4cCustomer;
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code); root[default = false]
+                                   ; OutboundC4cCustomer	; Customer	; Customer  ; true
+                                   ; OutboundC4cCustomer	; Country 	; Country   ;
+                                   ; OutboundC4cCustomer	; Address 	; Address   ;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; OutboundC4cCustomer:Customer	; uid                   	; Customer:uid                   	;                            	; true	;
+                                            ; OutboundC4cCustomer:Customer	; name                  	; Customer:name                  	;                            	; 	;
+                                            ; OutboundC4cCustomer:Customer	; defaultShipmentAddress	; Customer:defaultShipmentAddress	; OutboundC4cCustomer:Address	; 	;
+                                            ; OutboundC4cCustomer:Customer	; customerID            	; Customer:customerID            	;                            	; 	;
+                                            ; OutboundC4cCustomer:Customer	; defaultPaymentAddress 	; Customer:defaultPaymentAddress 	; OutboundC4cCustomer:Address	; 	;
+                                            ; OutboundC4cCustomer:Customer	; addresses             	; Customer:addresses             	; OutboundC4cCustomer:Address	; 	;
+                                            ; OutboundC4cCustomer:Customer	; creationtime             	; Customer:creationtime             ;                               ; 	;
+                                            ; OutboundC4cCustomer:Address 	; phone1                	; Address:phone1                 	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; streetname            	; Address:streetname             	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; country               	; Address:country                	; OutboundC4cCustomer:Country	; true	;
+                                            ; OutboundC4cCustomer:Address 	; phone2                	; Address:phone2                 	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; town                  	; Address:town                   	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; postalcode            	; Address:postalcode             	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; fax                   	; Address:fax                    	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; cellphone             	; Address:cellphone              	;                            	; 	;
+                                            ; OutboundC4cCustomer:Address 	; streetnumber          	; Address:streetnumber           	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; pobox                 	; Address:pobox                  	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; email                 	; Address:email                  	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; district              	; Address:district               	;                            	; true	;
+                                            ; OutboundC4cCustomer:Country 	; isocode               	; Country:isocode                	;                            	; true	;
+                                            ; OutboundC4cCustomer:Address 	; owner              	    ; Address:owner               	    ; OutboundC4cCustomer:Customer  ;	;
+                                            ; OutboundC4cCustomer:Country 	; owner              	    ; Country:owner               	    ; OutboundC4cCustomer:Customer  ;	;

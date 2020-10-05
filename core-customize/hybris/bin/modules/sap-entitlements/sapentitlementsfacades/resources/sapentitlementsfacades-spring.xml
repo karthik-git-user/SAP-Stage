@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <alias name="defaultSapEntitlementFacade" alias="sapEntitlementFacade"/>
+    <bean id="defaultSapEntitlementFacade" class="com.sap.hybris.sapentitlementsfacades.facade.impl.DefaultSapEntitlementFacade">
+   		<property name="sapEntitlementService" ref="sapEntitlementService"/>
+   		<property name="sapEntitlementConverter" ref="sapEntitlementConverter"/>
+   		<property name="sapEntitlementDetailsConverter" ref="sapEntitlementDetailsConverter"/>
+    </bean>
+    
+    <alias name="defaultSapEntitlementPopulator" alias="sapEntitlementPopulator" />
+	<bean id="defaultSapEntitlementPopulator"
+		class="com.sap.hybris.sapentitlementsfacades.populator.DefaultSapEntitlementPopulator">
+		<property name="productFacade" ref="productFacade"/>
+	</bean>
+	
+	<alias name="defaultSapEntitlementAttributesPopulator" alias="sapEntitlementAttributesPopulator" />
+	<bean id="defaultSapEntitlementAttributesPopulator"
+		class="com.sap.hybris.sapentitlementsfacades.populator.DefaultSapEntitlementAttributesPopulator">
+		<property name="ignoredAttributes">
+			<set value-type="java.lang.String">
+				<value>DistributionChannel</value>
+				<value>CreatedAt</value>
+				<value>BusinessEvent</value>
+				<value>GenerationMethod</value>
+				<value>CustomerID</value>
+				<value>CreatedBy</value>
+				<value>RefItemNo</value>
+				<value>EntitlementModelCode</value>
+				<value>CreatedByID</value>
+				<value>LastChangedBy</value>
+				<value>RefDocType</value>
+				<value>Operation</value>
+				<value>StatusCode</value>
+				<value>FolderName</value>
+				<value>FolderCode</value>
+				<value>LegacyTrancDocNo</value>
+				<value>LastChangedAt</value>
+				<value>CustomerName</value>
+				<value>OfferingName</value>
+				<value>EntitlementTypeCode</value>
+				<value>SourceSystem</value>
+				<value>DistributorID</value>
+				<value>ThirdPartyID</value>
+				<value>DistributorName</value>
+				<value>OfferingSystem</value>
+				<value>ThirdPartyName</value>
+				<value>CustomerSystem</value>
+				<value>LastChangedByID</value>
+			</set>
+		</property>
+	</bean>
+	
+	<alias name="defaultSapEntitlementConverter" alias="sapEntitlementConverter"/>
+	<bean id="defaultSapEntitlementConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.sap.hybris.sapentitlementsfacades.data.EntitlementData"/>
+		<property name="populators">
+			<list>
+				<ref bean="sapEntitlementPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+	<alias name="defaultSapEntitlementDetailsConverter" alias="sapEntitlementDetailsConverter"/>
+	<bean id="defaultSapEntitlementDetailsConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.sap.hybris.sapentitlementsfacades.data.EntitlementData"/>
+		<property name="populators">
+			<list>
+				<ref bean="sapEntitlementPopulator"/>
+				<ref bean="sapEntitlementAttributesPopulator"/>
+			</list>
+		</property>
+	</bean>
+	
+			
+</beans>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Warehouse Fulfillment Configuration -->
+    <bean depends-on="warehouseFulfillmentProcessConfigs" parent="listMergeDirective">
+        <property name="add" value="SAPPlantLogSysOrg"/>
+    </bean>
+
+    <!-- SAP CPI Pre-Send Strategy -->
+    <alias name="sapConsignmentPreFulfillmentStrategy" alias="sapConsignmentPreSendToSapCpiStrategy"/>
+    <bean id="sapConsignmentPreFulfillmentStrategy"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.strategy.SapConsignmentPreFulfillmentStrategy">
+        <property name="sapGlobalConfigurationService" ref="sapCoreDefaultSAPGlobalConfigurationService"/>
+    </bean>
+
+    <!-- SAP CPI Pre-Send Strategy Registry -->
+    <alias name="sapPreFulfillmentStrategyRegistry" alias="sapPreSendToSapCpiStrategyRegistry"/>
+    <bean id="sapPreFulfillmentStrategyRegistry" class="java.util.ArrayList">
+        <constructor-arg>
+            <list>
+                <ref bean="sapConsignmentPreSendToSapCpiStrategy"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Pre-Send Strategy Registry -->
+    <bean depends-on="preFulfillmentStrategyRegistry" parent="mapMergeDirective">
+        <property name="key" value="SAPPlantLogSysOrgModel"/>
+        <property name="value" ref="sapPreSendToSapCpiStrategyRegistry"/>
+    </bean>
+
+    <!-- SAP CPI Send Strategy -->
+    <alias name="sapSendConsignmentToExternalFulfillmentSystemStrategy" alias="sapSendConsignmentToSapCpiStrategy"/>
+    <bean id="sapSendConsignmentToExternalFulfillmentSystemStrategy"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.strategy.SapSendConsignmentToExternalFulfillmentSystemStrategy">
+        <property name="sapPlantLogSysOrgService" ref="sapPlantLogSysOrgService"/>
+        <property name="orderHistoryService" ref="orderHistoryService"/>
+        <property name="modelService" ref="modelService"/>
+        <property name="sapCpiOutboundService" ref="sapCpiOutboundService"/>
+        <property name="sapCpiOrderOutboundConversionService" ref="sapCpiOrderOutboundConversionService"/>
+        <property name="orderService" ref="orderService"/>
+        <property name="timeService" ref="timeService"/>
+    </bean>
+
+    <!-- Send Strategy Registry Map -->
+    <bean depends-on="sendConsignmentToExternalFulfillmentSystemStrategyMap" parent="mapMergeDirective">
+        <property name="key" value="SAPPlantLogSysOrgModel"/>
+        <property name="value" ref="sapSendConsignmentToSapCpiStrategy"/>
+    </bean>
+
+    <!-- Inbound Order Notification Helper -->
+    <alias name="sapCipOmsInboundHelper" alias="sapDataHubInboundHelper"/>
+    <bean id="sapCipOmsInboundHelper"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.inbound.helper.SapCipOmsInboundHelper"
+          parent="sapOmsDataHubInboundHelper"/>
+
+    <!-- Inbound Order Confirmation Helper -->
+    <alias name="sapCipOmsInboundOrderHelper" alias="sapDataHubInboundOrderHelper"/>
+    <bean id="sapCipOmsInboundOrderHelper"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.inbound.helper.SapCipOmsInboundOrderHelper"
+          parent="sapOmsDataHubInboundOrderHelper">
+        <property name="orderCancelService" ref="orderCancelService"/>
+    </bean>
+
+    <!-- Enter Cancelling Strategy -->
+    <alias name="sapCpiOmsEnterCancellingStrategy" alias="enterCancellingStrategy"/>
+    <bean id="sapCpiOmsEnterCancellingStrategy"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.cancellation.SapCpiOmsEnterCancellingStrategy">
+        <property name="modelService" ref="modelService"/>
+        <property name="sapCpiOutboundService" ref="sapCpiOutboundService"/>
+        <property name="sapCpiOrderOutboundConversionService" ref="sapCpiOrderOutboundConversionService"/>
+    </bean>
+
+    <!-- Order Cancel State Mapping Strategy -->
+    <!-- Revert the definition in the saporderexchangeoms extension -->
+    <alias name="sapCpiOmsOrderCancelStateMappingStrategy" alias="orderCancelStateMappingStrategy"/>
+    <bean id="sapCpiOmsOrderCancelStateMappingStrategy"
+          class="de.hybris.platform.sap.ysapcpiomsfulfillment.cancellation.SapCpiOmsOrderCancelStateMappingStrategy"
+          scope="prototype" parent="warehousingOrderCancelStateMappingStrategy">
+    </bean>
+
+</beans>

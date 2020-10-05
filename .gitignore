@@ -29,8 +29,7 @@ eclipsebin
 **/jalo
 
 # allow only custom extensions
-**/hybris/bin/*
-!**/hybris/bin/custom/
+
  
 # Folders to ignore at the root of the repository
 **/hybris/roles/

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Order Confirmation Persistence Hook -->
+    <bean id="sapCpiOmmOrderConfirmationPersistenceHook"
+          class="de.hybris.platform.sap.sapcpiorderexchange.inbound.events.SapCpiOmmOrderConfirmationPersistenceHook">
+        <property name="sapDataHubInboundOrderHelper" ref="sapDataHubInboundOrderHelper"/>
+    </bean>
+
+    <!-- Order Cancellation Persistence Hook -->
+    <bean id="sapCpiOmmOrderCancellationPersistenceHook"
+          class="de.hybris.platform.sap.sapcpiorderexchange.inbound.events.SapCpiOmmOrderCancellationPersistenceHook">
+        <property name="sapDataHubInboundOrderHelper" ref="sapDataHubInboundOrderHelper"/>
+    </bean>
+
+    <!-- Delivery Persistence Hook -->
+    <bean id="sapCpiOmmDeliveryPersistenceHook"
+          class="de.hybris.platform.sap.sapcpiorderexchange.inbound.events.SapCpiOmmDeliveryPersistenceHook">
+        <property name="sapDataHubInboundDeliveryHelper" ref="sapDataHubInboundDeliveryHelper"/>
+    </bean>
+
+    <!-- Goods Issue Persistence Hook -->
+    <bean id="sapCpiOmmGoodsIssuePersistenceHook"
+          class="de.hybris.platform.sap.sapcpiorderexchange.inbound.events.SapCpiOmmGoodsIssuePersistenceHook">
+        <property name="sapDataHubInboundDeliveryHelper" ref="sapDataHubInboundDeliveryHelper"/>
+    </bean>
+
+</beans>

@@ -1,0 +1,41 @@
+$MDM_System = https://<MDM-System-endpoint>/bpservices/BusinessPartnerBulkReplicateRequestIn
+$HTTPDestinationUser = COMM_SB
+$LOGICALSYSTEMNAME = MDM
+$HTTPDESTINATIONNAME = MDM
+$SENDER_NAME = COMM_SB
+$SENDER_PORT = COMM_SB
+
+INSERT_UPDATE SAPGlobalConfiguration; &Item; core_name; replicateregistereduser[allownull = true]
+                                    ;      ; GLOBAL   ; false
+
+
+INSERT_UPDATE SAPHTTPDestination; &Item ; authenticationType(code, itemtype(code))[allownull = true]; httpDestinationName[unique = true]; password             ; targetURL   ; userid
+                                ; Item3 ; BASIC_AUTHENTICATION:HTTPAuthenticationType               ; $HTTPDESTINATIONNAME              ; $HTTPDESTINATIONNAME ; $MDM_System ; $HTTPDestinationUser
+
+
+INSERT_UPDATE SAPLogicalSystem; defaultLogicalSystem[allownull = true]; sapGlobalConfiguration(core_name); sapHTTPDestination(httpDestinationName); sapLogicalSystemName[unique = true]; sapSystemType(code, itemtype(code)); senderName   ; senderPort
+                              ; true                                 ; GLOBAL                           ; $LOGICALSYSTEMNAME                     ; $LOGICALSYSTEMNAME                 ;                                    ; $SENDER_NAME ; $SENDER_PORT
+
+
+#*********************************************************************MDM Customer Replication **********************************************************************
+
+                             
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;sample;username
+
+#*********************************************************************MDM Customer Replication **********************************************************************
+#********************#
+#***SAP  Customer Lookup URL ***#
+#********************#
+$customerUrl = <SCPI_ENDPOINT>/gw/odata/SAP/LOOKUP-B2C-CUSTOMER-FROM-SAP-CLOUD-PLATFORM-MASTER-DATA-FOR-BUSINESS-PARTNERS-TO-SAP-COMMERCE-CLOUD_ODATA;v=1/SAPCpiOutboundCustomers
+$customerVersion = v=1
+
+
+INSERT_UPDATE Endpoint; id[unique = true]                       ; name                                    ; version[unique = true]; specUrl
+                      ; SAPCustomerLookupMDMDestinationEndpoint ; SAPCustomerLookupMDMDestinationEndpoint ; unknown               ; "$customerUrl;$customerVersion/"
+
+INSERT_UPDATE DestinationTarget; id[unique = true]
+                               ; SAPCustomerLookupMDMDestinationTarget
+
+INSERT_UPDATE ConsumedDestination; id[unique = true]               ; url                                                     ; endpoint(id, version)                           ; additionalProperties(key, value)[map-delimiter = |]; credential(id); destinationTarget(id)[default = scpiDestinationTarget]; active
+                                 ; SAPCustomerLookupMDMDestination ; "$customerUrl;$customerVersion/SAPCpiOutboundCustomers" ; SAPCustomerLookupMDMDestinationEndpoint:unknown ; "csrfURL->$customerUrl;$customerVersion/"          ;scpiCredentials; SAPCustomerLookupMDMDestinationTarget                 ; true

@@ -1,0 +1,21 @@
+#**********************************************************************************************
+#************* Product Configuration S4HC related integration objects for outbound order ******
+#**********************************************************************************************
+
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code)
+; OutboundOMMOrderOMSOrder ; SAPCpiOutboundOrderItemS4hcConfigHeader     ; SAPCpiOutboundOrderS4hcConfigHeader
+; OutboundOMMOrderOMSOrder ; SAPCpiOutboundOrderItemS4hcConfigValuation  ; SAPCpiOutboundOrderS4hcConfigValuation
+
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItem                    ; productConfigS4hcHeader     ; SAPCpiOutboundOrderItem:s4hcConfigHeader                       ; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigHeader    ;
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigHeader    ; productConfigS4hcValuations ; SAPCpiOutboundOrderS4hcConfigHeader:sapCpiS4hcConfigValuations ; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ;
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigHeader    ; orderId                     ; SAPCpiOutboundOrderS4hcConfigHeader:orderId                    ;                                                                     ; true
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigHeader    ; entryNumber                 ; SAPCpiOutboundOrderS4hcConfigHeader:entryNumber                ;                                                                     ; true
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigHeader    ; status                      ; SAPCpiOutboundOrderS4hcConfigHeader:status                     ;                                                                     ; 
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ; orderId                     ; SAPCpiOutboundOrderS4hcConfigValuation:orderId                 ;                                                                     ; true
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ; entryNumber                 ; SAPCpiOutboundOrderS4hcConfigValuation:entryNumber             ;                                                                     ; true
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ; characteristic              ; SAPCpiOutboundOrderS4hcConfigValuation:characteristic          ;                                                                     ; 
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ; value                       ; SAPCpiOutboundOrderS4hcConfigValuation:value                   ;                                                                     ; 
+; OutboundOMMOrderOMSOrder:SAPCpiOutboundOrderItemS4hcConfigValuation ; author                      ; SAPCpiOutboundOrderS4hcConfigValuation:author                  ;                                                                     ; 

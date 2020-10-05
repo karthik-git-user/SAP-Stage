@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+       
+    <extension abstractclassprefix="Generated" classprefix="Sapimpeximportadapter" managername="SapimpeximportadapterManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapimpeximportadapter" usemaven="false">
+              
+        <coremodule generated="true" manager="com.sap.hybris.sapimpeximportadapter.jalo.SapimpeximportadapterManager" packageroot="com.sap.hybris.sapimpeximportadapter"/>
+              
+        <webmodule jspcompile="false" webroot="/sapimpeximportadapter"/>
+              
+        <meta key="deprecated" value="true"/>
+        	
+
+   
+    </extension>
+          
+
+</extensioninfo>

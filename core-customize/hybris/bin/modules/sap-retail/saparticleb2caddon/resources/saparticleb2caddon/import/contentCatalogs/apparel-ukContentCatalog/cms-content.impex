@@ -1,0 +1,10 @@
+$contentCatalog=apparel-ukContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$jarResourceCms=jar:com.sap.retail.commercesuite.saparticleb2caddon.constants.saparticleb2caddonConstants&/saparticleb2caddon/import/cockpit/cmscockpit
+
+
+INSERT_UPDATE ArticleComponentTabParagraphComponent;$contentCV[unique=true];uid[unique=true];name
+;;ArticleComponentsInformation;Article Components Information
+
+INSERT_UPDATE CMSTabParagraphContainer;$contentCV[unique=true];uid[unique=true];name;visible;simpleCMSComponents(uid, $contentCV);&componentRef
+;;TabPanelContainer;Tab container;true;deliveryTab,ArticleComponentsInformation;TabPanelContainer

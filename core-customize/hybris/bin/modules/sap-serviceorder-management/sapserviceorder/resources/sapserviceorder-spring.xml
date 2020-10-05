@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util.xsd">
+  	
+  	<!-- Service Order Mappers -->
+    <alias name="sapCpiServiceOrderMapperServices" alias="sapCpiServiceOrderMappers"/>
+    <util:list id="sapCpiServiceOrderMapperServices" value-type="de.hybris.platform.sap.sapcpiorderexchange.service.SapCpiOrderMapperService"/>
+  	
+  	<!-- Service Order Mapper -->
+    <alias name="defaultSapCpiServiceOrderMapperService" alias="sapCpiServiceOrderMapperService"/>
+    <bean id="defaultSapCpiServiceOrderMapperService" class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapCpiServiceOrderMapperService">
+    	<property name="modelService" ref="modelService" />
+    </bean>
+    
+    <!-- Add Service Order Mapper to Mapper List-->
+    <bean id="sapCpiServiceOrderMapperAdd" depends-on="sapCpiServiceOrderMappers" parent="listMergeDirective">
+        <property name="add" ref="sapCpiServiceOrderMapperService" />
+    </bean>
+  
+    <!-- Service Order Outbound Conversion Service -->
+    <alias name="defaultSapCpiServiceOrderOutboundConversionService" alias="sapCpiServiceOrderOutboundConversionService"/>
+    <bean id="defaultSapCpiServiceOrderOutboundConversionService" parent="sapCpiOmmOrderOutboundConversionService" 
+    	class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapCpiServiceOrderOutboundConversionService">
+    	<property name="modelService" ref="modelService" />
+		<property name="sapCpiServiceOrderMappers" ref="sapCpiServiceOrderMappers"/>
+    </bean>
+    
+    <!-- Service Order Update Outbound Builder -->
+    <alias name="defaultSapCpiServiceOrderUpdateOutboundBuilderService" alias="sapCpiServiceOrderUpdateOutboundBuilderService"/>
+    <bean id="defaultSapCpiServiceOrderUpdateOutboundBuilderService" class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapCpiServiceOrderUpdateOutboundBuilderService">
+    	<property name="modelService" ref="modelService" />
+    	<property name="sapCpiOrderDestinationService" ref="sapCpiOrderDestinationService" />
+    </bean>
+    
+    <!-- Service Order Mappers -->
+    <util:list id="sapServiceOrderUpdateHooks" value-type="de.hybris.platform.sap.sapserviceorder.hook.SapServiceOrderUpdateHook"/>
+    
+    <!-- Service Order Outbound Service -->
+    <alias name="defaultSapCpiServiceOrderOutboundService" alias="sapCpiServiceOrderOutboundService"/>
+    <bean id="defaultSapCpiServiceOrderOutboundService" 
+    	class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapCpiServiceOrderOutboundService">
+    	<property name="outboundServiceFacade" ref="outboundServiceFacade" />
+    	<property name="sapServiceOrderUpdateHooks" ref="sapServiceOrderUpdateHooks" />    	
+    </bean>
+    
+    <!-- Service Order Confirmation Persistence Hook -->
+    <bean id="sapCpiOmsServiceOrderConfirmationPersistenceHook"
+          class="de.hybris.platform.sap.sapserviceorder.inbound.events.SapCpiOmsServiceOrderConfirmationPersistenceHook">
+        <property name="sapDataHubInboundOrderHelper" ref="sapDataHubInboundOrderHelper"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService" />
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+		<property name="eventService" ref="eventService" />
+    </bean>
+			
+	<alias name="sapSetConfirmationStatusAction" alias="sapOmsSetConfirmationStatusAction" />
+	<bean id="sapSetConfirmationStatusAction" class="de.hybris.platform.sap.sapserviceorder.action.SapSetConfirmationStatusAction"
+		parent="abstractAction">
+	</bean>
+	
+	<bean id="setCompletionEventListner" class="de.hybris.platform.sap.sapserviceorder.inbound.events.SetCompletionEventListener"
+	parent="abstractEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+	</bean>
+	
+	<alias name="defaultSapServiceOrderConsignmentProcessingEventListener" alias="sapServiceOrderConsignmentProcessingEventListener"/>
+	<bean id="defaultSapServiceOrderConsignmentProcessingEventListener" class="de.hybris.platform.sap.sapserviceorder.inbound.events.SapServiceOrderConsignmentProcessingEventListener"
+	parent="abstractEventListener">
+		<property name="businessProcessService" ref="businessProcessService" />
+		<property name="modelService" ref="modelService" />
+	</bean>
+	
+	<alias name="defaultSapProductReferenceService" alias="sapProductReferenceService"/>
+	<bean id="defaultSapProductReferenceService" class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapProductReferenceService">
+		<property name="productReferencesDao" ref="productReferencesDao"/>
+	</bean>
+	
+	 <alias name="defaultSapServiceDeliveryModeLookupStrategy" alias="deliveryModeLookupStrategy"/>
+    <bean id="defaultSapServiceDeliveryModeLookupStrategy"
+          class="de.hybris.platform.sap.sapserviceorder.strategies.impl.DefaultSapServiceDeliveryModeLookupStrategy" parent="defaultDeliveryModeLookupStrategy" />
+
+	
+	
+	<alias name="defaultSapServiceScheduleTimeList" alias="sapServiceScheduleTimeList"/>
+	<util:list id="defaultSapServiceScheduleTimeList" value-type="java.lang.String">
+    	<value>09:00</value>
+    	<value>09:30</value>
+    	<value>10:00</value>
+    	<value>10:30</value>
+    	<value>11:00</value>
+    	<value>11:30</value>
+    	<value>12:00</value>
+    	<value>12:30</value>
+    	<value>13:00</value>
+    	<value>13:30</value>
+    	<value>14:00</value>
+    	<value>14:30</value>
+    	<value>15:00</value>
+    	<value>15:30</value>
+    	<value>16:00</value>
+    	<value>16:30</value>
+    	<value>17:00</value>
+    	<value>17:30</value>
+    	<value>18:00</value>
+	</util:list>
+	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="orderConverter" />
+		<property name="add"
+			ref="sapServiceOrderPopulator" />
+	</bean>
+	
+	<alias name="defaultSapServicePopulator"
+		alias="sapServiceOrderPopulator" />
+	<bean id="defaultSapServicePopulator"
+		class="de.hybris.platform.sap.sapserviceorder.populator.DefaultSapServiceOrderPopulator">
+
+	</bean>
+	
+	<bean parent="modifyPopulatorList">
+		<property name="list" ref="productConverter"/>
+		<property name="add" ref="sapServiceProductPopulator"/>
+	</bean>
+	
+	
+	<alias name="defaultSapServiceProductPopulator"
+		alias="sapServiceProductPopulator" />
+	<bean id="defaultSapServiceProductPopulator"
+		class="de.hybris.platform.sap.sapserviceorder.populator.DefaultSapServiceProductPopulator">
+
+	</bean>
+	
+	<alias name="sapServiceOrderConsignmentStatusDisplayByMap" alias="dynamicAttributesConsignmentStatusDisplay"/>
+	<bean id="sapServiceOrderConsignmentStatusDisplayByMap" parent="acceleratorDynamicAttributesConsignmentStatusDisplayByMap" >
+		<property name="statusDisplayMap">
+			<map key-type="de.hybris.platform.basecommerce.enums.ConsignmentStatus" merge="true">
+				<entry key="SERVICED" value="serviced"/>
+				<entry key="CANCELLING" value="cancelling"/>
+			</map>
+		</property>
+	</bean>
+	
+	<alias name="defaultSapCpiServiceOrderCancelOutboundBuilderService" alias="sapCpiServiceOrderCancelOutboundBuilderService"/>
+	<bean id="defaultSapCpiServiceOrderCancelOutboundBuilderService" class="de.hybris.platform.sap.sapserviceorder.service.impl.DefaultSapCpiServiceOrderCancelOutboundBuilderService">
+		<property name="sapCpiOrderDestinationService" ref="sapCpiOrderDestinationService" />
+	</bean>
+	
+</beans>

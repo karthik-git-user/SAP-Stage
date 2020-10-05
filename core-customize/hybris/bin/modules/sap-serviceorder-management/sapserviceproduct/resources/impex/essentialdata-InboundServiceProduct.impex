@@ -1,0 +1,4 @@
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]
+ 											; InboundProduct:Product              								 ; serviceCode       	       ; Product:serviceCode      	;                                     	;  
+											; InboundProduct:Product              								 ; skillsDescription       	       ; Product:skillsDescription      	;                                     	;  

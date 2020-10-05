@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="sapProductConfigDefaultPricingHandlerCEP" alias="sapProductConfigCPSPricingHandler" />
+	<bean id="sapProductConfigDefaultPricingHandlerCEP"  
+			parent="sapProductConfigCPSDefaultPricingHandler"
+			class="de.hybris.platform.sap.productconfig.cep.pricing.impl.DefaultPricingHandlerCEP">
+		<constructor-arg ref="sapProductConfigPricingConfigurationParametersCEP" />
+	</bean>
+	
+	<alias name="sapProductConfigDefaultPricingConfigurationParametersCEP" alias="sapProductConfigPricingConfigurationParametersCEP" />
+	<bean id="sapProductConfigDefaultPricingConfigurationParametersCEP" parent="sapProductConfigDefaultPricingParametersCPS"
+		class="de.hybris.platform.sap.productconfig.cep.pricing.impl.DefaultPricingConfigurationParameterCEP">
+	</bean>
+	
+	<alias name="sapProductConfigDefaultExternalConfigMapperServiceS4hc" alias="sapProductConfigExternalConfigMapperServiceS4hc" />
+	<bean id="sapProductConfigDefaultExternalConfigMapperServiceS4hc"
+		class="de.hybris.platform.sap.productconfig.cep.pricing.impl.HierarchicalConfigurationOrderMapperImpl">		 
+	</bean>
+	<bean id="sapProductConfigCpiOrderMapperS4hc" depends-on="sapCpiOrderMappers" parent="listMergeDirective">
+		<property name="add" ref="sapProductConfigExternalConfigMapperServiceS4hc" />
+	</bean>	
+
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        
+    <extension abstractclassprefix="Generated" classprefix="Sapcustomerb2b" managername="Sapcustomerb2bManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapcustomerb2b">
+                
+        <requires-extension name="sapcustomerb2c"/>
+                
+        <requires-extension name="b2bcommercefacades"/>
+                
+        <requires-extension name="b2bcommerce"/>
+                
+        <requires-extension name="b2bacceleratorservices"/>
+                
+        <coremodule generated="true" manager="com.sap.hybris.sapcustomerb2b.jalo.Sapcustomerb2bManager" packageroot="com.sap.hybris.sapcustomerb2b"/>
+                
+        <webmodule jspcompile="false" webroot="/sapcustomerb2b"/>
+            
+    </extension>
+    
+</extensioninfo>

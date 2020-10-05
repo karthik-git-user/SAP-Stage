@@ -1,0 +1,11 @@
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<module xmlns="http://www.sap.com/ppengine/core/module"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.sap.com/ppengine/core/module ppengine-module-0.2.xsd">
+	<name name="sapppspricing" vendor="sap" />
+	<dependencies>
+	    <module name="dataaccess-localdb" vendor="sap"/>	    
+	</dependencies>
+</module>

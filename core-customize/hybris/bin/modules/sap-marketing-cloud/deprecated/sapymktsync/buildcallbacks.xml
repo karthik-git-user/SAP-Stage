@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<project name="sapymktsync_buildcallbacks">
+	<macrodef name="sapymktsync_before_ear">
+		<sequential>
+		</sequential>
+	</macrodef>
+</project>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd">
+           
+    <context:annotation-config/> 
+
+
+	<!-- Expose /acceleratoraddon/web/webroot/WEB-INF/messages/base.js.properties  resource bundle as javascript variables -->
+	<bean id="defaultsaparticleb2caddonJavaScriptMessageResourceAccessor" parent="abstractJavaScriptMessageResourceAccessor">
+		<property name="addOnName" value="saparticleb2caddon"/>
+	</bean>
+
+	<bean id="defaultsaparticleb2caddonBeforeViewJsPropsHandlerAdaptee" parent="abstractBeforeViewJsPropsHandlerAdaptee" class="de.hybris.platform.addonsupport.interceptors.ExportJsPropertiesBeforeViewHandler">
+		<property name="messageSource" ref="defaultsaparticleb2caddonJavaScriptMessageResourceAccessor"/>
+	</bean>
+
+	<bean id="getsaparticleb2caddonBeforeViewHandler" parent="beforeViewHandlerAdapter">
+		<property name="adaptee">
+			<ref bean="defaultsaparticleb2caddonBeforeViewJsPropsHandlerAdaptee"/>
+		</property>
+	</bean>
+	<bean id="saparticleb2caddonBeforeViewHandlerListMergeDirective" depends-on="beforeViewHandlersList" parent="listMergeDirective">
+		<property name="add" ref="getsaparticleb2caddonBeforeViewHandler"/>
+	</bean>
+
+ 
+ <!-- Responsive UI Renderer Definition -->
+      <bean id="articleComponentsInfoComponentRenderer" class="com.sap.retail.commercesuite.saparticleb2caddon.renderer.ArticleComponentsRenderer">
+                   <property name="typeService" ref="typeService" />
+                   <property name="uiExperienceService" ref="defaultUiExperienceService" />
+                   <property name="cmsComponentService" ref="cmsComponentService" />
+                   <property name="modelService" ref="modelService" />
+                   <property name="uiExperienceViewFolderNames">
+                           <map>
+                               <entry key="DESKTOP" value="${commerceservices.default.desktop.ui.experience:desktop}"/>
+                               <entry key="MOBILE" value="mobile"/>
+                           </map>
+                   </property>
+		<property name="uiExperienceViewPrefixMap">
+			<map>
+				<entry key="DESKTOP" value="${commerceservices.default.desktop.ui.experience:desktop}/" />
+				<entry key="MOBILE" value="mobile/"/>
+			</map>
+		</property>
+		<property name="unknownUiExperiencePrefix" value="${commerceservices.default.desktop.ui.experience:desktop}/" />
+           </bean>
+           
+  <!-- Responsive UI Renderer Mapping Definition -->                  
+    <bean id="articleComponentsInfoComponentRendererMapping"    
+      class="de.hybris.platform.addonsupport.renderer.impl.AddOnCMSComponentRendererMapping">
+      <property name="typeCode" value="ArticleComponentTabParagraphComponent" />
+      <property name="renderer" ref="articleComponentsInfoComponentRenderer" />
+    </bean>
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+--><extensioninfo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="extensioninfo.xsd">
+        
+    
+    <extension abstractclassprefix="Generated" classprefix="Sapserviceorderaddon" description="sapserviceorderaddon extension" managername="SapserviceorderaddonManager" managersuperclass="de.hybris.platform.jalo.extension.Extension" name="sapserviceorderaddon">
+                        		
+        
+        <!-- you should add all required extensions to this list, except platform extensions which are automatically required -->
+                
+        
+        <requires-extension name="addonsupport"/>
+                
+        <requires-extension name="acceleratorstorefrontcommons"/>
+                
+        <requires-extension name="sapserviceorderfacades"/>
+                
+        
+        <coremodule generated="true" manager="com.sap.hybris.sapserviceorderaddon.jalo.SapserviceorderaddonManager" packageroot="com.sap.hybris.sapserviceorderaddon"/>
+                
+        
+        <meta key="classpathgen" value="false"/>
+                        	
+    
+    </extension>
+    
+</extensioninfo>

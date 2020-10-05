@@ -1,0 +1,27 @@
+
+
+
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+
+$contentCatalog=powertoolsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+
+$jarResourceCms=jar:de.hybris.platform.commerceorgaddon.constants.CommerceorgaddonConstants&/commerceorgaddon/import/cockpits/cmscockpit
+# Language
+$lang=en
+$addonExtensionName=sapbillinginvoiceaddon
+
+#################    Order Details for external billing invoice    #################
+
+
+INSERT_UPDATE JspIncludeComponent ; $contentCV[unique=true] ; uid[unique=true]                  ; name                           ; page                                                                                               ; actions(uid,$contentCV) ; &componentRef                    
+                                  ;                         ; ExtBillingDocumentsDetailComponent ;  Order Detail Component ; /WEB-INF/views/addons/$addonExtensionName/responsive/pages/sapbillinginvoice/extBillingDocumentPage.jsp ;                         ; ExtBillingDocumentsDetailComponent
+
+# ContentSlot             
+INSERT_UPDATE ContentSlot ; $contentCV[unique=true] ; uid[unique=true]               ; name                                                 ; active ; cmsComponents(uid,$contentCV)                                                                                                                                                                                                                                                                         ;  ;  ;  
+                          ;                         ; BodyContent-orderdetail        ; Body Content Slot for My Account Order Details       ; true   ; AccountOrderDetailsHeadlineComponent,AccountOrderDetailsOverviewComponent,AccountOrderDetailsItemsComponent,ExtBillingDocumentsDetailComponent, AccountOrderDetailsShippingComponent,AccountOrderDetailsApprovalDetailsComponent,AccountOrderDetailsTotalsComponent,AccountOrderDetailsReorderComponent ;  ;  ;  
+
+
+#################     Order Details for external billing invoice END    #################

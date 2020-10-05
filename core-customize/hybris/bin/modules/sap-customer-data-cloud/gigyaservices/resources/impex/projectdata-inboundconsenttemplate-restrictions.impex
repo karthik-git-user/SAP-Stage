@@ -1,0 +1,5 @@
+
+#create technical users to interact with Integration Objects
+INSERT_UPDATE Employee ; UID[unique = true]         ; name[default = $defaultName]  ; groups(uid)[mode = append]
+                       ; InboundConsentTemplateUser ; Inbound Consent Template User ; InboundConsentTemplateGroup,integrationadmingroup
+

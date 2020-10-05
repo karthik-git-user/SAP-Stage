@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<alias name="defaultGigyaConfigGenericDao" alias="gigyaConfigGenericDao"/>
+	<bean name="defaultGigyaConfigGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="GigyaConfig"/>
+	</bean>
+	
+	<alias name="defaultGigyaUserGenericDao" alias="gigyaUserGenericDao"/>
+	<bean name="defaultGigyaUserGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="Customer"/>
+	</bean>
+    
+    <alias name="defaultGigyaLoginService" alias="gigyaLoginService"/>
+    <bean id="defaultGigyaLoginService" class="de.hybris.platform.gigya.gigyaservices.login.impl.DefaultGigyaLoginService">
+    		<property name="gigyaService" ref="gigyaService"/>
+    		<property name="gigyaConfigGenericDao" ref="gigyaConfigGenericDao"/>
+    		<property name="gigyaUserGenericDao" ref="gigyaUserGenericDao"/>
+    		<property name="modelService" ref="modelService"/>
+    		<property name="gigyaFieldMappingGenericDao" ref="gigyaFieldMappingGenericDao"/>
+    		<property name="gigyaUserConverter" ref="gigyaUserConverter"/>
+    		<property name="gigyaKeyService" ref="gigyaKeyService"/>    		
+    </bean>
+    
+    <alias name="defaultGigyaService" alias="gigyaService"/>
+    <bean id="defaultGigyaService" class="de.hybris.platform.gigya.gigyaservices.service.impl.DefaultGigyaService" >
+    		<property name="userService" ref="userService"/>
+    </bean>
+    
+    <alias name="defaultGigyaFieldMappingGenericDao" alias="gigyaFieldMappingGenericDao"/>
+	<bean name="defaultGigyaFieldMappingGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="GigyaFieldMapping"/>
+	</bean>
+	
+	<alias name="defaultGigyaUserValidateInterceptor" alias="gigyaUserValidateInterceptor"/>
+	<bean id="defaultGigyaUserValidateInterceptor" class="de.hybris.platform.gigya.gigyaservices.interceptor.GigyaUserValidateInterceptor" >
+		<property name="userService" ref="userService"/>
+		<property name="gigyaLoginService" ref="gigyaLoginService"/>
+	</bean>
+	
+	<bean id="gigyaUserValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="gigyaUserValidateInterceptor"/>
+		<property name="typeCode" value="Customer" />
+	</bean>
+	
+	<alias name="defaultGigyaConfigValidateInterceptor" alias="gigyaConfigValidateInterceptor"/>
+	<bean id="defaultGigyaConfigValidateInterceptor" class="de.hybris.platform.gigya.gigyaservices.interceptor.GigyaConfigValidateInterceptor" />
+	
+	<bean id="gigyaConfigValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="gigyaConfigValidateInterceptor"/>
+		<property name="typeCode" value="GigyaConfig" />
+	</bean>
+	
+	<alias name="defaultGigyaConfigPrepareInterceptor" alias="gigyaConfigPrepareInterceptor"/>
+	<bean id="defaultGigyaConfigPrepareInterceptor" class="de.hybris.platform.gigya.gigyaservices.interceptor.GigyaConfigPrepareInterceptor" />
+	
+	<bean id="gigyaConfigPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="gigyaConfigPrepareInterceptor"/>
+		<property name="typeCode" value="GigyaConfig" />
+	</bean>
+	
+	<alias name="defaultGigyaUserCleanupHook" alias="gigyaUserCleanupHook"/>
+	<bean id="defaultGigyaUserCleanupHook" class="de.hybris.platform.gigya.gigyaservices.retention.GigyaUserCleanupHook" >
+		<property name="gigyaService" ref="gigyaService"/>
+    		<property name="gigyaConfigGenericDao" ref="gigyaConfigGenericDao"/>
+	</bean>
+	
+	<bean id="gigyaUserCleanupHookMergeDirective" depends-on="customerCleanupHooks" parent="listMergeDirective" >
+    		<property name="add" ref="gigyaUserCleanupHook" />
+	</bean>
+	
+	<alias name="defaultGigyaUserPopulator" alias="gigyaUserPopulator"/>
+    <bean id="defaultGigyaUserPopulator" class="de.hybris.platform.gigya.gigyaservices.populators.DefaultGigyaUserPopulator" >
+    		<property name="gigyaFieldMappingGenericDao" ref="gigyaFieldMappingGenericDao"/>
+    		<property name="modelService" ref="modelService"/>
+    		<property name="customerNameStrategy" ref="customerNameStrategy"/>
+    </bean>
+    
+    <bean id="gigyaUserConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="com.gigya.socialize.GSObject" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="gigyaUserPopulator"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="gigyaUserReverseConverter" parent="abstractPopulatingConverter">
+		<property name="targetClass" value="de.hybris.platform.core.model.user.CustomerModel" />
+        <property name="populators">
+            <list merge="true">
+                <ref bean="gigyaUserReversePopulator"/>
+            </list>
+        </property>
+    </bean>
+    
+    <alias name="defaultGigyaUserReversePopulator" alias="gigyaUserReversePopulator"/>
+    <bean id="defaultGigyaUserReversePopulator" class="de.hybris.platform.gigya.gigyaservices.populators.DefaultGigyaUserReversePopulator" >
+    		<property name="gigyaFieldMappingGenericDao" ref="gigyaFieldMappingGenericDao"/>
+    		<property name="modelService" ref="modelService"/>
+    </bean>
+    
+    <alias name="defaultGigyaConsentService" alias="gigyaConsentService"/>
+    <bean id="defaultGigyaConsentService" class="de.hybris.platform.gigya.gigyaservices.consent.impl.DefaultGigyaConsentService" parent="defaultCommerceConsentService" />
+    
+    <alias name="defaultGigyaSessionConfigPrepareInterceptor" alias="gigyaSessionConfigPrepareInterceptor"/>
+    <bean id="defaultGigyaSessionConfigPrepareInterceptor" class="de.hybris.platform.gigya.gigyaservices.interceptor.GigyaSessionConfigPrepareInterceptor" />
+    
+    <bean id="gigyaSessionConfigPrepareInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="gigyaSessionConfigPrepareInterceptor"/>
+		<property name="typeCode" value="GigyaSessionConfig" />
+	</bean>
+	
+	<alias name="defaultGigyaSessionConfigValidateInterceptor" alias="gigyaSessionConfigValidateInterceptor"/>
+    <bean id="defaultGigyaSessionConfigValidateInterceptor" class="de.hybris.platform.gigya.gigyaservices.interceptor.GigyaSessionConfigValidateInterceptor" />
+    
+    <bean id="gigyaSessionConfigValidateInterceptorMapping" class="de.hybris.platform.servicelayer.interceptor.impl.InterceptorMapping">
+		<property name="interceptor" ref="gigyaSessionConfigValidateInterceptor"/>
+		<property name="typeCode" value="GigyaSessionConfig" />
+	</bean>
+    
+    <alias name="defaultFetchConsentTemplateCronJobPerformable" alias="fetchConsentTemplateCronJobPerformable" />
+    <bean id="defaultFetchConsentTemplateCronJobPerformable" class="de.hybris.platform.gigya.gigyaservices.consenttemplatejobs.FetchConsentTemplateCronJobPerformable"
+            parent="abstractJobPerformable">
+        <property name="outboundServiceFacade" ref="outboundServiceFacade"/>
+    </bean>
+    
+    <alias name="defaultGigyaKeyService" alias="gigyaKeyService"/>
+    <bean id="defaultGigyaKeyService" class="de.hybris.platform.gigya.gigyaservices.keymanagement.impl.DefaultGigyaKeyService" >
+    	<property name="gigyaService" ref="gigyaService"/>
+    	<property name="modelService" ref="modelService"/>
+    	<property name="gigyaPublicKeyGenericDao" ref="gigyaPublicKeyGenericDao"/>
+    </bean>  
+    
+    <alias name="defaultGigyaPublicKeyGenericDao" alias="gigyaPublicKeyGenericDao"/>
+	<bean name="defaultGigyaPublicKeyGenericDao" class="de.hybris.platform.servicelayer.internal.dao.DefaultGenericDao" >
+		<constructor-arg value="GigyaPublicKey"/>
+	</bean>  		
+    
+</beans>

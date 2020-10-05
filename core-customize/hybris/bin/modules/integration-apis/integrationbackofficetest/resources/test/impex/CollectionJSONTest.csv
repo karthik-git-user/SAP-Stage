@@ -1,0 +1,22 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; CollectionJSONTest; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; CollectionJSONTest	; DeliveryMode  	; DeliveryMode  	; 	;  
+; CollectionJSONTest	; CatalogVersion	; CatalogVersion	; 	;  
+; CollectionJSONTest	; Media         	; Media         	; 	;  
+; CollectionJSONTest	; Catalog       	; Catalog       	; 	;  
+; CollectionJSONTest	; Product       	; Product       	; true	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; CollectionJSONTest:DeliveryMode  	; code          	; DeliveryMode:code     	;                                  	; true	;  
+; CollectionJSONTest:CatalogVersion	; version       	; CatalogVersion:version	;                                  	; true	;  
+; CollectionJSONTest:CatalogVersion	; catalog       	; CatalogVersion:catalog	; CollectionJSONTest:Catalog       	; true	;  
+; CollectionJSONTest:Media         	; catalogVersion	; Media:catalogVersion  	; CollectionJSONTest:CatalogVersion	; true	;  
+; CollectionJSONTest:Media         	; code          	; Media:code            	;                                  	; true	;  
+; CollectionJSONTest:Catalog       	; id            	; Catalog:id            	;                                  	; true	;  
+; CollectionJSONTest:Product       	; code          	; Product:code          	;                                  	; true	;  
+; CollectionJSONTest:Product       	; catalogVersion	; Product:catalogVersion	; CollectionJSONTest:CatalogVersion	; true	;  
+; CollectionJSONTest:Product       	; data_sheet    	; Product:data_sheet    	; CollectionJSONTest:Media         	; 	;  
+; CollectionJSONTest:Product       	; deliveryTime  	; Product:deliveryTime  	;                                  	; 	;  
+; CollectionJSONTest:Product       	; deliveryModes 	; Product:deliveryModes 	; CollectionJSONTest:DeliveryMode  	; 	;  

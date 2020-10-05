@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">	
+		   
+
+	<alias name="defaultSapServiceOrderCheckoutFacade" alias="sapServiceOrderCheckoutFacade"/>
+	<bean id="defaultSapServiceOrderCheckoutFacade" class="de.hybris.platform.sap.sapserviceorderfacades.facades.impl.DefaultSapServiceOrderCheckoutFacade">
+	      <property name="baseStoreService" ref="baseStoreService"/>
+		  <property name="cartService" ref="cartService"/>
+		  <property name="modelService" ref="modelService" />
+		  <property name="customerAccountService" ref="customerAccountService"/>
+		  <property name="userService" ref="userService"/>
+		  <property name="sapCpiServiceOrderUpdateOutboundBuilderService" ref="sapCpiServiceOrderUpdateOutboundBuilderService"/>
+		  <property name="sapCpiServiceOrderOutboundService" ref="sapCpiServiceOrderOutboundService"/>
+	</bean>
+	
+</beans>

@@ -1,0 +1,19 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# -----------------------------------------------------------------------										
+
+$destination_target=qualtricsDestinationTarget
+
+INSERT_UPDATE DestinationTarget		;destinationChannel(code,itemtype(code))	;id[unique=true];
+									;DEFAULT:DestinationChannel					;$destination_target;;
+
+#Add your endpoint
+INSERT_UPDATE Endpoint		;id[unique=true]		;name						;specData		;specUrl							;version[unique=true];
+							;qualtricsEndpoint		;SAPQualtricsEndpoint		;				;"https://api.qualtrics.com"		;1;
+
+#Add your ConsumedDestination
+INSERT_UPDATE ConsumedDestination	;active[allownull=true]			;destinationTarget(id)[unique = true,default=$destination_target]		;endpoint(id)			;id[unique=true]								;url									;additionalProperties(key, value)[map-delimiter=|];
+									;true							;																		;qualtricsEndpoint		;qualtrics-quote-destination					;"https://api.qualtrics.com"			;"projectId->sample_project_ID1|brandId->sample_brand_ID1";
+
+											

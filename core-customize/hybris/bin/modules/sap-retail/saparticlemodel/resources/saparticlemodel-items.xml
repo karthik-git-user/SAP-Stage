@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype autocreate="true" code="StructuredArticleType" dynamic="false" generate="true">
+			<description>Structured Article Type</description>
+			<value code="DISPLAY" />
+			<value code="SALES_SET" />
+			<value code="PREPACK" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+		<relation code="ArticleComponents" generate="true" localized="false" autocreate="true">
+			<sourceElement qualifier="structuredArticle" type="Product" cardinality="one">
+				<modifiers read="true" write="false" initial="true" optional="false" unique="true" />
+			</sourceElement>
+			<targetElement qualifier="component" type="ArticleComponent" cardinality="many" ordered="true" collectiontype="collection">
+				<modifiers read="true" write="true" optional="true" partof="true" />
+			</targetElement>
+		</relation>
+	</relations>
+
+	<itemtypes>
+		<itemtype code="Product" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="structuredArticleType" type="StructuredArticleType">
+					<description>Article Type</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+
+		<itemtype code="ArticleComponent" generate="true" extends="GenericItem" autocreate="true">
+			<deployment table="ArticleComponents" typecode="9320" />
+			<attributes>
+				<attribute qualifier="component" type="Product">
+					<description>Component Article</description>
+					<modifiers read="true" write="true" search="true" optional="false" unique="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="quantity" type="java.lang.Integer">
+					<description>Quantity</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="unit" type="Unit">
+					<description>Unit of measure</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+
+</items>

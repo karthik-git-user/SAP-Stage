@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config  xmlns="http://www.hybris.com/cockpit/config"
+    xmlns:y="http://www.hybris.com/cockpit/config/hybris"
+    xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config"
+    xmlns:list-view="http://www.hybris.com/cockpitng/component/listView"
+    xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea"
+    xmlns:explorer-tree="http://www.hybris.com/cockpitng/config/explorertree"
+    xmlns:simple-search="http://www.hybris.com/cockpitng/config/simplesearch"
+    xmlns:advanced-search="http://www.hybris.com/cockpitng/config/advancedsearch"
+    xmlns:df="http://www.hybris.com/cockpitng/component/dynamicForms"
+	xmlns:dsb="http://www.hybris.com/cockpitng/config/dashboard"
+    xmlns:na="http://www.hybris.com/cockpitng/config/notifications">
+
+	<context merge-by="module" parent="auto" type="SAPGlobalConfiguration"
+		component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.backendconnectivity">
+				<section name="hmc.section.oaa">
+					<attribute qualifier="sapoaa_carHttpDestination" />
+					<attribute qualifier="sapoaa_carClient" />
+				</section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+
+	<context merge-by="module" parent="auto" type="SAPConfiguration"
+		component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.tab.oaa">				
+			
+				<editorArea:section name="hmc.section.common">
+					<editorArea:attribute qualifier="sapoaa_vendorItemCategory" />					
+					<editorArea:attribute qualifier="sapoaa_mode" />
+				</editorArea:section>
+					
+				<editorArea:section name="hmc.section.oaamode">
+					<editorArea:attribute qualifier="sapoaa_oaaProfile" />
+					<editorArea:attribute qualifier="sapoaa_consumerId" />					
+				</editorArea:section>
+				
+				<editorArea:section name="hmc.section.saleschannelmode">
+					<editorArea:attribute qualifier="sapoaa_salesChannel" />
+				</editorArea:section>
+					
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<context type="SAPConfiguration" component="editorAreaDynamicForms" >
+	  <df:dynamicForms>
+	    <df:section id="oaaSection" qualifier="hmc.section.oaamode" triggeredOn="sapoaa_mode" visibleIf="getSapoaa_mode() == Sapoaa_mode.OAAPROFILE"/>
+        <df:section id="salesChannelSection" qualifier="hmc.section.saleschannelmode" triggeredOn="sapoaa_mode" visibleIf="getSapoaa_mode() == Sapoaa_mode.SALESCHANNEL"/>
+      </df:dynamicForms>
+	</context>
+	
+	
+	<context type="SAPConfiguration" component="create-wizard" module="sapcoreconfigurationbackoffice">
+	  <wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="baseStoreWizard" title="create.basestore.title">
+	    <wz:step id="step1" label="create.basestore.essential.label" sublabel="create.basestore.essential.sublabel">
+	      <wz:content>
+            <wz:property-list root="newBaseStore">          
+              <wz:property qualifier="sapoaa_mode"/>
+			</wz:property-list>
+	      </wz:content>
+		</wz:step>
+	  </wz:flow>
+    </context>
+
+	<context merge-by="type" parent="auto" type="AbstractOrder"
+		component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.positions_and_prices">
+                <section name="hmc.common">
+					<attribute qualifier="sapCarReservation" />
+				</section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+	<context merge-by="type" parent="auto" type="AbstractOrderEntry"
+		component="editor-area">
+		<editorArea:editorArea>
+			<editorArea:tab name="hmc.common">
+				<section name="hmc.section.scheduleLines">
+					<attribute qualifier="scheduleLines" />
+				</section>
+				<section name="hmc.section.sapSource">
+					<attribute qualifier="sapSource" />
+				</section>
+				<section name="hmc.section.sapVendor">
+					<attribute qualifier="sapVendor" />
+				</section>
+				<section name="hmc.section.sapCarReservation">
+					<attribute qualifier="sapCarReservation" />
+				</section>
+			</editorArea:tab>
+		</editorArea:editorArea>
+	</context>
+	
+</config>

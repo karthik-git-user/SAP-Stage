@@ -1,0 +1,9 @@
+
+#Create group of users to give access to
+INSERT_UPDATE UserGroup; UID[unique = true]; locname[lang = en];
+; InboundConsentTemplateGroup;   Inbound Consent Template Integration Admin Group;
+ 
+
+#Add restrictions
+INSERT_UPDATE SearchRestriction; code[unique = true] ; name[lang = en]; query; principal(UID); restrictedType(code); active; generate
+; InboundConsentTemplateIntegrationVisibility;   Inbound Consent Template Restriction	   ; ({code}='InboundConsentTemplate' AND EXISTS ( {{ select {ug:PK} from {UserGroup as ug} where {ug:PK} IN (?session.user.groups) and {ug:uid} = 'InboundConsentTemplateGroup' }} )) OR ({code}!='InboundConsentTemplate');         integrationusergroup ; IntegrationObject; true; true

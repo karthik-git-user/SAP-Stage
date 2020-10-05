@@ -1,0 +1,6 @@
+#****************************
+#*** SAP Integration User ***
+#****************************
+
+INSERT_UPDATE Employee; UID[unique = true]     ; name                       ; groups(uid)[mode = append]                    ;loginDisabled
+                      ; sapInboundOMSOrderUser ; SAP Inbound OMS Order User ; sapInboundOMSOrderGroup,integrationadmingroup ; TRUE

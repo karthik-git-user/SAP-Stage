@@ -1,0 +1,29 @@
+$productCatalog=apparelProductCatalog
+$currencies=GBP
+$net=false
+$storeUid=apparel-uk
+$defaultCurrency=GBP
+$languages=en
+$defaultLanguage=en
+
+####################################################################
+# Create merchandise classification catalog ERP_CLASSIFICATION_026 #
+# with active version ERP_IMPORT and assign it to base store       #
+####################################################################
+$erpClassificationCatalog=ERP_CLASSIFICATION_026
+$erpClassificationCatalogVersion=ERP_IMPORT
+
+# Create merchandise classification catalog
+INSERT_UPDATE ClassificationSystem;id[unique=true]
+;$erpClassificationCatalog
+# ... and active version
+INSERT_UPDATE ClassificationSystemVersion;catalog(id)[unique=true];version[unique=true];active
+;$erpClassificationCatalog;$erpClassificationCatalogVersion;true
+
+# Assign merchandise classification catalog to Base Store
+# ... remove first in order to avoid duplicates
+INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id)[mode=remove]
+;$storeUid;$erpClassificationCatalog
+# ... then append the merchandise classificatin catalog
+INSERT_UPDATE BaseStore;uid[unique=true];catalogs(id)[mode=append]
+;$storeUid;$erpClassificationCatalog

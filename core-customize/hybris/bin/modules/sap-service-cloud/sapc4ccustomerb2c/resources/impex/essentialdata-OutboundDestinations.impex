@@ -1,0 +1,17 @@
+$scpiCustomerMetaUrl=https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATION-OF-CUSTOMER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-CLOUD-FOR-CUSTOMER
+$version=1
+
+INSERT_UPDATE BasicCredential;id[unique=true];password;username
+;scpiCredentials;password;username
+
+
+INSERT_UPDATE DestinationTarget;destinationChannel(code,itemtype(code));id[unique=true]
+;KYMA:DestinationChannel;scpiOutboundCustomerDestination
+
+
+INSERT_UPDATE Endpoint;id[unique=true];name;specData;specUrl;version[unique=true]
+;SAPCpiOutboundCustomerEndpoint;SAPCpiOutboundCustomerEndpoint;;"$scpiCustomerMetaUrl;v=$version/$metadata";unknown
+
+
+INSERT_UPDATE ConsumedDestination;active[allownull=true];credential(id);destinationTarget(id);endpoint(id,version);id[unique=true]; url;additionalProperties(key, value)[map-delimiter = |]
+;true;scpiCredentials; scpiOutboundCustomerDestination;SAPCpiOutboundCustomerEndpoint:unknown;scpiOutboundCustomerConsumedDestination;"$scpiCustomerMetaUrl;v=$version/Customers";"$scpiCustomerMetaUrl;v=$version/"

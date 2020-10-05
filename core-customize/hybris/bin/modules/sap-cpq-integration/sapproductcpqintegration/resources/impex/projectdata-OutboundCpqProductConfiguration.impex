@@ -1,0 +1,24 @@
+$catalog=Online 
+
+INSERT_UPDATE OutboundSyncStreamConfigurationContainer; id[unique = true]       ;
+                                                      ; productCpqOutboundSyncDataStreams ;
+
+INSERT_UPDATE OutboundSyncJob; code[unique = true]  ; streamConfigurationContainer(id)
+                             ; productCpqOdataOutboundSyncJob ; productCpqOutboundSyncDataStreams
+
+INSERT_UPDATE OutboundSyncCronJob; code[unique = true] ; job(code)            ; sessionLanguage(isoCode)[default = en]
+                                 ; productCpqOutboundSyncCronJob ; productCpqOdataOutboundSyncJob ;
+                            
+                            
+INSERT_UPDATE OutboundChannelConfiguration; code[unique = true]; integrationObject(code); destination(id)
+                                          ; sapCpiCpqProductOutboundChannel    ; SAPCpqOutboundProduct        ; scpiProductCpqDestination
+
+INSERT_UPDATE OutboundChannelConfiguration; code[unique = true]; integrationObject(code); destination(id)
+                                          ; sapCpiCpqPriceoutbOundChannel    ; SAPCpqOutboundPrice        ; scpiPriceCpqDestination
+
+
+INSERT_UPDATE OutboundSyncStreamConfiguration; streamId[unique = true]; container(id)           ; itemTypeForStream(code); outboundChannelConfiguration(code);  whereClause;
+                                 ; sapCpiCpqProductStream          ; productCpqOutboundSyncDataStreams ; Product                ; sapCpiCpqProductOutboundChannel; {item.catalogVersion} IN ({{SELECT {c.pk} FROM {CatalogVersion as c} WHERE {c.version}='$catalog'}})
+
+INSERT_UPDATE OutboundSyncStreamConfiguration; streamId[unique = true]; container(id)           ; itemTypeForStream(code); outboundChannelConfiguration(code);  whereClause;
+                                 ; sapCpiCpqPriceStream          ; productCpqOutboundSyncDataStreams ; PriceRow                ; sapCpiCpqPriceoutbOundChannel; {item.catalogVersion} IN ({{SELECT {c.pk} FROM {CatalogVersion as c} WHERE {c.version}='$catalog'}})

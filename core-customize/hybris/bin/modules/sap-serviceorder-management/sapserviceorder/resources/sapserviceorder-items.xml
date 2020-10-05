@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xsi:noNamespaceSchemaLocation="items.xsd">
+			
+	<collectiontypes>
+        <collectiontype code="ConsignmentList" elementtype="Consignment" autocreate="true" generate="false" type="list"/>
+        <collectiontype code="ServiceSkillList" elementtype="SapServiceSkill" autocreate="true" generate="false" type="list"/>
+    </collectiontypes>
+			
+	<enumtypes>
+		<enumtype code="SAPOrderStatus" autocreate="false" generate="false">
+			<value code="SENT_TO_S4CM"/>
+			<value code="NOT_SENT_TO_S4CM" />
+			<value code="SERVICE_ORDER_CREATED"/>
+			<value code="CONFIRMED_FROM_S4CM" />
+			<value code="CANCELLED_FROM_S4CM" />
+			<!-- S4CM side statuses -->
+			<value code="SERVICE_ORDER_IS_RELEASED" />
+			<value code="SERVICE_ORDER_IS_COMPLETED" />
+			<value code="SERVICE_ORDER_IS_REJECTED" />
+		</enumtype>
+		<enumtype code="ConsignmentStatus" generate="false"
+			autocreate="false">
+			<value code="SERVICED" />
+		</enumtype>
+		<enumtype code="ConsignmentEntryStatus" generate="false"
+			autocreate="false">
+			<value code="PLANNED" />
+			<value code="SERVICED" />
+		</enumtype>
+	</enumtypes>
+
+	<relations>
+	   <relation code="S4CMConfig2WarehouseRelation" autocreate="true"
+	           generate="true" localized="false">
+	      <sourceElement type="S4CMConfig" qualifier="s4cmConfig" cardinality="one"/>
+	      <targetElement type="Warehouse" qualifier="warehouses" cardinality="many">
+	      		<modifiers read="true" write="true" search="true"
+					optional="false" />
+	      </targetElement>
+	   </relation>
+	   <relation code="SAPCpiOutboundServiceOrderItem2SAPCpiOutboundPriceComponent" autocreate="true"
+	           generate="true" localized="false">
+            <sourceElement type="SAPCpiOutboundServiceOrderItem" qualifier="sapCpiOutboundServiceOrderItem" cardinality="one" />
+            <targetElement type="SAPCpiOutboundPriceComponent" qualifier="sapCpiOutboundPriceComponents" cardinality="many" collectiontype="set">
+                <modifiers partof="true" />
+            </targetElement>
+        </relation>
+        <relation code="SAPCpiOutboundServiceOrder2SAPCpiOutboundServiceOrderItem" autocreate="true"
+	           generate="true" localized="false">
+            <sourceElement type="SAPCpiOutboundServiceOrder" qualifier="sapCpiOutboundServiceOrder" cardinality="one" />
+            <targetElement type="SAPCpiOutboundServiceOrderItem" qualifier="sapCpiOutboundServiceOrderItems" cardinality="many" collectiontype="set">
+                <modifiers partof="true" />
+            </targetElement>
+        </relation>
+	</relations>
+
+	<itemtypes>
+        
+        <itemtype code="SAPCpiOutboundServiceOrder" extends="SAPCpiOutboundOrder">
+			<attributes>
+				<attribute qualifier="commerceOrderId" type="java.lang.String"
+					generate="true">
+					<persistence type="property" />
+					<description>Order code of the parent Commerce Order.</description>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="serviceOrderId" type="java.lang.String"
+					generate="true">
+					<persistence type="property" />
+					<description>Order code of the S4 Service Order.</description>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="requestedServiceStartDateTime" type="java.lang.String"
+					generate="true">
+					<persistence type="property" />
+					<description>Service Order requested start date time</description>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="skillSummary" type="java.lang.String"
+					generate="true">
+					<persistence type="property" />
+					<description>Service Order Skill Summary</description>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="sapOrderStatus" type="SAPOrderStatus">
+					<persistence type="property" />
+					<description>Status of the corresponding SAPOrder.</description>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="SAPCpiOutboundServiceOrderItem" extends="SAPCpiOutboundOrderItem">
+            <attributes>
+                <attribute qualifier="skills" type="java.lang.String">
+                    <persistence type="property"/>
+                </attribute>
+                <attribute qualifier="description" type="java.lang.String">
+                    <persistence type="property"/>
+                    <description>Service Order item description</description>
+					<modifiers optional="true" />
+                </attribute>
+				<attribute qualifier="requestedServiceStartDateTime" type="java.lang.String"
+					generate="true">
+					<persistence type="property" />
+					<description>Service Order item requested start date time</description>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+        </itemtype>
+		
+		<itemtype code="Consignment" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="serviceProducts" type="boolean">
+					<description>sets service products flag on consignment</description>
+                 	<persistence type="property"/>
+				</attribute>
+				<attribute qualifier="isRelatedConsignmentProcessed" type="boolean">
+					<description>boolean to know if related consignments are processed</description>
+                 	<persistence type="property"/>
+                 	<defaultvalue>false</defaultvalue>
+				</attribute>
+				<attribute qualifier="relatedConsignments" type="ConsignmentList">
+					<description>Related Consignments</description>
+               		<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="ConsignmentEntry" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="plannedStartDate" type="java.util.Date">
+					<description>Planned start date of the service.</description>
+                 	<persistence type="property"/>
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="AbstractOrder" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="requestedServiceStartDate"
+					type="java.util.Date">
+					<description>Service Order request Start Date</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		
+		<itemtype code="SAPOrder" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="serviceOrderId" type="java.lang.String">
+					<persistence type="property" />
+					<description>Saves S/4 service order ID Commerce.</description>
+					<modifiers optional="true" />
+				</attribute>
+				<attribute qualifier="cancelReason" type="java.lang.String">
+					<persistence type="property" />
+					<description>Cancellation Reason.</description>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+         
+          <itemtype code="SAPConfiguration" autocreate="false"
+			generate="false">
+			<attributes>
+			
+				<attribute qualifier="serviceOrderTransactionType" type="java.lang.String">
+					<description>service order transaction type code</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="serviceItemPriceConditionCode" type="java.lang.String">
+					<description>service product base price condition code</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="serviceProductWarehousesConfig" type="S4CMConfig">
+					<description>service product warehouses</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="leadDays" type="java.lang.Integer">
+					<description>No. of days to be added to the current date for the service order request date</description>
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="serviceOrderModificationCutoffDays" type="java.lang.Integer">
+					<description>No. of days before the requested start date that the service order can be modified</description>
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+		</itemtype>
+		 
+		 <itemtype code="S4CMConfig"
+			autocreate="true" generate="true">
+			<deployment table="S4CMConfig" typecode="9366" />
+				<attributes>
+					<attribute qualifier="id" type="java.lang.String">
+			            <description>id</description>
+			            <persistence type="property"/>
+			            <modifiers unique="true"/>
+			         </attribute>
+			     </attributes>
+		</itemtype>	
+		
+		<itemtype code="Product" autocreate="false" generate="false">
+				<description>Extending the Product type from core with additional attributes.</description>
+				<attributes>
+					<attribute type="ServiceSkillList" qualifier="skills">
+						<modifiers optional="true" />
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype>
+		
+		<itemtype code="SapServiceSkill"
+			autocreate="true" generate="true" >
+			<deployment table="sapserviceskills" typecode="9370" />
+				<attributes>
+					<attribute type="java.lang.String" qualifier="code">
+						<description>code</description>
+			            <persistence type="property"/>
+			            <modifiers read="true" write="true" optional="true" unique="true"/>
+					</attribute>
+					<attribute type="java.lang.String" qualifier="name">
+						<description>name</description>
+			            <persistence type="property"/>
+			            <modifiers read="true" write="true" optional="true" />
+					</attribute>
+					<attribute type="java.lang.String" qualifier="description">
+						<description>description</description>
+			            <persistence type="property"/>
+			            <modifiers read="true" write="true" optional="true" />
+					</attribute>
+			     </attributes>
+		</itemtype>		
+		
+		<!-- END -->
+		
+		
+	</itemtypes>
+</items>

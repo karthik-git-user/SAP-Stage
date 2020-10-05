@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	
+	<alias name="defaultDiscountOrderEntryPopulator" alias="discountOrderEntryPopulator"/>
+    <bean id="defaultDiscountOrderEntryPopulator"
+          class="com.sap.hybris.sapcpqquotefacades.populators.DiscountOrderEntryPopulator">
+    </bean>
+
+    <!-- append discount specific order entry populator to the default orderEntryConverter -->
+    <bean parent="modifyPopulatorList">
+        <property name="list" ref="orderEntryConverter"/>
+        <property name="add" ref="discountOrderEntryPopulator"/>
+    </bean>
+
+	<alias name="sapCpqQuoteFacadeImpl" alias="sapCpqQuoteFacade" />
+	<bean name="sapCpqQuoteFacadeImpl" class="com.sap.hybris.sapcpqquotefacades.impl.DefaultSapCpqQuoteFacadeImpl">
+		<property name="quoteService" ref="quoteService"/>
+		<property name="userService" ref="userService"/>
+		<property name="sapCpqQuoteApiClientService" ref="sapCpqQuoteApiClientService"/>
+	</bean>
+			
+</beans>

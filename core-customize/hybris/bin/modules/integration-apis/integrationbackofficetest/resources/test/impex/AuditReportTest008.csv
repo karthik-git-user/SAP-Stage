@@ -1,0 +1,12 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; AuditReportTest008; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+; AuditReportTest008	; Order   	; Order   	; true	;
+; AuditReportTest008	; Customer	; Customer	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; AuditReportTest008:Order   	; user      	; Order:user         	; AuditReportTest008:Customer	; 	;
+; AuditReportTest008:Order   	; code      	; Order:code         	;                              	; true	;
+; AuditReportTest008:Customer	; name      	; Customer:name      	;                              	; 	;
+; AuditReportTest008:Customer	; customerID	; Customer:customerID	;                              	; true	;

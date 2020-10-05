@@ -1,0 +1,14 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; SingleRootTestImpex001; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; SingleRootTestImpex001	; OrgUnit	; OrgUnit	; true	;  
+; SingleRootTestImpex001	; Address	; Address	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; SingleRootTestImpex001:OrgUnit	; uid           	; OrgUnit:uid           	;                  	; true	;  
+; SingleRootTestImpex001:OrgUnit	; contactAddress	; OrgUnit:contactAddress	; SingleRootTestImpex001:Address	; 	;  
+; SingleRootTestImpex001:Address	; fax           	; Address:fax           	;                  	; 	;  
+; SingleRootTestImpex001:Address	; company       	; Address:company       	;                  	; 	;  
+; SingleRootTestImpex001:Address	; cellphone     	; Address:cellphone     	;                  	; 	;  
+; SingleRootTestImpex001:Address	; email         	; Address:email         	;                  	; true	;  

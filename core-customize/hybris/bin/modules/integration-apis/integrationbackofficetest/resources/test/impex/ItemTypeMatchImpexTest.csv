@@ -1,0 +1,17 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; ItemTypeMatchImpexTest; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]; itemTypeMatch(code)
+; ItemTypeMatchImpexTest	; Product       	; Product       	; 	    ; ALL_SUB_AND_SUPER_TYPES	;
+; ItemTypeMatchImpexTest	; CatalogVersion	; CatalogVersion	; 	    ; RESTRICT_TO_ITEM_TYPE  	;
+; ItemTypeMatchImpexTest	; StockLevel    	; StockLevel    	; true	; ALL_SUB_AND_SUPER_TYPES	;
+; ItemTypeMatchImpexTest	; Catalog       	; Catalog       	; 	    ; ALL_SUBTYPES           	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; ItemTypeMatchImpexTest:Product       	; catalogVersion	; Product:catalogVersion	; ItemTypeMatchImpexTest:CatalogVersion	; true	;
+; ItemTypeMatchImpexTest:Product       	; code          	; Product:code          	;                         	            ; true	;
+; ItemTypeMatchImpexTest:CatalogVersion	; catalog       	; CatalogVersion:catalog	; ItemTypeMatchImpexTest:Catalog       	; true	;
+; ItemTypeMatchImpexTest:CatalogVersion	; version       	; CatalogVersion:version	;                         	            ; true	;
+; ItemTypeMatchImpexTest:StockLevel    	; product       	; StockLevel:product    	; ItemTypeMatchImpexTest:Product       	; 	;
+; ItemTypeMatchImpexTest:StockLevel    	; productCode       ; StockLevel:productCode    ;                         	            ; true	;
+; ItemTypeMatchImpexTest:Catalog       	; id            	; Catalog:id            	;                         	            ; true	;

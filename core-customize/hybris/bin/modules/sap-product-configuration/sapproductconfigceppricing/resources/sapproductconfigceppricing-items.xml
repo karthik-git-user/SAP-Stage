@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved
+-->
+<!--
+	ATTENTION: This is just an example file. You have to edit it according to your needs.
+-->
+
+<items 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<enumtypes>
+		<enumtype code="SAPProductConfigPricingDetailsMode" generate="true"
+			autocreate="true">
+			<description>
+				Possible values for pricing details mode
+			</description>
+			<value code="conditionFunction" />
+			<value code="conditionType" />
+			<value code="pricingSubtotal" />
+		</enumtype>
+	</enumtypes>
+	
+	<relations>
+				<relation code="SAPCpiOutboundS4hcConfigHeaderToValuation" localized="false">
+            	<sourceElement type="SAPCpiOutboundOrderS4hcConfigHeader" qualifier="sapCpiS4hcConfigHeader" cardinality="one" />
+            	<targetElement type="SAPCpiOutboundOrderS4hcConfigValuation" qualifier="sapCpiS4hcConfigValuations" cardinality="many" collectiontype="set">
+               	 <modifiers partof="true" />
+            	</targetElement>
+        		</relation>         		
+  	</relations>	
+			
+	<itemtypes>	
+	
+		<itemtype code="SAPCpiOutboundOrderS4hcConfigHeader" extends="GenericItem">
+           <deployment table="SAPCpiS4hcConfigHeader" typecode="9920"/>
+           <attributes>
+               <attribute qualifier="orderId" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers unique="true"/>
+                </attribute>
+                <attribute qualifier="entryNumber" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers unique="true"/>
+                </attribute>           
+	              <attribute qualifier="status" type="java.lang.String">
+	                  <persistence type="property"/>
+	              </attribute>
+           </attributes>
+      </itemtype>
+      
+      <itemtype code="SAPCpiOutboundOrderS4hcConfigValuation" extends="GenericItem">
+           <deployment table="SAPCpiS4hcConfigVal" typecode="9921"/>
+           <attributes>
+                <attribute qualifier="orderId" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers unique="true"/>
+                </attribute>
+                <attribute qualifier="entryNumber" type="java.lang.String">
+                    <persistence type="property"/>
+                    <modifiers unique="true"/>
+                </attribute>
+	              <attribute qualifier="characteristic" type="java.lang.String">
+	                  <persistence type="property"/>
+	              </attribute>
+	              <attribute qualifier="value" type="java.lang.String">
+	                  <persistence type="property"/>
+	              </attribute>
+	              <attribute qualifier="author" type="java.lang.String">
+	                  <persistence type="property"/>
+	              </attribute>
+           </attributes>
+      </itemtype>
+      
+ 		<itemtype code="SAPCpiOutboundOrderItem" autocreate="false"
+			generate="false">			
+			 <attributes>
+				<attribute qualifier="s4hcConfigHeader"
+					type="SAPCpiOutboundOrderS4hcConfigHeader" generate="true" autocreate="true" >					 
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute> 
+			 </attributes>
+      	</itemtype>      
+        			
+ 		<itemtype code="SAPConfiguration" autocreate="false"
+			generate="false">			
+			 <attributes>
+				<attribute qualifier="sapproductconfig_subtotal_baseprice_cps"
+					type="java.lang.String" generate="true" autocreate="true" >
+					<description>Product Config - Subtotal for Base Price CPS</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapproductconfig_subtotal_selectedoptions_cps"
+					type="java.lang.String" generate="true" autocreate="true" >
+					<description>Product Config - Subtotal for Selected Options CPS</description>
+					<modifiers read="true" write="true" search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapproductconfig_conditiontypes_baseprice_cps" 
+				   type="StringCollection" generate="true" autocreate="true">
+					<description>Product Config - Condition Types for Base Price CPS</description>
+					<modifiers read="true" write="true"	search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapproductconfig_conditiontypes_selectedoptions_cps" 
+				   type="StringCollection" generate="true" autocreate="true">
+					<description>Product Config - Condition Types for Selected Options CPS</description>
+					<modifiers read="true" write="true"	search="true" optional="true" />
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="sapproductconfig_pricingdetailsmode" type="SAPProductConfigPricingDetailsMode"
+					generate="true" autocreate="true">		
+					<modifiers optional="false" />						 	
+					<description>Product Config - Pricing Details Mode</description>
+					<persistence type="property" />
+					<defaultvalue>em().getEnumerationValue("SAPProductConfigPricingDetailsMode", "conditionFunction")</defaultvalue>		
+				</attribute>
+			 </attributes>
+      	</itemtype>
+	</itemtypes>
+</items>

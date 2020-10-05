@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="beans.xsd">
+
+	<bean class="de.hybris.platform.scimfacadescep.ScimGroup" >
+		<description>An authorization group in Commerce</description>
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimGroup</hint>
+        </hints>
+		<property name="id" type="java.lang.String">
+			<description>id of the scim group</description>
+			<hints>
+				<hint name="example">SG1</hint>
+			</hints>
+		</property>
+		<property name="displayName" type="java.lang.String">
+			<description>name of the scim group</description>
+			<hints>
+				<hint name="example">ServiceGroup1</hint>
+			</hints>
+		</property>
+		<property name="members" type="java.util.List&lt;de.hybris.platform.scimfacadescep.ScimGroupMember>">
+			<description>list of members of the group</description>
+			<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimGroupMember</hint>
+        </hints>
+		</property>
+		<property name="meta" type="de.hybris.platform.scimfacadescep.ScimGroupMeta">
+			<description>Metadata of a scim group</description>
+			<hints>
+	            <hint name="example">ScimGroupMeta</hint>
+       		</hints>
+		</property>
+	</bean>
+
+	<bean class="de.hybris.platform.scimfacadescep.ScimGroupMember" >
+		<description>Users who are members of the scim group</description>
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimGroupMember</hint>
+        </hints>
+		<property name="value" type="java.lang.String">
+			<description>id of the member</description>
+			<hints>
+				<hint name="example">E001</hint>
+			</hints>
+		</property>
+		<property name="display" type="java.lang.String">
+			<description>name of the member</description>
+			<hints>
+				<hint name="example">John Doe</hint>
+			</hints>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.scimfacadescep.ScimGroupMeta" >
+		<description>Metadata of a scim group</description>
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimGroupMeta</hint>
+        </hints>
+		<property name="version" type="int">
+			<description>version of scim</description>
+			<hints>
+				<hint name="example">2</hint>
+			</hints>
+		</property>
+		<property name="created" type="java.util.Date">
+			<description>creation date and time of the scim group</description>
+			<hints>
+				<hint name="example">2019-11-05T16:58:29+0000</hint>
+			</hints>
+		</property>
+		<property name="lastModified" type="java.util.Date">
+			<description>date and time when scim group was last updated</description>
+			<hints>
+				<hint name="example">2019-11-05T16:58:29+0000</hint>
+			</hints>
+		</property>
+		<property name="resourceType" type="java.lang.String">
+			<description>type of scim resource</description>
+			<hints>
+				<hint name="example">group</hint>
+			</hints>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.scimfacadescep.ScimGroupList" >
+		<description>List of all the scim groups</description>
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimGroupList</hint>
+        </hints>
+		<property name="totalResults" type="int">
+			<description>Total number of scim groups exists in Commerce.</description>
+			<hints>
+				<hint name="example">10</hint>
+			</hints>
+		</property>
+		<property name="itemsPerPage" type="int">
+			<description>Total number of scim groups to be fetched from Commerce on a page.</description>
+			<hints>
+				<hint name="example">5</hint>
+			</hints>
+		</property>
+		<property name="startIndex" type="int">
+			<description>The starting point for fetch of scim groups from Commerce on a page.</description>
+			<hints>
+				<hint name="example">3</hint>
+			</hints>
+		</property>
+		<property name="resources" type="java.util.List&lt;de.hybris.platform.scimfacadescep.ScimGroup>">
+			<description>List of all the scim groups fetched from Commerce</description>
+			<hints>
+	            <hint name="example">ScimGroup</hint>
+        	</hints>
+		</property>
+	</bean>
+	
+	<bean class="de.hybris.platform.scimfacadescep.ScimUserList" >
+		<description>List of all the users of type employee</description>
+		<hints>
+            <hint name="wsRelated"/>
+            <hint name="alias">ScimUserList</hint>
+        </hints>
+		<property name="totalResults" type="int">
+			<description>Total number of scim groups exists in Commerce.</description>
+		</property>
+		<property name="itemsPerPage" type="int">
+			<description>Total number of scim groups to be fetched from Commerce on a page.</description>
+		</property>
+		<property name="startIndex" type="int">
+			<description>The starting point for fetch of scim groups from Commerce on a page.</description>
+		</property>
+		<property name="resources" type="java.util.List&lt;de.hybris.platform.scimfacades.ScimUser>">
+			<description>List of all the scim groups fetched from Commerce</description>
+		</property>
+	</bean>
+
+</beans>

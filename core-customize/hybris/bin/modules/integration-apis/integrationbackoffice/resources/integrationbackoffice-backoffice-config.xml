@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config"
+        xmlns:ea="http://www.hybris.com/cockpitng/component/editorArea"
+        xmlns:na="http://www.hybris.com/cockpitng/config/notifications"
+        xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config">
+
+    <context component="perspective-view-switcher" authority="backofficeintegrationadministrator">
+        <vs:view-switcher xmlns:vs="http://www.hybris.com/cockpitng/config/viewSwitcher">
+            <vs:authority name="backofficeintegrationadministrator ">
+                <vs:view id="integrationBackofficeToolPerspective"/>
+                <vs:view id="hmc2"/>
+            </vs:authority>
+        </vs:view-switcher>
+    </context>
+
+    <context component="perspective-view-switcher" authority="backofficeintegrationagent">
+        <vs:view-switcher xmlns:vs="http://www.hybris.com/cockpitng/config/viewSwitcher">
+            <vs:authority name="backofficeintegrationagent">
+                <vs:view id="integrationBackofficeToolPerspective"/>
+            </vs:authority>
+        </vs:view-switcher>
+    </context>
+
+    <context component="integrationbackoffice-explorer-tree"
+             authority="backofficeintegrationadministrator,backofficeintegrationagent">
+        <n:explorer-tree xmlns:n="http://www.hybris.com/cockpitng/config/explorertree">
+            <n:type-node id="integrationbackoffice.explorer.treenode.maintenance" code="Modeling"/>
+        </n:explorer-tree>
+    </context>
+
+    <context component="integrationbackoffice-modeling-actions" type="IntegrationObject">
+        <y:actions xmlns:y="http://www.hybris.com/cockpit/config/hybris">
+            <y:group qualifier="common">
+                <y:action action-id="integrationbackoffice.actions.createIntegrationObjectAction"/>
+                <y:action action-id="integrationbackoffice.actions.deleteIntegrationObjectAction"/>
+                <y:action action-id="integrationbackoffice.actions.integrationObjectMetadataViewerAction"/>
+                <y:action action-id="integrationbackoffice.actions.cloneIntegrationObjectAction"/>
+                <y:action action-id="integrationbackoffice.actions.integrationObjectAuditReportDownloadAction"/>
+                <y:action action-id="integrationbackoffice.actions.addClassificationClassAction"
+                          property="currentObject"/>
+                <y:action action-id="integrationbackoffice.actions.itemTypeMatchIOIAction"/>
+            </y:group>
+        </y:actions>
+    </context>
+
+    <context type="IntegrationObject" component="base">
+        <b:base xmlns:b="http://www.hybris.com/cockpit/config/hybris">
+            <b:labels>
+                <b:label>code</b:label>
+            </b:labels>
+        </b:base>
+    </context>
+    <context type="IntegrationObjectItem" component="base">
+        <b:base xmlns:b="http://www.hybris.com/cockpit/config/hybris">
+            <b:labels>
+                <b:label>code</b:label>
+            </b:labels>
+        </b:base>
+    </context>
+    <context type="IntegrationObjectItemAttribute" component="base">
+        <b:base xmlns:b="http://www.hybris.com/cockpit/config/hybris">
+            <b:labels>
+                <b:label>attributeName</b:label>
+            </b:labels>
+        </b:base>
+    </context>
+    <context type="ComposedType" component="base">
+        <b:base xmlns:b="http://www.hybris.com/cockpit/config/hybris">
+            <b:labels>
+                <b:label>code</b:label>
+            </b:labels>
+        </b:base>
+    </context>
+
+    <context component="notification-area" source="integrationbackoffice" merge-by="source">
+        <na:notification-area xmlns:na="http://www.hybris.com/cockpitng/config/notifications">
+            <na:notifications eventType="JustMessage" level="FAILURE">
+                <na:message>integrationbackoffice.notification.message</na:message>
+                <na:references linksEnabled="false">
+                    <na:reference placeholder="0"
+                                  label="#root instanceof T(java.lang.Throwable) ? @exceptionTranslationService.toString(#root) : #root"/>
+                </na:references>
+            </na:notifications>
+            <na:notifications eventType="JustMessage" level="SUCCESS">
+                <na:message>integrationbackoffice.notification.message</na:message>
+                <na:references linksEnabled="false">
+                    <na:reference placeholder="0"
+                                  label="#root instanceof T(java.lang.Throwable) ? @exceptionTranslationService.toString(#root) : #root"/>
+                </na:references>
+            </na:notifications>
+            <na:notifications eventType="JustMessage" level="INFO">
+                <na:message>integrationbackoffice.notification.message</na:message>
+                <na:references linksEnabled="false">
+                    <na:reference placeholder="0"
+                                  label="#root instanceof T(java.lang.Throwable) ? @exceptionTranslationService.toString(#root) : #root"/>
+                </na:references>
+            </na:notifications>
+            <na:notifications eventType="JustMessage" level="WARNING" destination="GLOBAL">
+                <na:message>integrationbackoffice.notification.message</na:message>
+                <na:references linksEnabled="false">
+                    <na:reference placeholder="0"
+                                  label="#root instanceof T(java.lang.Throwable) ? @exceptionTranslationService.toString(#root) : #root"/>
+                </na:references>
+            </na:notifications>
+        </na:notification-area>
+    </context>
+
+    <context type="Product" component="integration-object-add-classification-class-wizard" parent="GenericItem"
+             merge-by="type">
+        <wz:flow id="integrationObjectAddClassificationClass" title="integrationbackoffice.wizard.classification.label"
+                 show-breadcrumb="false"
+                 size="large" merge-mode="merge">
+            <wz:prepare id="integrationObjectClassification" merge-mode="merge">
+                <wz:initialize property="classificationAttributesForm" template-bean="attributesForm"/>
+            </wz:prepare>
+            <wz:step id="step1">
+                <wz:content id="step1.content">
+                    <wz:custom-view lang="zul">
+                        <wz:renderer spring-bean="defaultClassificationAttributesWithoutLocalizationRenderer">
+                            <wz:parameter>
+                                <wz:name>itemsToExport</wz:name>
+                                <wz:value>{}</wz:value>
+                            </wz:parameter>
+                            <wz:parameter>
+                                <wz:name>classificationAttributesFormModelKey</wz:name>
+                                <wz:value>classificationAttributesForm</wz:value>
+                            </wz:parameter>
+                            <wz:parameter>
+                                <wz:name>retrieveMode</wz:name>
+                                <wz:value>ALL</wz:value>
+                            </wz:parameter>
+                            <wz:parameter>
+                                <wz:name>excludeLocalizedNodes</wz:name>
+                                <wz:value>true</wz:value>
+                            </wz:parameter>
+                            <wz:parameter>
+                                <wz:name>includeAllSupported</wz:name>
+                                <wz:value>false</wz:value>
+                            </wz:parameter>
+                        </wz:renderer>
+                    </wz:custom-view>
+                </wz:content>
+                <wz:navigation id="step2.navigation">
+                    <wz:cancel/>
+                    <wz:custom label="integrationbackoffice.wizard.classification.button.add.label"
+                               handler="integrationObjectClassificationClassWizardHandler"
+                               visible="classificationAttributesForm.hasSelectedAttributes()">
+                        <wz:parameter>
+                            <wz:name>classificationAttributesFormModelKey</wz:name>
+                            <wz:value>classificationAttributesForm</wz:value>
+                        </wz:parameter>
+                    </wz:custom>
+                </wz:navigation>
+            </wz:step>
+        </wz:flow>
+    </context>
+</config>

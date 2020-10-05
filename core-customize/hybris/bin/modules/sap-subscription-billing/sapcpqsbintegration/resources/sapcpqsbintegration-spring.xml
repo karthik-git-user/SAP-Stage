@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="sapcpqsbintegrationSystemSetup"
+          class="com.sap.hybris.sapcpqsbintegration.setup.SapcpqsbintegrationSystemSetup">
+        <!-- constructor arg injection example -->
+        <constructor-arg ref="sapcpqsbintegrationService"/>
+    </bean>
+
+    <bean id="sapcpqsbintegrationService"
+          class="com.sap.hybris.sapcpqsbintegration.service.impl.DefaultSapcpqsbintegrationService">
+        <!-- setter injection example -->
+        <property name="modelService" ref="modelService"/>
+        <property name="mediaService" ref="mediaService"/>
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+
+    <alias alias="quoteCpqSbConversionService" name="defaultCpqSbQuoteConversionService"/>
+    <bean id="defaultCpqSbQuoteConversionService"
+          class="com.sap.hybris.sapcpqsbintegration.outbound.service.impl.DefaultSapCpqSbOutboundQuoteConversionService">
+    </bean>
+
+    <alias alias="defaultSapCpqSbOutboundQuoteService" name="defaultSapCpqSbOutboundQuoteService"/>
+    <bean id="defaultSapCpqSbOutboundQuoteService"
+          class="com.sap.hybris.sapcpqsbintegration.outbound.service.impl.DefaultSapCpqSbOutboundQuoteService">
+        <property name="outboundServiceFacade" ref="outboundServiceFacade"/>
+    </bean>
+
+
+    <alias name="defaultCpqSbInboundQuoteHelper" alias="cpqSbInboundQuoteHelper"/>
+    <bean id="defaultCpqSbInboundQuoteHelper"
+          class="com.sap.hybris.sapcpqsbintegration.inbound.helper.impl.DefaultCpqSbInboundQuoteHelper"/>
+
+    <bean id="sapCpqSbInboundQuoteHelper" depends-on="sapCpqInboundQuoteHelpers" parent="listMergeDirective">
+        <property name="add" ref="cpqSbInboundQuoteHelper"/>
+    </bean>
+
+    <alias name="defaultSapCpqSbOrderConversionService" alias="sapCpqSbOrderConversionService"/>
+    <bean id="defaultSapCpqSbOrderConversionService"
+          class="com.sap.hybris.sapcpqsbintegration.service.impl.DefaultSapCpqSbOrderConversionService"
+          parent="sapRevenueCloudOrderConversionService">
+    </bean>
+
+    <alias name="defaultSapCpqRevenueCloudOrderOutboundService" alias="sapRevenueCloudOrderOutboundService"/>
+    <bean id="defaultSapCpqRevenueCloudOrderOutboundService"
+          class="de.hybris.platform.sap.saprevenuecloudorder.service.impl.DefaultSapRevenueCloudOrderOutboundService">         
+        <property name="sapRevenueCloudOrderConversionService" ref="sapCpqSbOrderConversionService"/>
+        <property name="outboundServiceFacade" ref="outboundServiceFacade"/>
+    </bean>
+
+    <alias name="defaultCpqSbQuoteHelper" alias="cpqSbQuoteHelper"/>
+    <bean id="defaultCpqSbQuoteHelper"
+          class="com.sap.hybris.sapcpqsbintegration.inbound.helper.impl.DefaultCpqSbQuoteHelper">
+        <property name="quoteConversionService" ref="quoteCpqSbConversionService"/>
+        <property name="sapCpqSbOutboundQuoteService" ref="defaultSapCpqSbOutboundQuoteService"/>
+    </bean>
+
+
+    <bean id="sapCpqSbQuoteHelper" depends-on="sapCpqQuoteHelpers" parent="listMergeDirective">
+        <property name="add" ref="cpqSbQuoteHelper"/>
+    </bean>
+
+    <alias alias="createCartFromQuoteStrategy" name="defaultSapCpqSbCreateCartFromQuoteStrategy"/>
+    <bean id="defaultSapCpqSbCreateCartFromQuoteStrategy"
+          class="com.sap.hybris.sapcpqsbintegration.service.impl.DefaultSapCpqSbCreateCartFromQuoteStrategy" parent="commerceCreateCartFromQuoteStrategy"/>
+
+    <alias name="defaultSapCpqSbCpiQuoteService" alias="commerceQuoteService"/>
+    <bean id="defaultSapCpqSbCpiQuoteService"   class="com.sap.hybris.sapcpqsbintegration.service.impl.DefaultSapCpqSbCpiQuoteService" parent="defaultCPQOutboundQuoteService" />
+
+
+
+    <alias alias="sapCpqSbFetchQuoteDiscounts" name="defaultSapCpqSbFetchQuoteDiscounts"/>
+    <bean id="defaultSapCpqSbFetchQuoteDiscounts"
+          class="com.sap.hybris.sapcpqsbintegration.service.impl.DefaultSapCpqSbFetchQuoteDiscountsService">
+        <property name="flexibleSearchService" ref="flexibleSearchService"/>
+    </bean>
+</beans>

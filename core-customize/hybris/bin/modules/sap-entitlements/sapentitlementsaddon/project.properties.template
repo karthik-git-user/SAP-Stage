@@ -1,0 +1,17 @@
+# -----------------------------------------------------------------------
+# Copyright (c) 2019 SAP SE or an SAP affiliate company. All rights reserved.
+# -----------------------------------------------------------------------
+# you can put key/value pairs here.
+# Use Config.getParameter(..) to retrieve the values during runtime.
+
+sapentitlementsaddon.key=value
+
+# Specifies the location of the spring context file added automatically to the global platform application context.
+sapentitlementsaddon.application-context=sapentitlementsaddon-spring.xml
+
+yb2bacceleratorstorefront.additionalWebSpringConfigs.sapentitlementsaddon=classpath\:/sapentitlementsaddon/web/spring/sapentitlementsaddon-web-spring.xml
+yacceleratorstorefront.additionalWebSpringConfigs.sapentitlementsaddon=classpath\:/sapentitlementsaddon/web/spring/sapentitlementsaddon-web-spring.xml
+
+
+sapentitlementsaddon.javascript.paths.responsive=/responsive/common/js/sapentitlementsaddon.js
+sapentitlementsaddon.css.paths.responsive=/responsive/common/css/sapentitlementsaddon.css

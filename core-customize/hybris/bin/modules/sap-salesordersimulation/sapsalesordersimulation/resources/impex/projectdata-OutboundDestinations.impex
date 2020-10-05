@@ -1,0 +1,22 @@
+
+#**********************************#
+#************  Endpoints  *********#
+#**********************************#
+INSERT_UPDATE Endpoint; id[unique = true]; version[unique = true]; specUrl; name
+; sapOrderSimulateEndpoint       ; unknown ; "https://s4url/sap/opu/odata/sap/API_SALES_ORDER_SIMULATION_SRV/"            ; sapOrderSimulateEndpoint
+
+INSERT_UPDATE DestinationTarget; id[unique=true]
+; sapOrderSimulateOutboundDestination
+
+INSERT_UPDATE BasicCredential;id[unique=true];username;password
+;sapOrderSimulateBasicCreds;"user";"password!"
+
+#**********************************************#
+#************  Consumed Destinations  *********#
+#**********************************************#
+INSERT_UPDATE ConsumedDestination; id[unique = true]; url; endpoint(id, version); credential(id); destinationTarget(id); additionalProperties
+; sapOrderSimulateDestination      ; "https://s4url/sap/opu/odata/sap/API_SALES_ORDER_SIMULATION_SRV/"                 ; sapOrderSimulateEndpoint:unknown          ; sapOrderSimulateBasicCreds; sapOrderSimulateOutboundDestination
+
+
+INSERT_UPDATE AbstractDestination;id[unique = true];active
+;sapOrderSimulateDestination;true

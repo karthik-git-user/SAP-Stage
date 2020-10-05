@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+
+<!-- ATTENTION: This is just an example file. You have to edit it according 
+	to your needs. -->
+
+<items xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="items.xsd">
+
+	<collectiontypes>
+
+		<collectiontype code="SAPCPQSBPricingParameters"
+			elementtype="CpqPricingParameter" type="list"
+			autocreate="true" generate="false" />
+
+		<collectiontype code="Requests"
+			elementtype="SubscriptionPricingOutboundRequest" type="list"
+			autocreate="true" generate="false" />
+
+
+	</collectiontypes>
+
+	<relations>
+
+		<relation code="CpqSubscriptionDetail2PricingParameter"
+			localized="false">
+			<sourceElement type="CpqSubscriptionDetail"
+				qualifier="subscriptionDetail" cardinality="one" >
+				<modifiers unique="true"/>
+				</sourceElement>
+			<targetElement type="CpqPricingParameter"
+				qualifier="pricingParameters" cardinality="many"
+				collectiontype="list">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation code="AbstractOrderEntry2CpqSubscriptionDetail"
+			localized="false">
+			<sourceElement type="AbstractOrderEntry"
+				qualifier="orderEntry" cardinality="one" >
+				<modifiers unique="true"/>
+				</sourceElement>
+			<targetElement type="CpqSubscriptionDetail"
+				qualifier="cpqSubscriptionDetails" cardinality="many"
+				collectiontype="list">
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+		<relation
+				generate="true"
+				localized="false"
+				code="CpqSubscriptionDetail2OneTimeChargeEntryRelation"
+				autocreate="true">
+			<sourceElement type="CpqSubscriptionDetail" qualifier="cpqSubscriptionOneTime" cardinality="one">
+			</sourceElement>
+			<targetElement type="OneTimeChargeEntry" qualifier="oneTimeChargeEntries" cardinality="many">
+				<modifiers partof="true"></modifiers>
+			</targetElement>
+		</relation>
+
+		<relation
+				generate="true"
+				localized="false"
+				code="CpqSubscriptionDetail2RecurringChargeEntryRelation"
+				autocreate="true">
+			<sourceElement type="CpqSubscriptionDetail" qualifier="cpqSubscriptionRecurring" cardinality="one">
+			</sourceElement>
+			<targetElement type="RecurringChargeEntry" qualifier="recurringChargeEntries" cardinality="many">
+				<modifiers partof="true"></modifiers>
+			</targetElement>
+		</relation>
+
+		<relation
+				generate="true"
+				localized="false"
+				code="CpqSubscriptionDetail2UsageChargeRelation"
+				autocreate="true">
+			<sourceElement type="CpqSubscriptionDetail" qualifier="cpqSubscriptionUsageCharge" cardinality="one">
+			</sourceElement>
+			<targetElement type="UsageCharge" qualifier="usageCharges" cardinality="many">
+				<modifiers partof="true"></modifiers>
+			</targetElement>
+		</relation>
+
+		<relation
+				code="SAPCpiOutboundOrderItem2CpqSubscriptionDetail"
+				localized="false">
+			<sourceElement type="SAPCpiOutboundOrderItem"
+						   qualifier="sapCpiOutboundOrderItem" cardinality="one" />
+			<targetElement type="CpqSubscriptionDetail"
+						   qualifier="cpqSubscriptionDetails" cardinality="many"
+			>
+				<modifiers partof="true" />
+			</targetElement>
+		</relation>
+
+	</relations>
+
+
+	<itemtypes>
+
+		<itemtype code="CpqSubscriptionDetail"
+			jaloclass="com.sap.hybris.sapcpqsbintegration.jalo.CpqSubscriptionDetail"
+			extends="GenericItem">
+
+		<deployment table="cpqsubscriptiondetail" typecode="9371" />
+
+			<attributes>
+
+				<attribute qualifier="effectiveDate" type="java.util.Date">
+					<persistence type="property" />
+
+				</attribute>
+
+				<attribute qualifier="itemId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="ratePlanId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="contractStartDate"
+					type="java.util.Date">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="contractEndDate" type="java.util.Date">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="contractLength" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="minimumContractEndDate"
+					type="java.util.Date">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="minimumContractLength"
+					type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+				<attribute qualifier="subscriptionPricePlanId"
+						   type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+			</attributes>
+
+		</itemtype>
+
+		<itemtype code="CpqPricingParameter"
+			jaloclass="com.sap.hybris.sapcpqsbintegration.jalo.CpqPricingParameter"
+			extends="GenericItem">
+
+		<deployment table="cpqpricingparameter" typecode="9372" />
+
+			<attributes>
+
+				<attribute qualifier="code" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="itemId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="value" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SubscriptionPricingOutboundRequest"
+			jaloclass="com.sap.hybris.sapcpqsbintegration.jalo.SubscriptionPricingOutboundRequest"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+			<attributes>
+				<attribute qualifier="id" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="ratePlanId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="method" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="url" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="effectiveAt" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="pricingParameters" type="SAPCPQSBPricingParameters">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+
+		<itemtype code="SubscriptionPricingOutbound"
+			jaloclass="com.sap.hybris.sapcpqsbintegration.jalo.SubscriptionPricingOutbound"
+			extends="GenericItem" generate="true" autocreate="true" abstract="true">
+
+
+			<attributes>
+
+				<attribute qualifier="externalSystemId" type="java.lang.String">
+					<persistence type="property" />
+					<modifiers unique="true" />
+				</attribute>
+
+				<attribute qualifier="cpqQuoteId" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="cpqQuoteVersion" type="java.lang.String">
+					<persistence type="property" />
+				</attribute>
+
+				<attribute qualifier="requests" type="Requests">
+					<persistence type="property" />
+				</attribute>
+
+			</attributes>
+		</itemtype>
+		<itemtype code="SAPCpiOutboundOrderItem" autocreate="false" generate="false">
+			<attributes>
+				<attribute qualifier="overwriteContractTerm" type="java.lang.String"
+						   >
+					<persistence type="property" />
+					<description>Override subscription terms.</description>
+					<modifiers optional="true" />
+				</attribute>
+			</attributes>
+		</itemtype>
+	</itemtypes>
+</items>

@@ -1,0 +1,53 @@
+#***************************************************************************#
+#*** Please change only the sample data and do NOT change anything else! ***#                                                                                       #
+#***************************************************************************#
+
+#*********************************#
+#*** Sample Data To Be Changed ***#
+#*********************************#
+
+
+#**************************#
+#***  OAuth CredentialS ***#
+#**************************#    
+$oAuthUrl = https://test.sap.hana.ondemand.com/oauth/token?grant_type=client_credentials
+$clientId = sampleClientId        
+$password = samplePassword
+
+#******************#
+#***  COS URL ***#
+#******************#
+$cosUrl = https://tenant.sap.hana.ondemand.com/v1
+
+     
+#*****************************************#
+#***  DO NOT Change The Section Below! ***#
+#*****************************************#
+
+#**************************#      
+#***  OAuth CredentialS ***#      
+#**************************# 
+INSERT_UPDATE OAuthClientDetails ; clientId[unique=true] ; oAuthUrl  ; authorizedGrantTypes ; scope
+                                 ; $clientId             ; $oAuthUrl ; client_credentials   ;      
+                                 
+
+INSERT_UPDATE ExposedOAuthCredential ; id[unique=true]        ; oAuthClientDetails(clientId) ; password 
+                                     ; scpCOSOauthCredential ; $clientId                    ; $password
+                                     
+#******************#                 
+#***  Endpoints ***#                 
+#******************#                 
+INSERT_UPDATE Endpoint ; id[unique = true]     ; version[unique = true] ; specUrl    ; name                 
+                       ; scpCOSServiceEndpoint ; unknown                ; "$cosUrl" ; scpCOSServiceEndpoint
+
+#****************************#
+#***  Destination Target  ***#
+#****************************#
+INSERT_UPDATE DestinationTarget ; id[unique = true]       
+                                ; scpCOSDestinationTarget
+                                           
+#*******************************#
+#***  Consumed Destinations  ***#
+#*******************************#
+INSERT_UPDATE ConsumedDestination ; id[unique = true]        ; url        ; endpoint(id, version)         ; credential(id)         ; destinationTarget(id)[default = scpCOSDestinationTarget]
+                                  ; scpCOSServiceDestination ; "$cosUrl" ; scpCOSServiceEndpoint:unknown ; scpCOSOauthCredential ;                                                          ;  

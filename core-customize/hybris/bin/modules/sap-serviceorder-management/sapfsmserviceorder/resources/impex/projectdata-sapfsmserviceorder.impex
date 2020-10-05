@@ -1,0 +1,17 @@
+$updateServiceOrderFSMUrl=https://tester.hana.ondemand.com/gw/odata/SAP/NOTIFY-SERVICEORDER-UPDATE-FROM-SAP-COMMERCE-CLOUD-TO-SAP-FIELD-SERVICE-MANAGEMENT
+$serviceOrderVersion=v=1
+
+
+#**********************************#
+#************  Endpoints  *********#
+#**********************************#
+
+INSERT_UPDATE Endpoint ; id[unique = true]                 ; name                              ; version[unique = true] ; specUrl
+                       ; scpiOutboundFSMUpdateServiceOrder ; scpiOutboundFSMUpdateServiceOrder ; unknown                ; "$updateServiceOrderFSMUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders"
+
+#**********************************************#
+#************  Consumed Destinations  *********#
+#**********************************************#
+
+INSERT_UPDATE ConsumedDestination ; id[unique = true]                    ; url                                                                          ; endpoint(id,version)                      ; additionalProperties(key, value)[map-delimiter = |]         ; credential(id)              ; destinationTarget(id)[forceWrite=true]
+                                  ; scpiServiceOrderUpdateFSMDestination ; "$updateServiceOrderFSMUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders" ; scpiOutboundFSMUpdateServiceOrder:unknown ; "csrfURL->$updateServiceOrderFSMUrl;$serviceOrderVersion/"  ; scpiServiceOrderCredentials ; scpiServiceOrderDestination

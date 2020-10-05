@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<config xmlns="http://www.hybris.com/cockpit/config">
+
+	<!--  Create wizards  -->
+    <context merge-by="type" type="GigyaConfig" component="create-wizard" >
+        <wz:flow xmlns:wz="http://www.hybris.com/cockpitng/config/wizard-config" id="GigyaConfigWizard" title="create.gigyaconfig.title">
+            <wz:prepare id="newItemPrepare">
+                <wz:initialize property="newItem" type="GigyaConfig"/>
+            </wz:prepare>
+            <wz:step id="step1" label="create.gigyaconfig.step1.label" sublabel="create.gigyaconfig.step1.sublabel" position="0">
+                <wz:content>
+                    <wz:property-list root="newItem">
+                    		<wz:property qualifier="code"/>
+                        <wz:property qualifier="gigyaApiKey"/>
+                        <wz:property qualifier="gigyaDataCenter"/>
+                        <wz:property qualifier="gigyaSiteSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext" />
+                        <wz:property qualifier="gigyaUserKey"/>
+                        <wz:property qualifier="gigyaUserSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext" />
+                        <wz:property qualifier="sites"/>
+                        <wz:property qualifier="mode"/>
+                        <wz:property qualifier="deleteUser"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation id="step1.navigation">
+                    <wz:cancel/>
+                    <wz:next visible="!#empty(newItem.gigyaApiKey) AND ((!#empty(newItem.gigyaUserKey) AND !#empty(newItem.gigyaUserSecret)) OR !#empty(newItem.gigyaSiteSecret)) AND newItem.sites!=null AND newItem.mode!=null"/>
+                </wz:navigation>
+            </wz:step>
+            <wz:step id="step2" label="create.gigyaconfig.step2.label" sublabel="create.gigyaconfig.step2.sublabel" position="1">
+                <wz:content>
+                    <wz:property-list root="newItem">
+                        <wz:property qualifier="authRequestKey"/>
+                        <wz:property qualifier="authRequestSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext" />
+                        <wz:property qualifier="partnerId"/>
+                        <wz:property qualifier="applicationClientId"/>
+                        <wz:property qualifier="authorizationUrl"/>
+                        <wz:property qualifier="createOrganizationOnLogin"/>
+                    </wz:property-list>
+                </wz:content>
+                <wz:navigation>
+                    <wz:back/>
+                    <wz:cancel/>
+                    <wz:done visible="newItem.authRequestKey!=null AND newItem.authRequestSecret!=null AND newItem.partnerId!=null AND newItem.applicationClientId!=null AND newItem.authorizationUrl!=null">
+                        <wz:save property="newItem"/>
+                    </wz:done>
+                </wz:navigation>
+            </wz:step>
+        </wz:flow>
+    </context>
+    
+    <!--  Editor area configs -->
+    <context merge-by="type" type="GigyaConfig" component="editor-area">
+        <editorArea:editorArea xmlns:editorArea="http://www.hybris.com/cockpitng/component/editorArea">
+            <editorArea:tab name="gigyaconfig.main.tab" position="1" merge-mode="append">
+                <editorArea:section name="gigyaconfig.main.section">
+                    <editorArea:attribute qualifier="code"/>
+                    <editorArea:attribute qualifier="gigyaApiKey"/>
+                    <editorArea:attribute qualifier="gigyaDataCenter"/>
+                    <editorArea:attribute qualifier="gigyaSiteSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext"/>
+                    <editorArea:attribute qualifier="gigyaUserKey"/>
+                    <editorArea:attribute qualifier="gigyaUserSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext"/>
+                    <editorArea:attribute qualifier="sites"/>
+                    <editorArea:attribute qualifier="mode"/>
+                    <editorArea:attribute qualifier="deleteUser"/>
+                    <editorArea:attribute qualifier="gigyaFieldMappings"/>
+                    <editorArea:attribute qualifier="gigyaSessionConfig"/>
+                </editorArea:section>
+            </editorArea:tab>
+            <editorArea:tab name="gigyaconfig.org.mgmt.tab" position="2" merge-mode="append">
+                <editorArea:section name="gigyaconfig.main.section">
+                    <editorArea:attribute qualifier="code"/>
+                    <editorArea:attribute qualifier="gigyaApiKey"/>
+                    <editorArea:attribute qualifier="gigyaDataCenter"/>
+                    <editorArea:attribute qualifier="authRequestKey"/>
+                    <editorArea:attribute qualifier="authRequestSecret" editor="de.hybris.platform.gigya.gigyabackoffice.editor.masktext"/>
+                    <editorArea:attribute qualifier="partnerId"/>
+                    <editorArea:attribute qualifier="applicationClientId"/>
+                    <editorArea:attribute qualifier="authorizationUrl"/>
+                    <editorArea:attribute qualifier="createOrganizationOnLogin"/>
+                </editorArea:section>
+            </editorArea:tab>
+        </editorArea:editorArea>
+    </context>
+    
+</config>

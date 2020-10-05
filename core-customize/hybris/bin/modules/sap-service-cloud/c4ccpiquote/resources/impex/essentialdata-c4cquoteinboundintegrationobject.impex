@@ -1,0 +1,55 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+; SalesInboundQuote ; INBOUND
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code) 
+; SalesInboundQuote	; Quote         	; Quote 
+; SalesInboundQuote	; CatalogVersion	; CatalogVersion 
+; SalesInboundQuote	; Unit          	; Unit 
+; SalesInboundQuote	; User          	; User 
+; SalesInboundQuote	; Product       	; Product 
+; SalesInboundQuote	; Currency      	; Currency 
+; SalesInboundQuote	; Catalog       	; Catalog 
+; SalesInboundQuote	; Comment       	; Comment
+; SalesInboundQuote ; QuoteEntry		; QuoteEntry
+; SalesInboundQuote ; SAPC4CPriceComponent	; SAPC4CPriceComponent
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate
+; SalesInboundQuote:Quote         	; code                  	; Quote:code                  	;                            	;  ;  
+; SalesInboundQuote:Quote         	; user                  	; Quote:user                  	; SalesInboundQuote:User          	;  ;
+; SalesInboundQuote:Quote         	; currency              	; Quote:currency              	; SalesInboundQuote:Currency      	;  ;
+; SalesInboundQuote:Quote         	; quoteExpirationDate   	; Quote:quoteExpirationDate   	;                            	;  ;
+; SalesInboundQuote:Quote         	; totalPrice            	; Quote:totalPrice            	;                            	;  ;
+; SalesInboundQuote:Quote         	; description           	; Quote:description           	;                            	;  ;
+; SalesInboundQuote:Quote         	; version               	; Quote:version               	;                            	;  ;
+; SalesInboundQuote:Quote         	; c4cQuoteExternalQuoteId   ; Quote:c4cQuoteExternalQuoteId       	;                            	;  ;
+; SalesInboundQuote:CatalogVersion	; version               	; CatalogVersion:version      	;                            	;  ;
+; SalesInboundQuote:CatalogVersion	; catalog               	; CatalogVersion:catalog      	; SalesInboundQuote:Catalog       	;  ;
+; SalesInboundQuote:Unit          	; code                  	; Unit:code                   	;                            	;  ;
+; SalesInboundQuote:User          	; uid                   	; User:uid                    	;                            	;  ;
+; SalesInboundQuote:Product       	; catalogVersion        	; Product:catalogVersion      	; SalesInboundQuote:CatalogVersion	;  ;
+; SalesInboundQuote:Product       	; code                  	; Product:code                	;                            	;  ;
+; SalesInboundQuote:Currency      	; isocode               	; Currency:isocode            	;                            	;  ;
+; SalesInboundQuote:Catalog       	; id                    	; Catalog:id                  	;                            	;  ;
+; SalesInboundQuote:Quote         	; comments               	; Quote:comments               	; SalesInboundQuote:Comment    	;  ; true
+; SalesInboundQuote:Comment    	; code           	; Comment:code      	;                            	;  ; true
+; SalesInboundQuote:Comment    	; text           	; Comment:text      	;                            	;  ; true
+; SalesInboundQuote:Comment    	; commentCode           	; Comment:commentCode      	;         	;  ; true
+; SalesInboundQuote:Comment    	; author           				; Comment:author      			; SalesInboundQuote:User         	;  ; true
+; SalesInboundQuote:Quote    	; c4cCpiSalesOrganization           	; Quote:c4cCpiSalesOrganization      	;         	;  ;
+; SalesInboundQuote:Quote    	; c4cCpiDistributionChannel           	; Quote:c4cCpiDistributionChannel      	;         	;  ; 
+; SalesInboundQuote:Quote    	; c4cCpiDivision           	; Quote:c4cCpiDivision      	;         	;  ; 
+; SalesInboundQuote:Quote    	; subtotal           	; Quote:subtotal      	;         	;  ;
+; SalesInboundQuote:Quote    	; totalTax           	; Quote:totalTax      	;         	;  ;
+; SalesInboundQuote:QuoteEntry	; c4cItemId					; QuoteEntry:c4cItemId ;									;  true;
+; SalesInboundQuote:QuoteEntry	; entryNumber				; QuoteEntry:entryNumber ;									;  ;
+; SalesInboundQuote:QuoteEntry	; quantity					; QuoteEntry:quantity ;									;  ;
+; SalesInboundQuote:QuoteEntry	; unit						; QuoteEntry:unit 						; SalesInboundQuote:Unit									;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; code						; SAPC4CPriceComponent:code					;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; value						; SAPC4CPriceComponent:value					;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; isoCode					; SAPC4CPriceComponent:isoCode					;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; originCode				; SAPC4CPriceComponent:originCode					;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; entryNumber				; SAPC4CPriceComponent:entryNumber					;  ;
+; SalesInboundQuote:SAPC4CPriceComponent	; quoteId				; SAPC4CPriceComponent:quoteId					;  ;
+; SalesInboundQuote:QuoteEntry	; itemPriceComponentList			; QuoteEntry:itemPriceComponentList 			; SalesInboundQuote:SAPC4CPriceComponent				;  ; true
+; SalesInboundQuote:Quote		; quoteEntries				; Quote:quoteEntries		; SalesInboundQuote:QuoteEntry ;  ; true
+; SalesInboundQuote:Quote		; headerPriceComponentList		; Quote:headerPriceComponentList 			; SalesInboundQuote:SAPC4CPriceComponent				;  ; true

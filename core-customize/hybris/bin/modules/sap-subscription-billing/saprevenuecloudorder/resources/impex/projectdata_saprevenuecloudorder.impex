@@ -1,0 +1,62 @@
+#**********************************#
+#************  Endpoints  *********#         
+#**********************************#         
+
+
+INSERT_UPDATE Endpoint ; id[unique = true]             ; name                          ; version[unique = true] ; specUrl
+                       ; scpiRevenuecloudOutboundOrder ; scpiRevenuecloudOutboundOrder ; unknown                ; "https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-SUBSCRIPTION-ORDER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-HYBRIS-REVENUE-CLOUD;v=1/scpiOutboundOrders"
+
+
+
+INSERT_UPDATE DestinationTarget ; id[unique=true]
+                                ; TestDestination
+
+
+#**********************************************#
+#************  Consumed Destinations  *********#
+#**********************************************#
+
+INSERT_UPDATE ConsumedDestination ; id[unique = true]                ; url                                                                                                                                                                         ; endpoint(id,version)                  ; credential(id)      ; destinationTarget(id)[default=TestDestination] ; additionalProperties(key, value)[map-delimiter = |];
+                                  ; scpiRevenuecloudOrderDestination ; "https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-SUBSCRIPTION-ORDER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-HYBRIS-REVENUE-CLOUD;v=1/scpiOutboundOrders"                     ; scpiRevenuecloudOutboundOrder:unknown ; scpiOauthCredential ;                                                ; "csrfURL->https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-SUBSCRIPTION-ORDER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-HYBRIS-REVENUE-CLOUD;v=1/"
+
+
+
+####################################################################################################
+#			Configurations for Synchronous calls - My Account Subscriptions & Subscription Bills
+####################################################################################################
+
+## Don't change id here           
+INSERT_UPDATE ConsumedOAuthCredential ; id[unique=true]                   ; clientId   ; clientSecret   ; oAuthUrl
+                                      ; SapRevenueCloudSubscriptionClient ; <clientId> ; <clientSecret> ; https://us25.sb.cloud.sap/api ;
+
+INSERT_UPDATE Endpoint ; id[unique=true]              ; version[unique=true] ; specUrl ; name
+                       ; sapRevenueCloudSubscriptions ; v1                   ; "empy"  ; "SAP Subscriptions"
+
+#Don't change clientClassName attribute  in additional properties
+INSERT_UPDATE ConsumedDestination ; id[unique=true]                   ; url                           ; additionalProperties(key,value)[map-delimiter=|]                                                                           ; endpoint(id)                 ; destinationTarget(id) ; credential(id)
+                                  ; SapRevenueCloudSubscriptionClient ; https://us25.sb.cloud.sap/api ; oauth.scope->revenue-cloud!b43.subscription_manage|clientClassName->SapRevenueCloudSubscriptionClient|baseSite->powertools ; sapRevenueCloudSubscriptions ; TestDestination       ; SapRevenueCloudSubscriptionClient
+
+
+
+#**********************************************************************************#
+#*****   SAP Subscription Billing Order Configuration***************************#
+#**********************************************************************************#
+
+
+
+INSERT_UPDATE SAPSubscriptionConfiguration;id[unique=true];warehouses(code);
+                                          ;saprcorderconfig;rc_warehouse;
+
+
+#**********************************************************************************#
+#*****   SAP Subscription Billing API registry configurations***************************#
+#**********************************************************************************#
+INSERT_UPDATE OAuthClientDetails;clientId[unique=true]		            ;scope		  		;clientSecret
+                                ;subscription_billing_client_id	        ;sample_scopes		;dummy_client_secret
+
+INSERT_UPDATE ExposedOAuthCredential;id[unique=true]                     ;oAuthClientDetails(clientId)    ;password
+                                    ;SubscriptionBillingOAuthCredentials ;subscription_billing_client_id  ;dummy_client_password
+
+INSERT_UPDATE ConsumedDestination ; id[unique=true]     ; url                           ; endpoint(id)                 ; destinationTarget(id) ; credential(id)
+                                  ; sapSubscriptionBilling ; https://sample.subscriptionbilling.url ; sapRevenueCloudSubscriptions ; TestDestination       ; SubscriptionBillingOAuthCredentials
+

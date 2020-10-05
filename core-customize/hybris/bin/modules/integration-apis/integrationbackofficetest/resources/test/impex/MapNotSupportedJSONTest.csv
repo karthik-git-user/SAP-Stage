@@ -1,0 +1,23 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; MapNotSupportedJSONTest; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; MapNotSupportedJSONTest	; Product       	; Product       	; true	;  
+; MapNotSupportedJSONTest	; Catalog       	; Catalog       	; 	;  
+; MapNotSupportedJSONTest	; CatalogVersion	; CatalogVersion	; 	;
+; MapNotSupportedJSONTest	; ArticleStatus 	; ArticleStatus 	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute[disable.interceptor.types=validate]; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; MapNotSupportedJSONTest:Product       	; articleStatus 	; Product:articleStatus        	; MapNotSupportedJSONTest:ArticleStatus	; 	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+; MapNotSupportedJSONTest:Product       	; code          	; Product:code                 	;                        	; true	;  
+; MapNotSupportedJSONTest:Product       	; catalogVersion	; Product:catalogVersion       	; MapNotSupportedJSONTest:CatalogVersion	; true	;  
+; MapNotSupportedJSONTest:Product       	; averageRating 	; Product:averageRating        	;                        	; 	;  
+; MapNotSupportedJSONTest:Catalog       	; id            	; Catalog:id                   	;                        	; true	;  
+; MapNotSupportedJSONTest:CatalogVersion	; generationDate	; CatalogVersion:generationDate	;                        	; 	;  
+; MapNotSupportedJSONTest:CatalogVersion	; version       	; CatalogVersion:version       	;                        	; true	;  
+; MapNotSupportedJSONTest:CatalogVersion	; generatorInfo 	; CatalogVersion:generatorInfo 	;                        	; 	;  
+; MapNotSupportedJSONTest:CatalogVersion	; inclAssurance 	; CatalogVersion:inclAssurance 	;                        	; 	;  
+; MapNotSupportedJSONTest:CatalogVersion	; catalog       	; CatalogVersion:catalog       	; MapNotSupportedJSONTest:Catalog       	; true	;
+; MapNotSupportedJSONTest:ArticleStatus 	; code          	; ArticleStatus:code           	;                        	; true	;

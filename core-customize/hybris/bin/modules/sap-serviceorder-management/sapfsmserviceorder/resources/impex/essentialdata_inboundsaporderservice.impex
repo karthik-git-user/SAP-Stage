@@ -1,0 +1,50 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code) 
+; InboundSAPOrderService; INBOUND 
+ 
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false] 
+; InboundSAPOrderService	; Product           	; Product           	; 	;  
+; InboundSAPOrderService	; SapServiceSkill   	; SapServiceSkill   	; 	;  
+; InboundSAPOrderService	; SAPOrder          	; SAPOrder          	; true	;  
+; InboundSAPOrderService	; Consignment       	; Consignment       	; 	;  
+; InboundSAPOrderService	; AbstractOrder     	; AbstractOrder     	; 	;  
+; InboundSAPOrderService	; ConsignmentEntry  	; ConsignmentEntry  	; 	;  
+; InboundSAPOrderService	; AbstractOrderEntry	; AbstractOrderEntry	; 	;  
+; InboundSAPOrderService	; CatalogVersion    	; CatalogVersion    	; 	;  
+; InboundSAPOrderService	; Country           	; Country           	; 	;  
+; InboundSAPOrderService	; Address           	; Address           	; 	;  
+; InboundSAPOrderService	; Catalog           	; Catalog           	; 	;  
+; InboundSAPOrderService	; Order             	; Order             	; 	;  
+ 
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false] 
+; InboundSAPOrderService:Product           	; skills                	; Product:skills                         	; InboundSAPOrderService:SapServiceSkill   	; 	;  
+; InboundSAPOrderService:Product           	; code                  	; Product:code                           	;                                          	; true	;  
+; InboundSAPOrderService:Product           	; catalogVersion        	; Product:catalogVersion                 	; InboundSAPOrderService:CatalogVersion    	; true	;  
+; InboundSAPOrderService:SapServiceSkill   	; description           	; SapServiceSkill:description            	;                                          	; 	;  
+; InboundSAPOrderService:SapServiceSkill   	; code                  	; SapServiceSkill:code                   	;                                          	; true	;  
+; InboundSAPOrderService:SapServiceSkill   	; name                  	; SapServiceSkill:name                   	;                                          	; 	;  
+; InboundSAPOrderService:SAPOrder          	; order                 	; SAPOrder:order                         	; InboundSAPOrderService:Order             	; 	;  
+; InboundSAPOrderService:SAPOrder          	; consignments          	; SAPOrder:consignments                  	; InboundSAPOrderService:Consignment       	; 	;  
+; InboundSAPOrderService:SAPOrder          	; serviceOrderId        	; SAPOrder:serviceOrderId                	;                                          	; true	;  
+; InboundSAPOrderService:Consignment       	; consignmentEntries    	; Consignment:consignmentEntries         	; InboundSAPOrderService:ConsignmentEntry  	; 	;  
+; InboundSAPOrderService:Consignment       	; code                  	; Consignment:code                       	;                                          	; true	;  
+; InboundSAPOrderService:AbstractOrder     	; code                  	; AbstractOrder:code                     	;                                          	; true	;  
+; InboundSAPOrderService:ConsignmentEntry  	; orderEntry            	; ConsignmentEntry:orderEntry            	; InboundSAPOrderService:AbstractOrderEntry	; 	;  
+; InboundSAPOrderService:ConsignmentEntry  	; sapOrderEntryRowNumber	; ConsignmentEntry:sapOrderEntryRowNumber	;                                          	; true	;  
+; InboundSAPOrderService:AbstractOrderEntry	; order                 	; AbstractOrderEntry:order               	; InboundSAPOrderService:AbstractOrder     	; true	;  
+; InboundSAPOrderService:AbstractOrderEntry	; entryNumber           	; AbstractOrderEntry:entryNumber         	;                                          	; true	;  
+; InboundSAPOrderService:AbstractOrderEntry	; product               	; AbstractOrderEntry:product             	; InboundSAPOrderService:Product           	; 	;  
+; InboundSAPOrderService:CatalogVersion    	; catalog               	; CatalogVersion:catalog                 	; InboundSAPOrderService:Catalog           	; true	;  
+; InboundSAPOrderService:CatalogVersion    	; version               	; CatalogVersion:version                 	;                                          	; true	;  
+; InboundSAPOrderService:Country           	; isocode               	; Country:isocode                        	;                                          	; true	;  
+; InboundSAPOrderService:Address           	; postalcode            	; Address:postalcode                     	;                                          	; 	;  
+; InboundSAPOrderService:Address           	; country               	; Address:country                        	; InboundSAPOrderService:Country           	; 	;  
+; InboundSAPOrderService:Address           	; town                  	; Address:town                           	;                                          	; 	;  
+; InboundSAPOrderService:Address           	; publicKey             	; Address:publicKey                      	;                                          	; true	;  
+; InboundSAPOrderService:Address           	; line2                 	; Address:line2                          	;                                          	; 	;  
+; InboundSAPOrderService:Address           	; streetnumber          	; Address:streetnumber                   	;                                          	; 	;  
+; InboundSAPOrderService:Address           	; streetname            	; Address:streetname                     	;                                          	; 	;  
+; InboundSAPOrderService:Address           	; line1                 	; Address:line1                          	;                                          	; 	;  
+; InboundSAPOrderService:Catalog           	; id                    	; Catalog:id                             	;                                          	; true	;  
+; InboundSAPOrderService:Order             	; versionID             	; Order:versionID                        	;                                          	; true	;  
+; InboundSAPOrderService:Order             	; code                  	; Order:code                             	;                                          	; true	;  
+; InboundSAPOrderService:Order             	; deliveryAddress       	; Order:deliveryAddress                  	; InboundSAPOrderService:Address           	; 	;  

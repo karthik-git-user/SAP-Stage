@@ -1,0 +1,54 @@
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundProduct; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique=true]; code[unique = true]; type(code)
+                                   ; InboundProduct	; ArticleApprovalStatus	; ArticleApprovalStatus
+                                   ; InboundProduct	; SubscriptionTypeEnum 	; SubscriptionTypeEnum
+                                   ; InboundProduct	; CatalogVersion       	; CatalogVersion
+                                   ; InboundProduct	; SubscriptionTerm     	; SubscriptionTerm
+                                   ; InboundProduct	; Unit                 	; Unit
+                                   ; InboundProduct	; ProductTaxGroup      	; ProductTaxGroup
+                                   ; InboundProduct	; Product              	; Product
+                                   ; InboundProduct	; Catalog              	; Catalog
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundProduct:ArticleApprovalStatus	; code                   	; ArticleApprovalStatus:code     	;                                     	; true	;
+                                            ; InboundProduct:SubscriptionTypeEnum 	; code                   	; SubscriptionTypeEnum:code      	;                                     	; true	;
+                                            ; InboundProduct:CatalogVersion       	; catalog                	; CatalogVersion:catalog         	; InboundProduct:Catalog              	; true	;
+                                            ; InboundProduct:CatalogVersion       	; active                 	; CatalogVersion:active          	;                                     	; 	;
+                                            ; InboundProduct:CatalogVersion       	; version                	; CatalogVersion:version         	;                                     	; true	;
+                                            ; InboundProduct:SubscriptionTerm     	; id                     	; SubscriptionTerm:id            	;                                     	; true	;
+                                            ; InboundProduct:Unit                 	; name                   	; Unit:name                      	;                                     	; 	;
+                                            ; InboundProduct:Unit                 	; unitType               	; Unit:unitType                  	;                                     	; 	;
+                                            ; InboundProduct:Unit                 	; code                   	; Unit:code                      	;                                     	; true	;
+                                            ; InboundProduct:ProductTaxGroup      	; code                   	; ProductTaxGroup:code           	;                                     	; true	;
+                                            ; InboundProduct:Product              	; subscriptionCode       	; Product:subscriptionCode       	;                                     	; 	;
+                                            ; InboundProduct:Product              	; catalogVersion         	; Product:catalogVersion         	; InboundProduct:CatalogVersion       	; true	;
+                                            ; InboundProduct:Product              	; subscriptionType       	; Product:subscriptionType       	; InboundProduct:SubscriptionTypeEnum 	; 	;
+                                            ; InboundProduct:Product              	; approvalStatus         	; Product:approvalStatus         	; InboundProduct:ArticleApprovalStatus	; 	;
+                                            ; InboundProduct:Product              	; description            	; Product:description            	;                                     	; 	;
+                                            ; InboundProduct:Product              	; subscriptionTerm       	; Product:subscriptionTerm       	; InboundProduct:SubscriptionTerm     	; 	;
+                                            ; InboundProduct:Product              	; contractTerms          	; Product:contractTerms          	;                                     	; 	;
+                                            ; InboundProduct:Product              	; renewalTerm           	; Product:renewalTerm           	;                                     	; 	;
+                                            ; InboundProduct:Product              	; subscriptionValidTerm           	; Product:subscriptionValidTerm           	;                                     	; 	;
+                                            ; InboundProduct:Product              	; unit                   	; Product:unit                   	; InboundProduct:Unit                 	; 	;
+                                            ; InboundProduct:Product              	; name                   	; Product:name                   	;                                     	; 	;
+                                            ; InboundProduct:Product              	; Europe1PriceFactory_PTG	; Product:Europe1PriceFactory_PTG	; InboundProduct:ProductTaxGroup      	; 	;
+                                            ; InboundProduct:Product              	; code                   	; Product:code                   	;                                     	; true	;
+                                            ; InboundProduct:Catalog              	; id                     	; Catalog:id                     	;                                     	; true	;
+
+INSERT_UPDATE IntegrationObject; code[unique = true]; integrationType(code)
+                               ; InboundStockLevel; INBOUND
+
+INSERT_UPDATE IntegrationObjectItem; integrationObject(code)[unique = true]; code[unique = true]; type(code); root[default = false]
+                                   ; InboundStockLevel	; Warehouse    	; Warehouse    	; 	;
+                                   ; InboundStockLevel	; InStockStatus	; InStockStatus	; 	;
+                                   ; InboundStockLevel	; StockLevel   	; StockLevel   	; true	;
+
+INSERT_UPDATE IntegrationObjectItemAttribute; integrationObjectItem(integrationObject(code), code)[unique = true]; attributeName[unique = true]; attributeDescriptor(enclosingType(code), qualifier); returnIntegrationObjectItem(integrationObject(code), code); unique[default = false]; autoCreate[default = false]
+                                            ; InboundStockLevel:Warehouse    	; code         	; Warehouse:code          	;                                	; true	;true
+                                            ; InboundStockLevel:InStockStatus	; code         	; InStockStatus:code      	;                                	; true	;true
+                                            ; InboundStockLevel:StockLevel   	; productCode  	; StockLevel:productCode  	;                                	; true	;
+                                            ; InboundStockLevel:StockLevel   	; available    	; StockLevel:available    	;                                	; 	;
+                                            ; InboundStockLevel:StockLevel   	; warehouse    	; StockLevel:warehouse    	; InboundStockLevel:Warehouse    	; true	;
+                                            ; InboundStockLevel:StockLevel   	; inStockStatus	; StockLevel:inStockStatus	; InboundStockLevel:InStockStatus	; 	;

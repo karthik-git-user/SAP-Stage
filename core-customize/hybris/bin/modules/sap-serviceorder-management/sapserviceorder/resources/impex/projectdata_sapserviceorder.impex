@@ -1,0 +1,34 @@
+$serviceOrderUrl=https://tester.hana.ondemand.com/gw/odata/SAP/REPLICATE-SERVICEORDERS-FROM-SAP-COMMERCE-CLOUD-TO-SAP-S4HANA-SERVICE
+$updateServiceOrderUrl=https://tester.hana.ondemand.com/gw/odata/SAP/RESCHEDULE-SERVICEORDER-FROM-SAP-COMMERCE-CLOUD-TO-SAP-S4HANA-SERVICE
+$cancelServiceOrderUrl=https://tester.hana.ondemand.com/gw/odata/SAP/CANCEL-SERVICEORDERS-FROM-SAP-COMMERCE-CLOUD-TO-SAP-S4HANA-SERVICE
+$serviceOrderVersion=v=1
+
+
+#**********************************#
+#************  Endpoints  *********#
+#**********************************#
+
+INSERT_UPDATE Endpoint ; id[unique = true]              ; name                           ; version[unique = true] ; specUrl
+                       ; scpiOutboundServiceOrder       ; scpiOutboundServiceOrder       ; unknown                ; "$serviceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders"
+                       ; scpiOutboundUpdateServiceOrder ; scpiOutboundUpdateServiceOrder ; unknown                ; "$updateServiceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders"
+                       ; scpiOutboundCancelServiceOrder ; scpiOutboundCancelServiceOrder ; unknown                ; "$cancelServiceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders"
+
+INSERT_UPDATE DestinationTarget ; id[unique=true]
+                                ; scpiServiceOrderDestination
+
+
+#**********************************************#
+#************  Consumed Destinations  *********#
+#**********************************************#
+
+INSERT_UPDATE ConsumedDestination ; id[unique = true]                 ; url                                                                       ; endpoint(id,version)                   ; additionalProperties(key, value)[map-delimiter = |]     ; credential(id)              ; destinationTarget(id)[forceWrite=true]
+                                  ; scpiServiceOrderDestination       ; "$serviceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders"       ; scpiOutboundServiceOrder:unknown       ; "csrfURL->$serviceOrderUrl;$serviceOrderVersion/"       ; scpiServiceOrderCredentials ; scpiServiceOrderDestination
+                                  ; scpiServiceOrderUpdateDestination ; "$updateServiceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders" ; scpiOutboundUpdateServiceOrder:unknown ; "csrfURL->$updateServiceOrderUrl;$serviceOrderVersion/" ; scpiServiceOrderCredentials ; scpiServiceOrderDestination
+                                  ; scpiCancelServiceOrderDestination ; "$cancelServiceOrderUrl;$serviceOrderVersion/SAPCpiOutboundServiceOrders" ; scpiOutboundCancelServiceOrder:unknown ; "csrfURL->$cancelServiceOrderUrl;$serviceOrderVersion/" ; scpiServiceOrderCredentials ; scpiServiceOrderDestination
+
+
+#**********************************************#
+#*************  Basic Credentials  ************#
+#**********************************************#
+INSERT_UPDATE BasicCredential ;id[unique=true]             ;password ;username
+                              ;scpiServiceOrderCredentials ;password ;username

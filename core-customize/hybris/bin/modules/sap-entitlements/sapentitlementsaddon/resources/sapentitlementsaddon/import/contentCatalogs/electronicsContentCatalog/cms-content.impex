@@ -1,0 +1,87 @@
+# -----------------------------------------------------------------------
+# [y] hybris Platform
+#
+# Copyright (c) 2017 SAP SE or an SAP affiliate company.
+# All rights reserved.
+#
+# This software is the confidential and proprietary information of SAP
+# ("Confidential Information"). You shall not disclose such Confidential
+# Information and shall use it only in accordance with the terms of the
+# license agreement you entered into with SAP.
+# -----------------------------------------------------------------------
+
+$contentCatalog=electronicsContentCatalog
+$contentCV=catalogVersion(CatalogVersion.catalog(Catalog.id[default=$contentCatalog]),CatalogVersion.version[default=Staged])[default=$contentCatalog:Staged]
+$contentCatalogName=Electronics Content Catalog
+$productCatalog=electronicsProductCatalog
+$productCatalogName=Electronics Product Catalog
+$productCV=catalogVersion(catalog(id[default=$productCatalog]),version[default='Staged'])[unique=true,default=$productCatalog:Staged]
+$picture=media(code, $contentCV);
+$image=image(code, $contentCV);
+$media=media(code, $contentCV);
+$page=page(uid, $contentCV);
+$contentPage=contentPage(uid, $contentCV);
+$product=product(code, $productCV)
+$category=category(code, $productCV)
+$lang=en
+$addonExtensionName=sapentitlementsaddon
+
+
+## Configure page for entitlements
+INSERT_UPDATE ContentPage;$contentCV[unique=true];uid[unique=true];name;masterTemplate(uid,$contentCV);label;defaultPage[default='true'];approvalStatus(code)[default='approved'];homepage[default='false'];title[lang=en];
+;;entitlements;My Entitlements;AccountPageTemplate;/my-account/entitlements;;;;"Entitlements"
+;;entitlement-details;Entitlement Details Page;AccountPageTemplate;/my-account/entitlement;;;;"Entitlement Details"
+
+
+# ContentSlot
+INSERT_UPDATE ContentSlot;$contentCV[unique=true];uid[unique=true];name;active;cmsComponents(&componentRef);;;
+;;SideContent-entitlements;Side Content Slot for My Entitlements;true;;;;
+;;BodyContent-entitlements;Body Content Slot for My Entitlements;true;AccountEntitlementsListComponent;;;
+;;SideContent-entitlement-details;Side Content Slot for Entitlement Details;true;;;;
+;;BodyContent-entitlement-details;Body Content Slot for Entitlement Details;true;AccountEntitlementDetailsComponent;;;
+
+
+
+# ContentSlotForPage
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='entitlements'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-entitlements;SideContent;;SideContent-entitlements;;;
+;;BodyContent-entitlements;BodyContent;;BodyContent-entitlements;;;
+
+INSERT_UPDATE ContentSlotForPage;$contentCV[unique=true];uid[unique=true];position[unique=true];page(uid,$contentCV)[unique=true][default='entitlement-details'];contentSlot(uid,$contentCV)[unique=true];;;
+;;SideContent-entitlement-details;SideContent;;SideContent-entitlement-details;;;
+;;BodyContent-entitlement-details;BodyContent;;BodyContent-entitlement-details;;;
+
+
+# JSP Components
+INSERT_UPDATE JspIncludeComponent;$contentCV[unique=true];uid[unique=true];name;page;actions(uid,$contentCV);&componentRef
+;;AccountEntitlementsListComponent;Account My Entitlements Component;/WEB-INF/views/addons/$addonExtensionName/responsive/pages/account/accountEntitlementsPage.jsp;;AccountEntitlementsListComponent
+;;AccountEntitlementDetailsComponent;Account Entitlement Details Component;/WEB-INF/views/addons/$addonExtensionName/responsive/pages/account/accountEntitlementPage.jsp;;AccountEntitlementDetailsComponent
+
+
+# CMS Link Components
+INSERT_UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];name;url;&linkRef;&componentRef;target(code)[default='sameWindow']
+;;EntitlementsLink;EntitlementsLink;/my-account/entitlements;EntitlementsLink;EntitlementsLink;
+
+
+# CMS Navigation Nodes (children of my account)
+INSERT_UPDATE CMSNavigationNode;uid[unique=true];$contentCV[unique=true];name;parent(uid, $contentCV);links(&linkRef);&nodeRef;title[lang=en]
+;EntitlementsNavNode;;Entitlements;MyAccountNavNode;;EntitlementsNavNode;"Entitlements"
+
+# Create cms navigation entry for nvaigation child nodes
+INSERT_UPDATE CMSNavigationEntry;uid[unique=true];$contentCV[unique=true];name;navigationNode(&nodeRef);item(&linkRef);
+;EntitlementsNavNodeEntry;;EntitlementsNavNodeEntry;EntitlementsNavNode;EntitlementsLink;
+
+# CMS Link Components
+UPDATE CMSLinkComponent;$contentCV[unique=true];uid[unique=true];linkName[lang=$lang]
+;;EntitlementsLink;"Entitlements"
+
+
+# CMS Navigation Nodes
+UPDATE CMSNavigationNode;$contentCV[unique=true];uid[unique=true];title[lang=$lang]
+;;EntitlementsNavNode;"Entitlements"
+
+
+
+
+
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (c) 2020 SAP SE or an SAP affiliate company. All rights reserved.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:/sapcpiorderexchangeoms-persistence-hooks-spring.xml"/>
+
+    <!-- Order and Order Cancellation Conversion Service -->
+    <alias name="sapCpiOmsOrderConversionService" alias="sapCpiOrderConversionService"/>
+    <bean id="sapCpiOmsOrderConversionService" parent="sapCpiOmmOrderConversionService"
+          class="de.hybris.platform.sap.sapcpiorderexchangeoms.service.impl.SapCpiOmsOrderConversionService">
+        <property name="sapOrderContributor" ref="sapOrderContributor"/>
+        <property name="sapOrderEntryContributor" ref="sapOrderEntryContributor"/>
+        <property name="sapPaymentContributor" ref="sapPaymentContributor"/>
+        <property name="sapPartnerContributor" ref="sapPartnerContributor"/>
+        <property name="sapSalesConditionsContributor" ref="sapSalesConditionsContributor"/>
+        <property name="sapOrderCancelRequestContributor" ref="sapOrderCancelRequestContributor"/>
+    </bean>
+
+    <!-- Send Outbound Order Action -->
+    <alias name="sapCpiOmsOrderOutboundAction" alias="sapOmsSendOrderAction"/>
+    <bean id="sapCpiOmsOrderOutboundAction" parent="sapOmsSendOrderToDataHubAction"
+          class="de.hybris.platform.sap.sapcpiorderexchangeoms.actions.SapCpiOmsOrderOutboundAction">
+        <property name="sapCpiOutboundService" ref="sapCpiOutboundService"/>
+        <property name="sapCpiOrderOutboundConversionService" ref="sapCpiOrderOutboundConversionService"/>
+    </bean>
+
+    <!-- Send Outbound Order Cancellation Action -->
+    <alias name="sapCpiOmsOrderOutboundCancellationAction" alias="sapSendOrderCancelRequestAsCSVTaskRunner"/>
+    <bean id="sapCpiOmsOrderOutboundCancellationAction" parent="sapCpiOmmOrderOutboundCancellationAction"
+          class="de.hybris.platform.sap.sapcpiorderexchangeoms.actions.SapCpiOmsOrderOutboundCancellationAction">
+    </bean>
+
+</beans>
